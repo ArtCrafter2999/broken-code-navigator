@@ -52,7 +52,7 @@ var mutation_cooldown: Timer = Timer.new()
 
 ## The menu of responses
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
-@onready var character_label_container: PanelContainer = $Balloon/CharacterLabelContainer
+@onready var character_label_container: TextureRect = %CharacterLabelContainer
 @onready var back_button: Button = $Balloon/BackButton
 
 
