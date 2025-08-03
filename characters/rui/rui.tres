@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Character" load_steps=4 format=3 uid="uid://0bgbunfojqx2"]
+
+[ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_g4h88"]
+[ext_resource type="Texture2D" uid="uid://b7k12bji3pe40" path="res://characters/rui/sprites/neutral.png" id="2_l051h"]
+[ext_resource type="Texture2D" uid="uid://b6cetv4n0ghpk" path="res://characters/rui/sprites/evil.png" id="3_04m1f"]
+
+[resource]
+script = ExtResource("1_g4h88")
+name = "Руї"
+color = Color(0, 1, 1, 1)
+sprites = Dictionary[StringName, Texture2D]({
+&"evil": ExtResource("3_04m1f"),
+&"neutral": ExtResource("2_l051h")
+})
+metadata/_custom_type_script = "uid://b2o4rsmyktar7"

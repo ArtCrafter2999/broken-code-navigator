@@ -2,12 +2,7 @@
 
 [ext_resource type="Script" uid="uid://04c5iy7xunf5" path="res://main_scene.gd" id="1_0f027"]
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="2_2c62f"]
-
-[sub_resource type="Resource" id="Resource_2c62f"]
-script = ExtResource("2_2c62f")
-name = "Руї"
-color = Color(0, 1, 1, 1)
-metadata/_custom_type_script = "uid://b2o4rsmyktar7"
+[ext_resource type="Resource" uid="uid://0bgbunfojqx2" path="res://characters/rui/rui.tres" id="3_gyfs4"]
 
 [node name="MainScene" type="Control"]
 layout_mode = 3
@@ -17,7 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0f027")
-characters = Array[ExtResource("2_2c62f")]([SubResource("Resource_2c62f")])
+characters = Array[ExtResource("2_2c62f")]([ExtResource("3_gyfs4")])
 
 [node name="Backgrounds" type="Control" parent="."]
 layout_mode = 1
@@ -35,3 +30,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
+
+[node name="Sprites" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

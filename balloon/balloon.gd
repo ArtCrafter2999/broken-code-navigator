@@ -108,10 +108,10 @@ func apply_dialogue_line() -> void:
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
 	
-	if history.is_empty():
-		back_button.hide()
-	else:
-		back_button.show();
+	#if history.is_empty():
+		#back_button.hide()
+	#else:
+		#back_button.show();
 
 	# Show our balloon
 	balloon.show()

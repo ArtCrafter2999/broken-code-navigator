@@ -1,5 +1,6 @@
 class_name Character
 extends Resource
 
-@export var name: String;
-@export var color: Color;
+@export var name: String = "Руї";
+@export var color: Color = Color.WHITE;
+@export var sprites: Dictionary[StringName, Texture2D] = {}

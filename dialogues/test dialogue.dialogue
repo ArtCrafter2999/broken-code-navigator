@@ -1,24 +1,11 @@
 ~ start
-Hi, this is some dialogue.
-Руї: Here are some choices.
-- First one
-	Nathan: You picked the first one.
-	Nathan: first one. 1
-	Nathan: first one. 2
-	Nathan: first one. 3
-- Second one
-	do set_background("bg test", 1)
-	Nathan: You picked the second one.
-- Start again => start
-- End the conversation => END
-Nathan: For more information see the online documentation.
-Nathan: 1
-Nathan: 2
-Nathan: 3
-Nathan: 4
-Nathan: 5
-Nathan: 6
-Nathan: 7
-Nathan: 8
-Nathan: 9
+Голова дуже болить
+???: [#ch=Руї] Хтось тут?
+do set_background("bg test", { "fade_in": 1 })
+Повільно підіймаючись з ліжка, я відкрила очі
+do add_character("Руї", { "fade_in": 0.3 })
+???: [#ch=Руї] Як мене звуть?
+Руї: А точно, Руї
+Руї: [#evil] Я зла Руї 😈
+Кінець)))
 => END
