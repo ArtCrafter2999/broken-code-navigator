@@ -5,6 +5,9 @@ extends Control
 @onready var backgrounds_container: Control = $Backgrounds
 @onready var background: TextureRect = $Backgrounds/Background
 @onready var sprites: Control = $Sprites
+@onready var voice_player: AudioStreamPlayer = $VoicePlayer
+@onready var music_player: AudioStreamPlayer = $MusicPlayer
+@onready var sound_player: AudioStreamPlayer = $SoundPlayer
 
 const TEST_DIALOGUE = preload("res://dialogues/test dialogue.dialogue")
 const BALLOON = preload("res://balloon/balloon.tscn")
@@ -72,6 +75,37 @@ func remove_character(ch_name: String, options: Dictionary = {}):
 		
 	_fade_out(texture_rect, fade_out, true);
 
+func music(file_name: String, options: Dictionary = {}):
+	var fade_in = options.get("fade_in", 0)
+	var fade_out = options.get("fade_out", 0)
+	
+	if not file_name: return
+	
+	var new_player = AudioStreamPlayer.new()
+	new_player.stream = load("res://music/%s.mp3" % file_name)
+	
+	if fade_in:
+		new_player.volume_linear = 0
+		var tween = get_tree().create_tween()
+		tween.tween_property(new_player, "volume_linear", 1, fade_in)
+		
+	
+	if fade_out and music_player.playing:
+		var tween = get_tree().create_tween()
+		tween.tween_property(music_player, "volume_linear", 0, fade_out)
+		tween.finished.connect(func (): 
+				music_player.queue_free()
+				music_player = new_player)
+				
+	add_child(new_player);
+	new_player.play();
+
+
+func sound(file_name: String, option: Dictionary = {}):
+	if not file_name: return;
+	sound_player.stream = load("res://sound/%s.mp3" % file_name)
+	sound_player.play()
+
 
 func _fade_in(texture: TextureRect, fade_duration: float):
 	if not fade_duration: return
@@ -91,6 +125,11 @@ func _fade_out(texture: TextureRect, fade_duration: float, remove: bool = true):
 
 
 func _got_dialogue(line: DialogueLine):
+	var voice_file = line.get_tag_value("v")
+	if voice_file:
+		voice_player.stream = load("res://voice/%s.mp3" % voice_file)
+		voice_player.play();
+	
 	var character_name = line.character
 	var character = characters_dict.get(character_name, null) as Character
 	if not character: # if character is not unknown to player it could have other name

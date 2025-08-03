@@ -82,9 +82,13 @@ grow_vertical = 2
 theme = SubResource("Theme_qq3yp")
 
 [node name="TextPanels" type="Control" parent="Balloon"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 metadata/_edit_group_ = true
 
 [node name="CharacterLabelContainer" type="TextureRect" parent="Balloon/TextPanels"]
@@ -126,6 +130,8 @@ offset_left = 151.0
 offset_top = 785.0
 offset_right = 1772.0
 offset_bottom = 1049.0
+grow_horizontal = 2
+grow_vertical = 0
 texture = ExtResource("5_rdoix")
 
 [node name="MarginContainer" type="MarginContainer" parent="Balloon/TextPanels/PanelContainer"]
@@ -145,6 +151,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 26
 text = "Dialogue..."
+seconds_per_step = 0.04
+seconds_per_pause_step = 0.6
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
