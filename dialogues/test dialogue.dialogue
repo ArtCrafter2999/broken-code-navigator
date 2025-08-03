@@ -1,12 +1,13 @@
 ~ start
 Hi, this is some dialogue.
-Nathan: Here are some choices.
+Руї: Here are some choices.
 - First one
 	Nathan: You picked the first one.
 	Nathan: first one. 1
 	Nathan: first one. 2
 	Nathan: first one. 3
 - Second one
+	do set_background("bg test", 1)
 	Nathan: You picked the second one.
 - Start again => start
 - End the conversation => END
