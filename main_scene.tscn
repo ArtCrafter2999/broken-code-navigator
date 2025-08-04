@@ -16,8 +16,6 @@ characters = Array[ExtResource("2_2c62f")]([ExtResource("3_gyfs4")])
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="Backgrounds" type="Control" parent="."]
@@ -27,15 +25,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Background" type="TextureRect" parent="Backgrounds"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 1
 
 [node name="Sprites" type="Control" parent="."]
 texture_filter = 2

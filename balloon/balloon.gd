@@ -1,6 +1,8 @@
 class_name Balloon extends CanvasLayer
 ## A basic dialogue balloon for use with Dialogue Manager.
 
+signal on_prev(line_id: String)
+
 ## The action to use for advancing the dialogue
 @export var next_action: StringName = &"ui_accept"
 
@@ -108,10 +110,10 @@ func apply_dialogue_line() -> void:
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
 	
-	#if history.is_empty():
-		#back_button.hide()
-	#else:
-		#back_button.show();
+	if history.is_empty():
+		back_button.hide()
+	else:
+		back_button.show();
 
 	# Show our balloon
 	balloon.show()
@@ -146,6 +148,7 @@ func next(next_id: String) -> void:
 func prev() -> void:
 	var last_line_id = history.pop_back()
 	if last_line_id:
+		on_prev.emit(last_line_id)
 		self.dialogue_line = await resource.get_next_dialogue_line(last_line_id, temporary_game_states)
 
 #region Signals
