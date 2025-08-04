@@ -2,6 +2,13 @@ class_name Balloon extends CanvasLayer
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 signal on_prev(line_id: String)
+#signal on_save()
+#signal on_load()
+#
+#func save():
+	#on_save.emit()
+#func save():
+	#on_load.emit()
 
 ## The action to use for advancing the dialogue
 @export var next_action: StringName = &"ui_accept"
@@ -138,18 +145,20 @@ func apply_dialogue_line() -> void:
 		balloon.grab_focus()
 
 
+func set_line(line_id: String):
+	self.dialogue_line = await resource.get_next_dialogue_line(line_id, temporary_game_states)
+
 ## Go to the next line
 func next(next_id: String) -> void:
 	if dialogue_line:
 		history.push_back(dialogue_line.id)
-	self.dialogue_line = await resource.get_next_dialogue_line(next_id, temporary_game_states)
-
+	set_line(next_id);
 ## Go to the prev line
 func prev() -> void:
 	var last_line_id = history.pop_back()
 	if last_line_id:
 		on_prev.emit(last_line_id)
-		self.dialogue_line = await resource.get_next_dialogue_line(last_line_id, temporary_game_states)
+		#self.dialogue_line = await resource.get_next_dialogue_line(last_line_id, temporary_game_states)
 
 #region Signals
 

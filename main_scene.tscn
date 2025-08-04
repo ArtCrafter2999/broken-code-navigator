@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1wxsghutirw0"]
+[gd_scene load_steps=5 format=3 uid="uid://b1wxsghutirw0"]
 
 [ext_resource type="Script" uid="uid://04c5iy7xunf5" path="res://main_scene.gd" id="1_0f027"]
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="2_2c62f"]
 [ext_resource type="Resource" uid="uid://0bgbunfojqx2" path="res://characters/rui/rui.tres" id="3_gyfs4"]
+[ext_resource type="Script" uid="uid://s3lmam86urra" path="res://save_load/save_load_manager.gd" id="4_d5x1h"]
 
 [node name="MainScene" type="Control"]
 layout_mode = 3
@@ -13,6 +14,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0f027")
 characters = Array[ExtResource("2_2c62f")]([ExtResource("3_gyfs4")])
+
+[node name="SaveLoadManager" type="Node" parent="."]
+script = ExtResource("4_d5x1h")
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
 
@@ -34,3 +38,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 11
+
+[node name="Save" type="Button" parent="CanvasLayer"]
+offset_left = 1801.0
+offset_top = 13.0
+offset_right = 1852.0
+offset_bottom = 47.0
+text = "Save"
+
+[node name="Load" type="Button" parent="CanvasLayer"]
+offset_left = 1855.0
+offset_top = 11.0
+offset_right = 1903.0
+offset_bottom = 45.0
+text = "load"
+
+[connection signal="pressed" from="CanvasLayer/Save" to="SaveLoadManager" method="save_file"]
+[connection signal="pressed" from="CanvasLayer/Load" to="SaveLoadManager" method="load_file"]

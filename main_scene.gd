@@ -1,3 +1,4 @@
+class_name MainScene
 extends Control
 
 @export var characters: Array[Character] = []
@@ -14,7 +15,7 @@ var characters_dict: Dictionary[StringName, Character] = {}
 var ballon: Balloon
 var background: TextureRect
 var music_player: AudioStreamPlayer
-var history: Dictionary[String, StepSaveState]
+var history: Dictionary
 
 func _ready() -> void:
 	for character in characters:
@@ -116,13 +117,25 @@ func sound(file_name: String, option: Dictionary = {}):
 	sound_player.stream = load("res://sound/%s.mp3" % file_name)
 	sound_player.play()
 
-func restore_state(state: StepSaveState):
-	_clear_scene(music_player and music_player.name != state.music);
+func restore_state(state: Dictionary):
+	var music = state.get("music", "")
+	var background = state.get("background", "")
+	var sprites = state.get("sprites", {})
+	var line_id = state.get("line_id")
 	
-	set_background(state.background)
+	_clear_scene(music_player and music_player.name != music);
 	
-	for sprite_name in state.sprites:
+	set_background(background)
+	
+	for sprite_name in sprites:
 		add_character(sprite_name, state.sprites[sprite_name])
+	
+	music(music)
+	
+	ballon.set_line(state.get("line_id"))
+
+func get_current_state():
+	return _save_step(ballon.dialogue_line)
 
 func _clear_scene(clear_music: bool = false):
 	var remove_node = Node.new();
@@ -154,15 +167,16 @@ func _fade_out(texture: TextureRect, fade_duration: float, remove: bool = true):
 	if remove:
 		texture.queue_free()
 
-func _save_step(line: DialogueLine) -> StepSaveState:
-	var step = StepSaveState.new()
+func _save_step(line: DialogueLine) -> Dictionary:
+	var step = {}
 	step.line_id = line.id
 	
 	if background:
 		step.background = background.name
 	if music_player:
 		step.music = music_player.name;
-		
+	
+	step.sprites = {}
 	for node in sprites.get_children():
 		if node is CharacterSprite:
 			step.sprites[node.name] = {
@@ -200,5 +214,7 @@ func _got_dialogue(line: DialogueLine):
 	history[line.id] = _save_step(line)
 
 func _on_prev(line_id: String):
-	var step = history[line_id]
+	print(history)
+	var step = history.get(line_id, null);
+	if not step: return;
 	restore_state(step)
