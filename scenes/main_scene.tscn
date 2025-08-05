@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8s6j6x6100y3"]
+
+[ext_resource type="Script" uid="uid://bma5lnvk8a3nd" path="res://scenes/main_scene.gd" id="1_7ykc4"]
+[ext_resource type="PackedScene" uid="uid://0nfip0jqf6j6" path="res://scenes/main_menu.tscn" id="1_pw63i"]
+[ext_resource type="PackedScene" uid="uid://b1wxsghutirw0" path="res://scenes/play_scene.tscn" id="2_7ykc4"]
+[ext_resource type="Script" uid="uid://s3lmam86urra" path="res://save_load/save_load_manager.gd" id="2_pu3yx"]
+
+[node name="MainScene" type="Node"]
+script = ExtResource("1_7ykc4")
+
+[node name="SaveLoadManager" type="Node" parent="." node_paths=PackedStringArray("play_scene", "main_menu")]
+script = ExtResource("2_pu3yx")
+play_scene = NodePath("../PlayScene")
+main_menu = NodePath("../MainMenu")
+
+[node name="MainMenu" parent="." instance=ExtResource("1_pw63i")]
+
+[node name="PlayScene" parent="." instance=ExtResource("2_7ykc4")]
+visible = false
+
+[connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
+[connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]

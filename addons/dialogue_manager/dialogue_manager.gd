@@ -449,7 +449,6 @@ func show_dialogue_balloon_scene(balloon_scene, resource: DialogueResource, titl
 	_start_balloon.call_deferred(balloon, resource, title, extra_game_states)
 	return balloon
 
-
 ## Resolve a static line ID to an actual line ID
 func static_id_to_line_id(resource: DialogueResource, static_id: String) -> String:
 	var ids = static_id_to_line_ids(resource, static_id)

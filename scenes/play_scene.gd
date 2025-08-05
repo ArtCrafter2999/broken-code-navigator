@@ -1,4 +1,4 @@
-class_name MainScene
+class_name PlayScene
 extends Control
 
 @export var characters: Array[Character] = []
@@ -8,7 +8,6 @@ extends Control
 @onready var voice_player: AudioStreamPlayer = $VoicePlayer
 @onready var sound_player: AudioStreamPlayer = $SoundPlayer
 
-const TEST_DIALOGUE = preload("res://dialogues/test dialogue.dialogue")
 const BALLOON = preload("res://balloon/balloon.tscn")
 
 var characters_dict: Dictionary[StringName, Character] = {}
@@ -21,10 +20,15 @@ func _ready() -> void:
 	for character in characters:
 		characters_dict[character.name] = character;
 	DialogueManager.got_dialogue.connect(_got_dialogue)
+
+func play(dialogue_path: String, line_id: String = "start") -> void:
+	var dialogue = load(dialogue_path)
 	
-	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, TEST_DIALOGUE, "start", [self])
+	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, dialogue, line_id, [self])
 	ballon.on_prev.connect(_on_prev)
 
+func quit():
+	DialogueManager.got_dialogue.disconnect(_got_dialogue)
 
 func set_background(bg_name: String, options: Dictionary = {}):
 	if not bg_name: return;
@@ -38,7 +42,6 @@ func set_background(bg_name: String, options: Dictionary = {}):
 	await _fade_out(background, fade_out)
 	await _fade_in(new_background, fade_in)
 	background = new_background;
-
 
 func add_character(ch_name: StringName, options: Dictionary = {}):
 	var fade_in = options.get("fade_in", 0)
@@ -212,6 +215,9 @@ func _got_dialogue(line: DialogueLine):
 				texture_rect.texture = character.sprites[variants.back()];
 	
 	history[line.id] = _save_step(line)
+	if not GameState.read_messages.has(line.id):
+		GameState.read_messages.append(line.id)
+		GameState.save();
 
 func _on_prev(line_id: String):
 	print(history)

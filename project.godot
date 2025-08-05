@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Broken Code: Navigator"
-run/main_scene="uid://b1wxsghutirw0"
+run/main_scene="uid://b8s6j6x6100y3"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+GameState="*res://save_load/game_state.gd"
 
 [display]
 
