@@ -2,6 +2,7 @@ class_name Balloon extends CanvasLayer
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 signal on_prev(line_id: String)
+signal on_next(prev_line: DialogueLine, new_line: DialogueLine)
 #signal on_save()
 #signal on_load()
 #
@@ -63,6 +64,12 @@ var mutation_cooldown: Timer = Timer.new()
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var character_label_container: TextureRect = %CharacterLabelContainer
 @onready var back_button: Button = $Balloon/BackButton
+
+var is_skiping: bool:
+	get():
+		return dialogue_label.is_skiping
+	set(value):
+		dialogue_label.is_skiping = value;
 
 func _ready() -> void:
 	balloon.hide()
@@ -145,13 +152,17 @@ func apply_dialogue_line() -> void:
 
 
 func set_line(line_id: String):
-	self.dialogue_line = await resource.get_next_dialogue_line(line_id, temporary_game_states)
+	self.dialogue_line = await resource.get_next_dialogue_line(line_id, temporary_game_states);
 
 ## Go to the next line
 func next(next_id: String) -> void:
 	if dialogue_line:
 		history.push_back(dialogue_line.id)
+	var prev_line = dialogue_line
 	set_line(next_id);
+	on_next.emit(prev_line, dialogue_line)
+
+
 ## Go to the prev line
 func prev() -> void:
 	var last_line_id = history.pop_back()

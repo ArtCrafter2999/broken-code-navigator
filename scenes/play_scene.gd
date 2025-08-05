@@ -3,26 +3,49 @@ extends Control
 
 signal resumed
 
+const BALLOON = preload("res://balloon/balloon.tscn")
+
 @export var characters: Array[Character] = []
 
 @onready var backgrounds_container: Control = $Backgrounds
 @onready var sprites: Control = $Sprites
 @onready var voice_player: AudioStreamPlayer = $VoicePlayer
 @onready var sound_player: AudioStreamPlayer = $SoundPlayer
-
-const BALLOON = preload("res://balloon/balloon.tscn")
+@onready var skip_interval: Timer = $SkipInterval
 
 var characters_dict: Dictionary[StringName, Character] = {}
 var ballon: Balloon
 var background: TextureRect
 var music_player: AudioStreamPlayer
 var history: Dictionary
+var is_skiping: bool:
+	get:
+		if not ballon: return false;
+		return ballon.is_skiping;
+	set(value):
+		if not ballon: return;
+		
+		ballon.is_skiping = value
+		if value:
+			if skip_interval.is_stopped():
+				skip_interval.start()
+			voice_player.stop()
+		else:
+			skip_interval.stop()
 
 var _is_paused = false;
 
 func _ready() -> void:
 	for character in characters:
 		characters_dict[character.name] = character;
+
+func _process(delta: float) -> void:
+	if not visible: return;
+	is_skiping = Input.is_action_pressed("Skip") and \
+			is_instance_valid(ballon) and \
+			ballon.dialogue_line.id in GameState.read_messages and \
+			not _is_paused and \
+			ballon.dialogue_line.responses.size() == 0
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
 	DialogueManager.got_dialogue.connect(_got_dialogue)
@@ -31,6 +54,7 @@ func play(dialogue_path: String, line_id: String = "start") -> void:
 	
 	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, dialogue, line_id, [self])
 	ballon.on_prev.connect(_on_prev)
+	ballon.on_next.connect(_on_next)
 	
 	if line_id != "start":
 		var step = history.get(line_id, null);
@@ -195,7 +219,7 @@ func _clear_scene(clear_music: bool = false):
 	remove_node.queue_free()
 
 func _fade_in(texture: TextureRect, fade_duration: float):
-	if not fade_duration: return
+	if is_skiping or not fade_duration: return
 	texture.modulate = Color.TRANSPARENT
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, fade_duration)
@@ -204,6 +228,10 @@ func _fade_in(texture: TextureRect, fade_duration: float):
 
 func _fade_out(texture: TextureRect, fade_duration: float, remove: bool = true):
 	if not texture: return
+	if is_skiping:
+		if remove:
+			texture.queue_free()
+		return;
 	if fade_duration: 
 		var tween = get_tree().create_tween()
 		tween.tween_property(texture, "modulate", Color.TRANSPARENT, fade_duration)
@@ -234,10 +262,11 @@ func _save_step(line: DialogueLine) -> Dictionary:
 func _got_dialogue(line: DialogueLine):
 	if _is_paused:
 		await resumed
-	var voice_file = line.get_tag_value("v")
-	if voice_file:
-		voice_player.stream = load("res://voice/%s.mp3" % voice_file)
-		voice_player.play();
+	if not is_skiping:
+		var voice_file = line.get_tag_value("v")
+		if voice_file:
+			voice_player.stream = load("res://voice/%s.mp3" % voice_file)
+			voice_player.play();
 	
 	var character_name = line.character
 	var character = characters_dict.get(character_name, null) as Character
@@ -258,11 +287,17 @@ func _got_dialogue(line: DialogueLine):
 				texture_rect.texture = character.sprites[variants.back()];
 	
 	history[line.id] = _save_step(line)
-	if not GameState.read_messages.has(line.id):
-		GameState.read_messages.append(line.id)
+
+func _on_next(prev_line: DialogueLine, _next_line: DialogueLine):
+	if not GameState.read_messages.has(prev_line.id):
+		GameState.read_messages.append(prev_line.id)
 		GameState.save();
 
 func _on_prev(line_id: String):
 	var step = history.get(line_id, null);
 	if not step: return;
 	restore_state(step)
+
+func _on_skip_interval_timeout() -> void:
+	if ballon:
+		ballon.next(ballon.dialogue_line.next_id)
