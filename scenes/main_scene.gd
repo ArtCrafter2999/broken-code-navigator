@@ -1,19 +1,38 @@
+class_name MainScene
 extends Node
 
 @onready var main_menu: MainMenu = $MainMenu
 @onready var play_scene: PlayScene = $PlayScene
-@onready var save_load_manager: Node = $SaveLoadManager
+@onready var save_load_manager: SaveLoadManager = $SaveLoadManager
+@onready var pause_screen: PauseScreen = $PauseScreen
+
+var in_main_menu: bool = true;
+
+func _input(event: InputEvent) -> void:
+	if in_main_menu: return
+	if Input.is_action_just_pressed("Pause"):
+		if pause_screen.is_open:
+			pause_screen.close()
+			play_scene.resume()
+		else:
+			pause_screen.open()
+			play_scene.pause()
 
 func _on_main_menu_new_game_pressed() -> void:
-	main_menu.set_music_playing(false)
-	await create_tween() \
-			.tween_property(main_menu, "modulate", Color.TRANSPARENT, 0.5) \
-			.finished
-
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1).timeout
 
 	play_scene.show()
 	play_scene.play("res://dialogues/test dialogue.dialogue")
+	in_main_menu = false;
 
 func _on_main_menu_load_pressed() -> void:
-	save_load_manager.load_file();
+	in_main_menu = false;
+	save_load_manager.load_file("quick", true);
+
+
+func _on_pause_screen_main_menu() -> void:
+	save_load_manager.save_file()
+	in_main_menu = true;
+	play_scene.quit()
+	pause_screen.close()
+	main_menu.open()

@@ -1,6 +1,8 @@
 class_name PlayScene
 extends Control
 
+signal resumed
+
 @export var characters: Array[Character] = []
 
 @onready var backgrounds_container: Control = $Backgrounds
@@ -16,19 +18,54 @@ var background: TextureRect
 var music_player: AudioStreamPlayer
 var history: Dictionary
 
+var _is_paused = false;
+
 func _ready() -> void:
 	for character in characters:
 		characters_dict[character.name] = character;
-	DialogueManager.got_dialogue.connect(_got_dialogue)
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
+	DialogueManager.got_dialogue.connect(_got_dialogue)
+	visible = true;
 	var dialogue = load(dialogue_path)
 	
 	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, dialogue, line_id, [self])
 	ballon.on_prev.connect(_on_prev)
+	
+	if line_id != "start":
+		var step = history.get(line_id, null);
+		if step: 
+			await get_tree().process_frame
+			await get_tree().process_frame
+			restore_state(step)
+
+func pause():
+	_is_paused = true;
+	if ballon:
+		ballon.dialogue_label.is_paused = true
+	voice_player.stream_paused = true;
+	sound_player.stream_paused = true;
+
+func resume(): 
+	_is_paused = false;
+	if ballon:
+		ballon.dialogue_label.is_paused = false;
+	voice_player.stream_paused = false;
+	sound_player.stream_paused = false;
+	resumed.emit();
 
 func quit():
 	DialogueManager.got_dialogue.disconnect(_got_dialogue)
+	ballon.queue_free();
+	ballon = null;
+	music("", {"fade_out": 0.5})
+	_is_paused = false;
+	voice_player.stream_paused = false;
+	sound_player.stream_paused = false;
+	voice_player.stop();
+	sound_player.stop();
+	_clear_scene(false)
+	hide();
 
 func set_background(bg_name: String, options: Dictionary = {}):
 	if not bg_name: return;
@@ -41,7 +78,8 @@ func set_background(bg_name: String, options: Dictionary = {}):
 	backgrounds_container.add_child(new_background)
 	await _fade_out(background, fade_out)
 	await _fade_in(new_background, fade_in)
-	background = new_background;
+	if new_background:
+		background = new_background;
 
 func add_character(ch_name: StringName, options: Dictionary = {}):
 	var fade_in = options.get("fade_in", 0)
@@ -88,16 +126,18 @@ func remove_character(ch_name: String, options: Dictionary = {}):
 	_fade_out(texture_rect, fade_out, true);
 
 func music(file_name: String, options: Dictionary = {}):
-	if not file_name or (music_player and music_player.name == file_name): return
+	if music_player and music_player.name == file_name: return
 	
 	var fade_in = options.get("fade_in", 0)
 	var fade_out = options.get("fade_out", 0)
 	
-	var new_player = AudioStreamPlayer.new()
-	new_player.name = file_name
-	new_player.stream = load("res://music/%s.mp3" % file_name)
+	var new_player: AudioStreamPlayer = null
+	if file_name:
+		new_player = AudioStreamPlayer.new()
+		new_player.name = file_name
+		new_player.stream = load("res://music/%s.mp3" % file_name)
 	
-	if fade_in:
+	if new_player and fade_in:
 		new_player.volume_linear = 0
 		var tween = get_tree().create_tween()
 		tween.tween_property(new_player, "volume_linear", 1, fade_in)
@@ -109,9 +149,10 @@ func music(file_name: String, options: Dictionary = {}):
 		tween.tween_property(old_player, "volume_linear", 0, fade_out)
 		tween.finished.connect(func (): 
 				old_player.queue_free())
-				
-	add_child(new_player);
-	new_player.play();
+	
+	if new_player:
+		add_child(new_player);
+		new_player.play();
 	music_player = new_player
 
 
@@ -191,6 +232,8 @@ func _save_step(line: DialogueLine) -> Dictionary:
 	return step;
 
 func _got_dialogue(line: DialogueLine):
+	if _is_paused:
+		await resumed
 	var voice_file = line.get_tag_value("v")
 	if voice_file:
 		voice_player.stream = load("res://voice/%s.mp3" % voice_file)
@@ -220,7 +263,6 @@ func _got_dialogue(line: DialogueLine):
 		GameState.save();
 
 func _on_prev(line_id: String):
-	print(history)
 	var step = history.get(line_id, null);
 	if not step: return;
 	restore_state(step)
