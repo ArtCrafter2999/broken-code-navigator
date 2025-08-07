@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Character" load_steps=5 format=3 uid="uid://dd88m8r02r3jv"]
+
+[ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_1whqn"]
+[ext_resource type="Texture2D" uid="uid://bkqj3f3d15say" path="res://characters/kira/Kira.png" id="2_03x83"]
+[ext_resource type="Texture2D" uid="uid://y2ik06sfkmt7" path="res://characters/kira/Kira_angry.png" id="3_5sorp"]
+[ext_resource type="Texture2D" uid="uid://cp0amexujga0b" path="res://characters/kira/Kira_happy.png" id="4_u76h8"]
+
+[resource]
+script = ExtResource("1_1whqn")
+name = "Кіра"
+color = Color(0.866667, 0, 0.0117647, 1)
+sprites = Dictionary[StringName, Texture2D]({
+&"angry": ExtResource("3_5sorp"),
+&"happy": ExtResource("4_u76h8"),
+&"neutral": ExtResource("2_03x83")
+})
+metadata/_custom_type_script = "uid://b2o4rsmyktar7"

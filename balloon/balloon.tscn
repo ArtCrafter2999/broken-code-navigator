@@ -1,12 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwe46fe62ssm7"]
+[gd_scene load_steps=14 format=3 uid="uid://cwe46fe62ssm7"]
 
 [ext_resource type="Script" uid="uid://cdbkdebocbfhy" path="res://balloon/balloon.gd" id="1_jra6m"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_kg5wc"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_ug21d"]
 [ext_resource type="Texture2D" uid="uid://yinp87lmjpus" path="res://balloon/sprites/namebox.svg" id="4_uro0l"]
+[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://obfuscated.gd" id="5_2rviv"]
 [ext_resource type="Texture2D" uid="uid://b6s7xokivw0a" path="res://balloon/sprites/textbox.svg" id="5_rdoix"]
-[ext_resource type="Texture2D" uid="uid://11bnygwu7cr4" path="res://balloon/sprites/back_button.svg" id="8_uro0l"]
-[ext_resource type="Script" uid="uid://cs70f0otc6h8p" path="res://gui/hover_modulate.gd" id="9_uro0l"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_2rviv"]
+script = ExtResource("5_2rviv")
+metadata/_custom_type_script = "uid://biyuj5ekuta5x"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0, 0, 0, 1)
@@ -67,9 +70,41 @@ MarginContainer/constants/margin_right = 30
 MarginContainer/constants/margin_top = 15
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_qkmqt")
 
+[sub_resource type="RichTextEffect" id="RichTextEffect_cwey4"]
+script = ExtResource("5_2rviv")
+metadata/_custom_type_script = "uid://biyuj5ekuta5x"
+
 [node name="ExampleBalloon" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_jra6m")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="ScreenText" parent="MarginContainer" instance=ExtResource("2_kg5wc")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/bold_italics_font_size = 30
+theme_override_font_sizes/italics_font_size = 30
+theme_override_font_sizes/mono_font_size = 30
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+text = "Dialogue..."
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_2rviv")]
+seconds_per_step = 0.04
+seconds_per_pause_step = 0.6
 
 [node name="Balloon" type="Control" parent="."]
 unique_name_in_owner = true
@@ -82,6 +117,7 @@ grow_vertical = 2
 theme = SubResource("Theme_qq3yp")
 
 [node name="TextPanels" type="Control" parent="Balloon"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,7 +125,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-metadata/_edit_group_ = true
 
 [node name="CharacterLabelContainer" type="TextureRect" parent="Balloon/TextPanels"]
 unique_name_in_owner = true
@@ -149,10 +184,28 @@ theme_override_constants/margin_right = 194
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/bold_italics_font_size = 26
+theme_override_font_sizes/italics_font_size = 26
+theme_override_font_sizes/mono_font_size = 26
 theme_override_font_sizes/normal_font_size = 26
+theme_override_font_sizes/bold_font_size = 26
 text = "Dialogue..."
+custom_effects = [SubResource("RichTextEffect_cwey4")]
 seconds_per_step = 0.04
 seconds_per_pause_step = 0.6
+
+[node name="BackButton" type="Button" parent="Balloon/TextPanels/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 85.0
+offset_top = 208.0
+offset_right = 155.0
+offset_bottom = 242.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Назад"
+flat = true
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
@@ -178,21 +231,6 @@ response_template = NodePath("ResponseExample")
 layout_mode = 2
 text = "Response example"
 
-[node name="BackButton" type="Button" parent="Balloon"]
-modulate = Color(0.486275, 0.486275, 0.486275, 1)
-layout_mode = 0
-offset_left = 15.0
-offset_top = 14.0
-offset_right = 65.0
-offset_bottom = 64.0
-focus_mode = 0
-mouse_default_cursor_shape = 2
-icon = ExtResource("8_uro0l")
-flat = true
-icon_alignment = 1
-script = ExtResource("9_uro0l")
-hover_modulate = Color(1, 1, 1, 1)
-
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
+[connection signal="pressed" from="Balloon/TextPanels/PanelContainer/BackButton" to="." method="_on_back_pressed"]
 [connection signal="response_selected" from="Balloon/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
-[connection signal="pressed" from="Balloon/BackButton" to="." method="_on_back_pressed"]

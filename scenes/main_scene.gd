@@ -5,8 +5,17 @@ extends Node
 @onready var play_scene: PlayScene = $PlayScene
 @onready var save_load_manager: SaveLoadManager = $SaveLoadManager
 @onready var pause_screen: PauseScreen = $PauseScreen
+@onready var back_button: CanvasLayer = $PlayScene/BackButton
 
-var in_main_menu: bool = true;
+var in_main_menu: bool = true:
+	get:
+		return in_main_menu;
+	set(value):
+		in_main_menu = value
+		if value:
+			back_button.hide()
+		else:
+			back_button.show()
 
 func _input(event: InputEvent) -> void:
 	if in_main_menu: return
@@ -15,14 +24,13 @@ func _input(event: InputEvent) -> void:
 			pause_screen.close()
 			play_scene.resume()
 		else:
-			pause_screen.open()
-			play_scene.pause()
+			_pause();
 
 func _on_main_menu_new_game_pressed() -> void:
 	await get_tree().create_timer(1).timeout
 
 	play_scene.show()
-	play_scene.play("res://dialogues/test dialogue.dialogue")
+	play_scene.play("res://dialogues/chapter_1.dialogue")
 	in_main_menu = false;
 
 func _on_main_menu_load_pressed() -> void:
@@ -36,3 +44,15 @@ func _on_pause_screen_main_menu() -> void:
 	play_scene.quit()
 	pause_screen.close()
 	main_menu.open()
+
+
+func _on_main_menu_test_pressed() -> void:
+	await get_tree().create_timer(1).timeout
+
+	play_scene.show()
+	play_scene.play("res://dialogues/test dialogue.dialogue")
+	in_main_menu = false;
+
+func _pause() -> void:
+	pause_screen.open()
+	play_scene.pause()

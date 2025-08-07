@@ -63,12 +63,17 @@ var mutation_cooldown: Timer = Timer.new()
 ## The menu of responses
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var character_label_container: TextureRect = %CharacterLabelContainer
-@onready var back_button: Button = $Balloon/BackButton
+@onready var back_button: Button = %BackButton
+
+@onready var text_panels: Control = %TextPanels
+
+@onready var screen_text: DialogueLabel = %ScreenText
 
 var is_skiping: bool:
 	get():
 		return dialogue_label.is_skiping
 	set(value):
+		screen_text.is_skiping = value
 		dialogue_label.is_skiping = value;
 
 func _ready() -> void:
@@ -113,29 +118,47 @@ func apply_dialogue_line() -> void:
 	is_waiting_for_input = false
 	balloon.focus_mode = Control.FOCUS_ALL
 	balloon.grab_focus()
-
-	character_label_container.visible = not dialogue_line.character.is_empty()
-	character_label.text = tr(dialogue_line.character, "dialogue")
-
-	dialogue_label.hide()
-	dialogue_label.dialogue_line = dialogue_line
-
-	responses_menu.hide()
-	responses_menu.responses = dialogue_line.responses
 	
-	if history.is_empty():
-		back_button.hide()
+	if dialogue_line.tags.has("screen"): 
+		text_panels.hide()
+		
+		screen_text.show();
+		screen_text.modulate = Color.WHITE;
+		screen_text.dialogue_line = dialogue_line
+		
+		if not dialogue_line.text.is_empty():
+			screen_text.type_out()
+			await screen_text.finished_typing
 	else:
-		back_button.show();
+		if screen_text.visible:
+			get_tree().create_tween()\
+					.tween_property(screen_text, "modulate", Color.TRANSPARENT, 1)\
+					.finished.connect(func (): screen_text.hide())
+			
+		
+		text_panels.show();
+		character_label_container.visible = not dialogue_line.character.is_empty()
+		character_label.text = tr(dialogue_line.character, "dialogue")
 
-	# Show our balloon
-	balloon.show()
-	will_hide_balloon = false
+		dialogue_label.hide()
+		dialogue_label.dialogue_line = dialogue_line
 
-	dialogue_label.show()
-	if not dialogue_line.text.is_empty():
-		dialogue_label.type_out()
-		await dialogue_label.finished_typing
+		responses_menu.hide()
+		responses_menu.responses = dialogue_line.responses
+		
+		if history.is_empty():
+			back_button.hide()
+		else:
+			back_button.show();
+
+		# Show our balloon
+		balloon.show()
+		will_hide_balloon = false
+
+		dialogue_label.show()
+		if not dialogue_line.text.is_empty():
+			dialogue_label.type_out()
+			await dialogue_label.finished_typing
 
 	# Wait for input
 	if dialogue_line.responses.size() > 0:
@@ -187,7 +210,7 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
 	# See if we need to skip typing of the dialogue
-	if dialogue_label.is_typing:
+	if dialogue_label.is_typing or screen_text.is_typing:
 		var mouse_was_clicked: bool = \
 				event is InputEventMouseButton and \
 				event.button_index == MOUSE_BUTTON_LEFT and \
@@ -196,7 +219,10 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		var skip_button_was_pressed: bool = event.is_action_pressed(skip_action)
 		if mouse_was_clicked or skip_button_was_pressed:
 			get_viewport().set_input_as_handled()
-			dialogue_label.skip_typing()
+			if(dialogue_label.is_typing):
+				dialogue_label.skip_typing()
+			else:
+				screen_text.skip_typing()
 			return
 
 	if not is_waiting_for_input: return

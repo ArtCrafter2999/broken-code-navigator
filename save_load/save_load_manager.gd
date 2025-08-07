@@ -18,6 +18,7 @@ func save_file(file_name: String = "quick"):
 	file.store_var(play_scene.get_current_state(), true)
 	file.store_var(play_scene.history, true)
 	file.store_var(play_scene.ballon.history, true)
+	main_menu.load_button.disabled = false
 	file.close();
 
 func load_file(file_name: String = "quick", from_menu: bool = false):
@@ -28,7 +29,7 @@ func load_file(file_name: String = "quick", from_menu: bool = false):
 	var state = file.get_var(true);
 	play_scene.history = file.get_var(true);
 	if from_menu:
-		play_scene.play("res://dialogues/test dialogue.dialogue", state.get("line_id"))
+		play_scene.play("res://dialogues/chapter_1.dialogue", state.get("line_id"))
 		play_scene.ballon.history = file.get_var(true);
 	else:
 		play_scene.ballon.history = file.get_var(true);

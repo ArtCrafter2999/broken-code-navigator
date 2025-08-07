@@ -70,6 +70,10 @@ metadata/_edit_group_ = true
 layout_mode = 2
 text = "Нова гра"
 
+[node name="Test" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
+layout_mode = 2
+text = "Тест"
+
 [node name="Load" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Продовжити"
@@ -81,5 +85,6 @@ text = "Назад"
 [connection signal="pressed" from="MainButtons/Play" to="." method="slide_play_buttons" binds= [true]]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="PlayButtons/Test" to="." method="_on_test_pressed"]
 [connection signal="pressed" from="PlayButtons/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="PlayButtons/Back" to="." method="slide_play_buttons" binds= [false]]

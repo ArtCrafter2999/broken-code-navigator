@@ -3,6 +3,7 @@ extends Control
 
 signal new_game_pressed
 signal load_pressed
+signal test_pressed
 
 @onready var main_menu_music: AudioStreamPlayer = $MainMenuMusic
 @onready var quit_button: GeneralMenuButton = $MainButtons/Quit
@@ -69,3 +70,7 @@ func _on_load_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+func _on_test_pressed() -> void:
+	test_pressed.emit()
+	close()

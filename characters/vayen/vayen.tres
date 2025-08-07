@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://cll88o6de06gg"]
+
+[ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_iq8m6"]
+[ext_resource type="Texture2D" uid="uid://bya55j6n0wust" path="res://characters/vayen/Vayen.png" id="2_gof2p"]
+[ext_resource type="Texture2D" uid="uid://bo4nurqeqnfvi" path="res://characters/vayen/Vayen_angry.png" id="3_aj1dg"]
+[ext_resource type="Texture2D" uid="uid://bde6vt2cd72rq" path="res://characters/vayen/Vayen_happy.png" id="4_tdjf3"]
+[ext_resource type="Texture2D" uid="uid://cdbomv0fjxcux" path="res://characters/vayen/Vayen_sad.png" id="5_1j0gs"]
+
+[resource]
+script = ExtResource("1_iq8m6")
+name = "Вайен"
+color = Color(0.470588, 0.164706, 0.603922, 1)
+sprites = Dictionary[StringName, Texture2D]({
+&"angry": ExtResource("3_aj1dg"),
+&"happy": ExtResource("4_tdjf3"),
+&"neutral": ExtResource("2_gof2p"),
+&"sad": ExtResource("5_1j0gs")
+})
+metadata/_custom_type_script = "uid://b2o4rsmyktar7"
