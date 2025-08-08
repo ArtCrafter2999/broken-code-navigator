@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("1_iq8m6")
 name = "Вайен"
-color = Color(0.470588, 0.164706, 0.603922, 1)
+color = Color(0.65604, 0.2268, 0.84, 1)
 sprites = Dictionary[StringName, Texture2D]({
 &"angry": ExtResource("3_aj1dg"),
 &"happy": ExtResource("4_tdjf3"),

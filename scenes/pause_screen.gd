@@ -2,6 +2,7 @@ class_name PauseScreen
 extends CanvasLayer
 
 signal main_menu
+signal closed
 
 @export var save_load_manager: SaveLoadManager;
 
@@ -13,6 +14,7 @@ var tween: Tween
 
 func close():
 	if not is_open: return;
+	closed.emit()
 	is_open = false;
 	
 	if tween:

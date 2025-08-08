@@ -2,10 +2,14 @@ class_name PlayScene
 extends Control
 
 signal resumed
+signal main_menu
 
 const BALLOON = preload("res://balloon/balloon.tscn")
 
 @export var characters: Array[Character] = []
+@export var defaut_character_color: Color = Color.WHITE
+const DIM_CHARACTER_COLOR: Color = Color(0.8, 0.8, 0.8)
+const DIM_CHARACTER_SCALE: Vector2 = Vector2(0.98, 0.98)
 
 @onready var backgrounds_container: Control = $Backgrounds
 @onready var sprites: Control = $Sprites
@@ -20,14 +24,15 @@ var background: TextureRect
 var music_player: AudioStreamPlayer
 var ambience_player: AudioStreamPlayer
 var history: Dictionary
-var is_skiping: bool:
+var is_skipping: bool:
 	get:
-		if not ballon: return false;
-		return ballon.is_skiping;
+		return DialogueManager.is_skipping;
 	set(value):
-		if not ballon: return;
-		
-		ballon.is_skiping = value
+		if not DialogueManager.is_skipping and value:
+			DialogueManager.is_skipping = value
+			_on_skip_interval_timeout();
+		else:
+			DialogueManager.is_skipping = value
 		if value:
 			if skip_interval.is_stopped():
 				skip_interval.start()
@@ -43,7 +48,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if not visible: return;
-	is_skiping = Input.is_action_pressed("Skip") and \
+	#print(Input.is_action_pressed("Skip"), " or ",
+			#ballon.is_skip_button_pressed, " and ", is_instance_valid(ballon), " and ",
+			#ballon.dialogue_line.id in GameState.read_messages, " and ", \
+			#not _is_paused, " and ", \
+			#ballon.dialogue_line.responses.size() == 0)
+	is_skipping = (Input.is_action_pressed("Skip") or (ballon and ballon.is_skip_button_pressed)) and \
 			is_instance_valid(ballon) and \
 			ballon.dialogue_line.id in GameState.read_messages and \
 			not _is_paused and \
@@ -51,6 +61,7 @@ func _process(delta: float) -> void:
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
 	DialogueManager.got_dialogue.connect(_got_dialogue)
+	DialogueManager.dialogue_ended.connect(_dialogue_ended)
 	visible = true;
 	var dialogue = load(dialogue_path)
 	
@@ -84,6 +95,7 @@ func resume():
 
 func quit():
 	DialogueManager.got_dialogue.disconnect(_got_dialogue)
+	DialogueManager.dialogue_ended.disconnect(_dialogue_ended)
 	ballon.queue_free();
 	ballon = null;
 	music("", {"fade_out": 0.5})
@@ -97,23 +109,36 @@ func quit():
 	hide();
 
 func set_background(bg_name: String, options: Dictionary = {}):
-	if not bg_name: return;
-	var fade_in = options.get("fade_in", 0)
+	var fade_in = options.get("fade_in", 1)
 	var fade_out = options.get("fade_out", 0)
+	if is_instance_valid(background):
+		await fade_out(background, fade_out)
+	
+	if not bg_name: return;
+	
 	var new_background = TextureRect.new();
 	new_background.name = bg_name
 	new_background.set_anchors_preset(Control.PRESET_FULL_RECT)
-	new_background.texture = load("res://backgrounds/%s.png" % bg_name)
-	backgrounds_container.add_child(new_background)
-	await fade_out(background, fade_out)
-	await fade_in(new_background, fade_in)
+	
 	if new_background:
 		background = new_background;
+	
+	var file = "res://backgrounds/%s.png" % bg_name
+	var backgoround_image = load(file);
+	if backgoround_image:
+		new_background.texture = load(file)
+		backgrounds_container.add_child(new_background)
+	
+		await fade_in(new_background, fade_in)
+	else:
+		push_warning("no '%s' background found" % bg_name)
 
 func add_character(ch_name: StringName, options: Dictionary = {}):
 	var fade_in = options.get("fade_in", 0)
 	var variant = options.get("variant", "neutral")
 	var align = options.get("align", 0)
+	var talking = options.get("talking", false)
+	var ch_z_index = options.get("z_index", 0)
 	
 	var character: Character = characters_dict.get(ch_name, null);
 	if not character:
@@ -130,6 +155,8 @@ func add_character(ch_name: StringName, options: Dictionary = {}):
 	else:
 		character_sprite = CharacterSprite.new()
 		character_sprite.name = ch_name
+		character_sprite.talking = talking
+		character_sprite.z_index = ch_z_index
 		sprites.add_child(character_sprite)
 	
 	
@@ -140,9 +167,56 @@ func add_character(ch_name: StringName, options: Dictionary = {}):
 	character_sprite.position = Vector2((get_viewport_rect().size.x - sprite.get_width()) * align, get_viewport_rect().size.y - sprite.get_height())
 	
 	fade_in(character_sprite, fade_in)
-	
 	character_sprite.align = align;
 	character_sprite.variant = variant;
+
+func change_character(ch_name: String, options: Dictionary = {}):
+	var variant = options.get("variant", null)
+	var align = options.get("align", null)
+	var align_dur = options.get("align_dur", 0.6)
+	var ch_z_index = options.get("z_index", null)
+	
+	var character: Character = characters_dict.get(ch_name, null);
+	if not character:
+		printerr("Character '%s' does not present in characters list" % ch_name)
+		return;
+	
+	var character_sprite: CharacterSprite = sprites.find_child(ch_name, false, false)
+	if not character:
+		printerr("Character '%s' does not present on the scene" % ch_name)
+		return;
+	
+	if ch_z_index or ch_z_index == 0:
+		character_sprite.z_index = ch_z_index;
+	
+	var sprite = character.sprites.get(variant if variant else "neutral", null) as Texture2D
+	
+	if variant:
+		if not sprite:
+			push_warning("The character '%s' does not have variant '%s'" % [ch_name, variant])
+			return;
+			
+		character_sprite.texture = sprite
+		character_sprite.variant = variant
+	
+	if align or align == 0:
+		character_sprite.align = align
+		var new_pivot = Vector2(sprite.get_width() * align, sprite.get_height());
+		var new_position = Vector2((get_viewport_rect().size.x - sprite.get_width()) * align, get_viewport_rect().size.y - sprite.get_height());
+		if not is_skipping:
+			var tween = create_tween().set_trans(Tween.TRANS_SINE)
+			tween.tween_property(character_sprite, 
+					"pivot_offset", 
+					new_pivot,
+					align_dur)
+			tween.tween_property(character_sprite, 
+					"position", 
+					new_position,
+					align_dur)
+			await tween.finished
+		else: 
+			character_sprite.pivot_offset = new_pivot
+			character_sprite.position = new_position
 
 func remove_character(ch_name: String, options: Dictionary = {}):
 	var fade_out = options.get("fade_out", 0)
@@ -152,6 +226,10 @@ func remove_character(ch_name: String, options: Dictionary = {}):
 		push_warning("Character '%s' missing on scene" % ch_name)
 		
 	fade_out(texture_rect, fade_out, true);
+
+func remove_all_characters(options: Dictionary = {}):
+	for node in sprites.get_children():
+		remove_character(node.name, options)
 
 func ambience(file_name: String, options: Dictionary = {}):
 	options["ambience"] = true
@@ -165,11 +243,16 @@ func music(file_name: String, options: Dictionary = {}):
 	var is_ambience = options.get("ambience", false)
 	
 	var new_player: AudioStreamPlayer = null
+	var file = "res://%s/%s.mp3" % \
+				["ambience" if is_ambience else "music", file_name]
 	if file_name:
-		new_player = AudioStreamPlayer.new()
-		new_player.name = file_name
-		new_player.stream = load("res://%s/%s.mp3" % 
-				["ambience" if is_ambience else "music", file_name])
+		var audio = load(file)
+		if audio:
+			new_player = AudioStreamPlayer.new()
+			new_player.name = file_name
+			new_player.stream = audio
+		else:
+			push_warning("no '%s' %s found" % [file_name, "ambience" if is_ambience else "music"])
 	
 	if new_player and fade_in:
 		new_player.volume_linear = 0
@@ -178,11 +261,14 @@ func music(file_name: String, options: Dictionary = {}):
 	
 	var old_player = ambience_player if is_ambience else music_player
 	
-	if old_player and fade_out and old_player.playing:
-		var tween = get_tree().create_tween()
-		tween.tween_property(old_player, "volume_linear", 0, fade_out)
-		tween.finished.connect(func (): 
-				old_player.queue_free())
+	if old_player:
+		if fade_out and old_player.playing:
+			var tween = get_tree().create_tween()
+			tween.tween_property(old_player, "volume_linear", 0, fade_out)
+			tween.finished.connect(func (): 
+					old_player.queue_free())
+		else:
+			old_player.queue_free()
 	
 	if new_player:
 		add_child(new_player);
@@ -193,10 +279,18 @@ func music(file_name: String, options: Dictionary = {}):
 	else:
 		music_player = new_player
 
-func sound(file_name: String, option: Dictionary = {}):
+func sound(file_name: String, options: Dictionary = {}):
+	var awaiting = options.get("await", false)
+	
 	if not file_name: return;
-	sound_player.stream = load("res://sound/%s.mp3" % file_name)
+	var file = "res://sound/%s.mp3" % file_name
+	if not FileAccess.file_exists(file):
+		push_warning("no '%s' sound found" % file_name)
+		return;
+	sound_player.stream = load(file)
 	sound_player.play()
+	if awaiting:
+		await sound_player.finished
 
 func restore_state(state: Dictionary):
 	var music_name = state.get("music", "")
@@ -209,7 +303,7 @@ func restore_state(state: Dictionary):
 			music_player and music_player.name != music_name, \
 			ambience_player and ambience_player.name != ambience_name);
 	
-	set_background(background)
+	set_background(background, {"fade_out": 0, "fade_in": 0})
 	
 	for sprite_name in sprites:
 		add_character(sprite_name, state.sprites[sprite_name])
@@ -217,13 +311,13 @@ func restore_state(state: Dictionary):
 	music(music_name)
 	ambience(ambience_name)
 	
-	ballon.set_line(state.get("line_id"))
+	ballon.set_line(line_id)
 
 func get_current_state():
 	return _save_step(ballon.dialogue_line)
 
 func fade_in(texture: Control, fade_duration: float):
-	if is_skiping or not fade_duration: return
+	if is_skipping or not fade_duration: return
 	texture.modulate = Color.TRANSPARENT
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, fade_duration)
@@ -231,7 +325,7 @@ func fade_in(texture: Control, fade_duration: float):
 
 func fade_out(texture: Control, fade_duration: float, remove: bool = true):
 	if not texture: return
-	if is_skiping:
+	if is_skipping:
 		if remove:
 			texture.queue_free()
 		return;
@@ -276,9 +370,34 @@ func _save_step(line: DialogueLine) -> Dictionary:
 				"name": node.name,
 				"align": node.align,
 				"variant": node.variant,
+				"talking": node.talking,
+				"z_index": node.z_index
 			}
 	
 	return step;
+
+func _get_line(line_id: String) -> DialogueLine:
+	var value = ballon.resource.lines[line_id]
+	return DialogueLine.new(value)
+
+func _set_talking(character_sprite: CharacterSprite = null):
+	var dim_characters = sprites.get_children()\
+			.filter(func (node): return node is CharacterSprite) as Array[CharacterSprite]
+	var tween = get_tree().create_tween().set_parallel(true)
+	
+	if character_sprite and character_sprite in dim_characters:
+		dim_characters.erase(character_sprite)
+		if not character_sprite.talking:
+			character_sprite.talking = true;
+			tween.tween_property(character_sprite, "self_modulate", Color.WHITE, 0.1)
+			tween.tween_property(character_sprite, "scale", Vector2(1, 1), 0.1)
+	
+	for sprite in dim_characters:
+		if not sprite.talking:
+			continue;
+		sprite.talking = false
+		tween.tween_property(sprite, "self_modulate", DIM_CHARACTER_COLOR, 0.1)
+		tween.tween_property(sprite, "scale", DIM_CHARACTER_SCALE, 0.1)
 
 func _got_dialogue(line: DialogueLine):
 	if _is_paused:
@@ -292,38 +411,65 @@ func _got_dialogue(line: DialogueLine):
 			character_name = ch_tag
 			character = characters_dict.get(character_name, null)
 	
-	if not is_skiping:
+	if not is_skipping:
 		var voice_file_name = line.get_tag_value("v")
 		if not voice_file_name:
-			voice_file_name = character_name + "_"
-			voice_file_name += line.text.substr(0, nth_symbol(line.text, " ", 3))
-			for sym in ",.?()": 
-				voice_file_name = voice_file_name.replace(sym, "")
-			for sym in "'-": 
+			voice_file_name = ""
+			
+			if character_name:
+				voice_file_name = character_name + "_"
+				
+			var fixed_line = line.text;
+			for sym in ",.?!():»«…": 
+				fixed_line = fixed_line.replace(sym, "")
+				
+			var regex = RegEx.new()
+			regex.compile("\\s[—]\\s")
+			fixed_line = regex.sub(fixed_line, " ", true)
+			
+			voice_file_name += fixed_line.strip_edges().substr(0, nth_symbol(fixed_line, " ", 3))
+			
+			regex.compile("\\[.+?\\]")
+			voice_file_name = regex.sub(voice_file_name, "", true)
+			
+			
+			regex = RegEx.new()
+			regex.compile("\\s+")
+			voice_file_name = regex.sub(voice_file_name, " ", true)
+			
+			for sym in "'’-": 
 				voice_file_name = voice_file_name.replace(sym, "_")
+			
 			voice_file_name = voice_file_name.replace(" ", "_")
 		
-		print(voice_file_name)
+		print(voice_file_name.to_lower())
 		var voice_file = "res://voice/%s.mp3" % voice_file_name.to_lower()
 		
-		if FileAccess.file_exists(voice_file):
-			voice_player.stream = load(voice_file)
+		var audio = load(voice_file)
+		if audio:
+			voice_player.stream = audio
 			voice_player.play();
 		else:
 			voice_player.stop();
 	
 	
 	if not character:
-		ballon.character_label.modulate = Color.WHITE;
+		ballon.character_label.modulate = defaut_character_color;
+		_set_talking(null)
 	else:
 		ballon.character_label.modulate = character.color;
-		var texture_rect: TextureRect = sprites.find_child(character_name, false, false)
+		var texture_rect: CharacterSprite = sprites.find_child(character_name, false, false)
 		
 		if texture_rect: 
 			var variants = Array(line.tags) \
 					.filter(func (tag): return character.sprites.has(tag))
 			if not variants.is_empty():
-				texture_rect.texture = character.sprites[variants.back()];
+				var variant = variants.back()
+				texture_rect.texture = character.sprites[variant];
+				texture_rect.variant = variant
+			_set_talking(texture_rect)
+		else:
+			_set_talking(null)
 	
 	history[line.id] = _save_step(line)
 
@@ -334,7 +480,7 @@ func nth_symbol(string: String, what: String, n: int, from: int = 0):
 	if index > 0:
 		return nth_symbol(string, what, n-1, index+1)
 	else:
-		return string.length() -1
+		return string.length()
 
 func _on_next(prev_line: DialogueLine, _next_line: DialogueLine):
 	if not GameState.read_messages.has(prev_line.id):
@@ -342,10 +488,30 @@ func _on_next(prev_line: DialogueLine, _next_line: DialogueLine):
 		GameState.save();
 
 func _on_prev(line_id: String):
-	var step = history.get(line_id, null);
+	var step: Dictionary
+	var id = line_id;
+	while not step:
+		var saved_step = history.get(id, null);
+		
+		if not saved_step: return;
+		
+		var line = _get_line(saved_step["line_id"])
+		
+		if line.tags.has("screen"):
+			var index = ballon.history.find(line.id)
+		
+			if index > 0:
+				id = ballon.history[index-1]
+				continue
+		step = saved_step;
 	if not step: return;
+	
 	restore_state(step)
 
 func _on_skip_interval_timeout() -> void:
-	if ballon:
+	#print(ballon.history, " ", ballon.dialogue_line.next_id)
+	if is_skipping and ballon and not DialogueManager.is_mutating:
 		ballon.next(ballon.dialogue_line.next_id)
+
+func _dialogue_ended(_resource: DialogueResource):
+	main_menu.emit()

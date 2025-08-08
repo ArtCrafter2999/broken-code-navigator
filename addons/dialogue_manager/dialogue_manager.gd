@@ -67,6 +67,10 @@ var _dotnet_dialogue_manager: RefCounted
 
 var _expression_parser: DMExpressionParser = DMExpressionParser.new()
 
+var is_mutating: bool = false;
+
+var is_skipping: bool = false;
+
 
 func _ready() -> void:
 	# Cache the known Node2D properties
@@ -111,13 +115,18 @@ func get_next_dialogue_line(resource: DialogueResource, key: String = "", extra_
 	# Run the mutation if it is one
 	if dialogue.type == DMConstants.TYPE_MUTATION:
 		var actual_next_id: String = dialogue.next_id.split("|")[0]
+		is_mutating = true
 		match mutation_behaviour:
 			DMConstants.MutationBehaviour.Wait:
-				await _mutate(dialogue.mutation, extra_game_states)
+				if is_skipping:
+					_mutate(dialogue.mutation, extra_game_states)
+				else:
+					await _mutate(dialogue.mutation, extra_game_states)
 			DMConstants.MutationBehaviour.DoNotWait:
 				_mutate(dialogue.mutation, extra_game_states)
 			DMConstants.MutationBehaviour.Skip:
 				pass
+		is_mutating = false;
 		if actual_next_id in [DMConstants.ID_END_CONVERSATION, DMConstants.ID_NULL, null]:
 			# End the conversation
 			dialogue_ended.emit.call_deferred(resource)

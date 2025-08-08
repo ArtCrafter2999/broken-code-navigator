@@ -17,12 +17,14 @@ var in_main_menu: bool = true:
 		else:
 			back_button.show()
 
+func _ready() -> void:
+	pause_screen.closed.connect(play_scene.resume)
+
 func _input(event: InputEvent) -> void:
 	if in_main_menu: return
 	if Input.is_action_just_pressed("Pause"):
 		if pause_screen.is_open:
 			pause_screen.close()
-			play_scene.resume()
 		else:
 			_pause();
 
@@ -30,7 +32,7 @@ func _on_main_menu_new_game_pressed() -> void:
 	await get_tree().create_timer(1).timeout
 
 	play_scene.show()
-	play_scene.play("res://dialogues/chapter_1.dialogue")
+	play_scene.play("res://dialogues/script.dialogue")
 	in_main_menu = false;
 
 func _on_main_menu_load_pressed() -> void:
@@ -39,7 +41,7 @@ func _on_main_menu_load_pressed() -> void:
 
 
 func _on_pause_screen_main_menu() -> void:
-	save_load_manager.save_file()
+	#save_load_manager.save_file()
 	in_main_menu = true;
 	play_scene.quit()
 	pause_screen.close()

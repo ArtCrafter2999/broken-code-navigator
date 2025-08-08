@@ -66,7 +66,7 @@ func _init(data: Dictionary = {}) -> void:
 
 		match type:
 			DMConstants.TYPE_DIALOGUE:
-				character = data.character
+				character = data.get("character", "")
 				character_replacements = data.get("character_replacements", [] as Array[Dictionary])
 				text = data.text
 				text_replacements = data.get("text_replacements", [] as Array[Dictionary])

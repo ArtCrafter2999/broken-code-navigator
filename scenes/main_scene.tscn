@@ -46,5 +46,6 @@ save_load_manager = NodePath("../SaveLoadManager")
 [connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
 [connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]
 [connection signal="test_pressed" from="MainMenu" to="." method="_on_main_menu_test_pressed"]
+[connection signal="main_menu" from="PlayScene" to="." method="_on_pause_screen_main_menu"]
 [connection signal="pressed" from="PlayScene/BackButton/BackButton" to="." method="_pause"]
 [connection signal="main_menu" from="PauseScreen" to="." method="_on_pause_screen_main_menu"]

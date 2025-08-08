@@ -51,6 +51,8 @@ var dialogue_line: DialogueLine:
 ## A cooldown timer for delaying the balloon hide when encountering a mutation.
 var mutation_cooldown: Timer = Timer.new()
 
+var is_skip_button_pressed: bool = false;
+
 ## The base balloon anchor
 @onready var balloon: Control = %Balloon
 
@@ -64,17 +66,18 @@ var mutation_cooldown: Timer = Timer.new()
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var character_label_container: TextureRect = %CharacterLabelContainer
 @onready var back_button: Button = %BackButton
+@onready var skip_button: Button = %SkipButton
 
 @onready var text_panels: Control = %TextPanels
 
 @onready var screen_text: DialogueLabel = %ScreenText
+@onready var letter_click: AudioStreamPlayer = $LetterClick
 
-var is_skiping: bool:
+var is_skipping: bool:
 	get():
-		return dialogue_label.is_skiping
+		return DialogueManager.is_skipping
 	set(value):
-		screen_text.is_skiping = value
-		dialogue_label.is_skiping = value;
+		DialogueManager.is_skipping = value
 
 func _ready() -> void:
 	balloon.hide()
@@ -86,7 +89,8 @@ func _ready() -> void:
 
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
-
+	dialogue_label.spoke.connect(_spoke)
+	screen_text.spoke.connect(_spoke)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
@@ -146,11 +150,12 @@ func apply_dialogue_line() -> void:
 		responses_menu.hide()
 		responses_menu.responses = dialogue_line.responses
 		
-		if history.is_empty():
-			back_button.hide()
-		else:
-			back_button.show();
-
+		back_button.visible = not history.is_empty()
+		
+		skip_button.visible = GameState.read_messages.has(dialogue_line.id)
+		if not skip_button.visible:
+			is_skip_button_pressed = false;
+	
 		# Show our balloon
 		balloon.show()
 		will_hide_balloon = false
@@ -166,7 +171,8 @@ func apply_dialogue_line() -> void:
 		responses_menu.show()
 	elif dialogue_line.time != "":
 		var time = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
-		await get_tree().create_timer(time).timeout
+		if not is_skipping:
+			await get_tree().create_timer(time).timeout
 		next(dialogue_line.next_id)
 	else:
 		is_waiting_for_input = true
@@ -188,9 +194,10 @@ func next(next_id: String) -> void:
 
 ## Go to the prev line
 func prev() -> void:
-	var last_line_id = history.pop_back()
+	var last_line_id = history.back()
 	if last_line_id:
 		on_prev.emit(last_line_id)
+		history.pop_back()
 		#self.dialogue_line = await resource.get_next_dialogue_line(last_line_id, temporary_game_states)
 
 #region Signals
@@ -210,6 +217,8 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
 	# See if we need to skip typing of the dialogue
+	
+	#print("gui 1")
 	if dialogue_label.is_typing or screen_text.is_typing:
 		var mouse_was_clicked: bool = \
 				event is InputEventMouseButton and \
@@ -218,18 +227,20 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 				
 		var skip_button_was_pressed: bool = event.is_action_pressed(skip_action)
 		if mouse_was_clicked or skip_button_was_pressed:
-			get_viewport().set_input_as_handled()
+			#get_viewport().set_input_as_handled()
 			if(dialogue_label.is_typing):
 				dialogue_label.skip_typing()
 			else:
 				screen_text.skip_typing()
 			return
 
+	#print("gui 2")
+
 	if not is_waiting_for_input: return
 	if dialogue_line.responses.size() > 0: return
 
 	# When there are no response options the balloon itself is the clickable thing
-	get_viewport().set_input_as_handled()
+	#get_viewport().set_input_as_handled()
 
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 		next(dialogue_line.next_id)
@@ -242,4 +253,16 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 
 func _on_back_pressed() -> void:
 	prev()
+
+func _spoke(_letter: String, _letter_index: int, _speed: float):
+	if dialogue_line.tags.has("clicking"):
+		letter_click.play()
+
+func _on_skip_button_button_down() -> void:
+	is_skip_button_pressed = true;
+	#print("button_down") #TODO чомусь іноді кнопка не клікається коли пишеться текст
+
+func _on_skip_button_button_up() -> void:
+	is_skip_button_pressed = false;
+
 #endregion

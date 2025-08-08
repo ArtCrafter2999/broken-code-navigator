@@ -1,11 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://cwe46fe62ssm7"]
+[gd_scene load_steps=20 format=3 uid="uid://cwe46fe62ssm7"]
 
 [ext_resource type="Script" uid="uid://cdbkdebocbfhy" path="res://balloon/balloon.gd" id="1_jra6m"]
+[ext_resource type="AudioStream" uid="uid://q7wpi8ab51jm" path="res://sound/letter_click.mp3" id="2_cwey4"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_kg5wc"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_ug21d"]
 [ext_resource type="Texture2D" uid="uid://yinp87lmjpus" path="res://balloon/sprites/namebox.svg" id="4_uro0l"]
-[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://obfuscated.gd" id="5_2rviv"]
+[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://styles/obfuscated.gd" id="5_2rviv"]
 [ext_resource type="Texture2D" uid="uid://b6s7xokivw0a" path="res://balloon/sprites/textbox.svg" id="5_rdoix"]
+[ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="8_q871c"]
+[ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="9_my1lc"]
+[ext_resource type="FontFile" uid="uid://c0hcdrpugul21" path="res://fonts/OpenSans_Condensed-Bold.ttf" id="10_mp4s2"]
+[ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="10_pos5u"]
+[ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="11_q3h3j"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_2rviv"]
 script = ExtResource("5_2rviv")
@@ -78,6 +84,9 @@ metadata/_custom_type_script = "uid://biyuj5ekuta5x"
 layer = 10
 script = ExtResource("1_jra6m")
 
+[node name="LetterClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_cwey4")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,6 +103,10 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("8_q871c")
+theme_override_fonts/italics_font = ExtResource("9_my1lc")
+theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
+theme_override_fonts/bold_font = ExtResource("11_q3h3j")
 theme_override_font_sizes/bold_italics_font_size = 30
 theme_override_font_sizes/italics_font_size = 30
 theme_override_font_sizes/mono_font_size = 30
@@ -114,6 +127,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = SubResource("Theme_qq3yp")
 
 [node name="TextPanels" type="Control" parent="Balloon"]
@@ -124,7 +138,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 
 [node name="CharacterLabelContainer" type="TextureRect" parent="Balloon/TextPanels"]
 unique_name_in_owner = true
@@ -151,7 +165,8 @@ theme_override_constants/margin_bottom = 13
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 26
+theme_override_fonts/normal_font = ExtResource("10_mp4s2")
+theme_override_font_sizes/normal_font_size = 33
 bbcode_enabled = true
 text = "Character"
 fit_content = true
@@ -184,15 +199,32 @@ theme_override_constants/margin_right = 194
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/bold_italics_font_size = 26
-theme_override_font_sizes/italics_font_size = 26
-theme_override_font_sizes/mono_font_size = 26
-theme_override_font_sizes/normal_font_size = 26
-theme_override_font_sizes/bold_font_size = 26
+theme_override_fonts/normal_font = ExtResource("8_q871c")
+theme_override_fonts/italics_font = ExtResource("9_my1lc")
+theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
+theme_override_fonts/bold_font = ExtResource("11_q3h3j")
+theme_override_font_sizes/bold_italics_font_size = 28
+theme_override_font_sizes/italics_font_size = 28
+theme_override_font_sizes/mono_font_size = 28
+theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/bold_font_size = 28
 text = "Dialogue..."
 custom_effects = [SubResource("RichTextEffect_cwey4")]
 seconds_per_step = 0.04
-seconds_per_pause_step = 0.6
+seconds_per_pause_step = 0.5
+
+[node name="SkipButton" type="Button" parent="Balloon/TextPanels/PanelContainer"]
+unique_name_in_owner = true
+offset_left = 1310.0
+offset_top = 208.0
+offset_right = 1434.0
+offset_bottom = 242.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_q871c")
+text = "Пропустити"
+flat = true
 
 [node name="BackButton" type="Button" parent="Balloon/TextPanels/PanelContainer"]
 unique_name_in_owner = true
@@ -204,6 +236,7 @@ offset_bottom = 242.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_q871c")
 text = "Назад"
 flat = true
 
@@ -232,5 +265,7 @@ layout_mode = 2
 text = "Response example"
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
+[connection signal="button_down" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_down"]
+[connection signal="button_up" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_up"]
 [connection signal="pressed" from="Balloon/TextPanels/PanelContainer/BackButton" to="." method="_on_back_pressed"]
 [connection signal="response_selected" from="Balloon/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]

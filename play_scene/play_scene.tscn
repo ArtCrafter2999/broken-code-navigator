@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1wxsghutirw0"]
+[gd_scene load_steps=14 format=3 uid="uid://b1wxsghutirw0"]
 
 [ext_resource type="Script" uid="uid://04c5iy7xunf5" path="res://play_scene/play_scene.gd" id="1_a0jw4"]
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="2_5i074"]
@@ -6,9 +6,12 @@
 [ext_resource type="Resource" uid="uid://dd88m8r02r3jv" path="res://characters/kira/kira.tres" id="4_btd5q"]
 [ext_resource type="Resource" uid="uid://b1lkftndb7spf" path="res://characters/stark/stark.tres" id="5_7pyap"]
 [ext_resource type="Resource" uid="uid://cll88o6de06gg" path="res://characters/vayen/vayen.tres" id="6_uyxvy"]
-[ext_resource type="Resource" uid="uid://mc7q51nsd1ay" path="res://characters/instructor.tres" id="7_741iy"]
-[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://obfuscated.gd" id="8_if7y8"]
+[ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="7_dqfbp"]
+[ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="8_1i840"]
+[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://styles/obfuscated.gd" id="8_if7y8"]
 [ext_resource type="Script" uid="uid://cl0w6uwhleqn1" path="res://play_scene/screen_text.gd" id="8_tve3q"]
+[ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="9_igwta"]
+[ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="10_p8y65"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_if7y8"]
 script = ExtResource("8_if7y8")
@@ -22,7 +25,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a0jw4")
-characters = Array[ExtResource("2_5i074")]([ExtResource("3_que2y"), ExtResource("4_btd5q"), ExtResource("5_7pyap"), ExtResource("6_uyxvy"), ExtResource("7_741iy")])
+characters = Array[ExtResource("2_5i074")]([ExtResource("3_que2y"), ExtResource("4_btd5q"), ExtResource("5_7pyap"), ExtResource("6_uyxvy")])
+defaut_character_color = Color(0.6642, 0.692763, 0.82, 1)
 
 [node name="SkipInterval" type="Timer" parent="."]
 wait_time = 0.1
@@ -62,7 +66,12 @@ theme_override_constants/margin_bottom = 100
 
 [node name="ScreenText" type="RichTextLabel" parent="MarginContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("7_dqfbp")
+theme_override_fonts/italics_font = ExtResource("8_1i840")
+theme_override_fonts/bold_italics_font = ExtResource("9_igwta")
+theme_override_fonts/bold_font = ExtResource("10_p8y65")
 theme_override_font_sizes/bold_italics_font_size = 30
 theme_override_font_sizes/italics_font_size = 30
 theme_override_font_sizes/mono_font_size = 30

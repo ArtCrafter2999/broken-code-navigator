@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Character" load_steps=2 format=3 uid="uid://cul8acw5pnvtg"]
+
+[ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_mrmpa"]
+
+[resource]
+script = ExtResource("1_mrmpa")
+name = "Система"
+color = Color(0.6516, 0.72, 0.648, 1)
+sprites = Dictionary[StringName, Texture2D]({})
+metadata/_custom_type_script = "uid://b2o4rsmyktar7"

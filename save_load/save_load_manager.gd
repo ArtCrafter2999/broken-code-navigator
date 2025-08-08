@@ -29,7 +29,7 @@ func load_file(file_name: String = "quick", from_menu: bool = false):
 	var state = file.get_var(true);
 	play_scene.history = file.get_var(true);
 	if from_menu:
-		play_scene.play("res://dialogues/chapter_1.dialogue", state.get("line_id"))
+		play_scene.play("res://dialogues/script.dialogue", state.get("line_id"))
 		play_scene.ballon.history = file.get_var(true);
 	else:
 		play_scene.ballon.history = file.get_var(true);
