@@ -31,22 +31,27 @@ metadata/_edit_group_ = true
 [node name="Continue" parent="Panel/VBoxContainer" instance=ExtResource("2_pcldp")]
 layout_mode = 2
 text = "Продовжити"
+font_size = null
 
 [node name="Save" parent="Panel/VBoxContainer" instance=ExtResource("2_pcldp")]
 layout_mode = 2
 text = "Зберегти"
+font_size = null
 
 [node name="Load" parent="Panel/VBoxContainer" instance=ExtResource("2_pcldp")]
 layout_mode = 2
 text = "Завантажити"
+font_size = null
 
 [node name="Settings" parent="Panel/VBoxContainer" instance=ExtResource("2_pcldp")]
 layout_mode = 2
 text = "Налаштування"
+font_size = null
 
 [node name="MainMenu" parent="Panel/VBoxContainer" instance=ExtResource("2_pcldp")]
 layout_mode = 2
 text = "Головне меню"
+font_size = null
 
 [connection signal="pressed" from="Panel/VBoxContainer/Continue" to="." method="close"]
 [connection signal="pressed" from="Panel/VBoxContainer/Save" to="." method="_on_save_pressed"]

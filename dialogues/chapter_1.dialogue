@@ -1,4 +1,4 @@
-~ start
+~ chapter
 set voiced = true
 
 Руї: Все що живе — має свій кінець.
@@ -159,8 +159,8 @@ do set_background("")
 Я тільки-но закінчила навчання, і мене направили в загін флангового прикриття, до прифронтової бази
 
 do ambience("private_room", {"fade_in": 1})
-do music("ruie_room", {"fade_in": 1}) # TODO Змінити якщо треба
-do set_background("room")  # TODO Змінити якщо треба
+do music("ruie_room", {"fade_in": 1})
+do set_background("room")
 
 В кожного кіборга, на такій базі, є своя кімната, в котрій я прямо зараз знаходжусь.
 Кімнатка доволі затишна. Незважаючи на свій доволі суворий і простий дизайн, тут є все необхідне для комфортного життя. 
@@ -185,7 +185,7 @@ do set_background("")
 do ambience("main_hall", {"fade_out": 1, "fade_out": 1})
 do sound("ruie_open_door_walk_close_door", {"await": true})
 
-do set_background("hall") # TODO Змінити якщо треба
+do set_background("hall")
 
 Переступивши за двері, я вийшла в круговий коридор, котрий з’єднує всі корпуси.
 Єдине що мене хвилює в цій базі, це те що вона наземна, а не підземна.
@@ -615,7 +615,7 @@ do set_background("command_hall", {"fade_in": 1})
 
 do ambience("main_hall", {"fade_out": 1, "fade_in": 1})
 do music("main_hall", {"fade_in": 1, "fade_out": 1})
-do set_background("main_hall", {"fade_in": 1})
+do set_background("hall")
 
 do add_character("Руї", {"fade_in": 1, "align": 0})
 do add_character("Кіра", {"fade_in": 1, "align": 0.26})
@@ -764,9 +764,10 @@ do remove_all_characters({"fade_out": 1})
 Після прощання, він одразу розвернувся і пішов. Але, що я помітила, він сказав це якось інакше. 
 Я теж пішла до своєї кімнати, по дорозі роздумуючи про нову команду. 
 
+do sound("ruie_open_door_walk_close_door", {"await": true})
 do ambience("private_room", {"fade_out": 1, "fade_in": 1})
 do music("ruie_room_after_meet", {"fade_out": 1, "fade_in": 1})  #TODO Змінити якщо треба
-do set_background("room", {"fade_in": 1}) #TODO Змінити якщо треба
+do set_background("room", {"fade_in": 1})
 
 Зрештою, після вечірньої рутини, я просто звалилася на ліжко. 
 А це виявилось доволі виснажливим — я ще ніколи не знайомилася з такою кількістю людей за день. 
@@ -792,7 +793,7 @@ do music("cyberspace", {"fade_in": 1, "fade_out": 1})
 do ambience("cyberspace", {"fade_in": 1, "fade_out": 1})
 do set_background("cyberspace". {"fade_out": 1, "fade_in": 1})
 
-do add_character("Руї", {"fade_in": 1, "holographic": true}) # TODO додати ефект голограми
+do add_character("Руї", {"fade_in": 1, "holographic": true})
 Руї: Почати під’єднання до загального серверу.
 
 Система: Початок під’єднання до загального серверу.

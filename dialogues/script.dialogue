@@ -1,8 +1,13 @@
+# script
 import "res://dialogues/chapter_1.dialogue" as chapter_1
 import "res://dialogues/chapter_2.dialogue" as chapter_2
+import "res://dialogues/chapter_3.dialogue" as chapter_3
 
 ~ start
-=>< chapter_1/start
+=>< chapter_1/chapter
 [#screen][next=2][font_size=50]Кінець першої глави[/font_size]
-=>< chapter_2/start
+=>< chapter_2/chapter
 [#screen][next=2][font_size=50]Кінець другої глави[/font_size]
+=>< chapter_3/chapter
+[#screen][next=2][font_size=50]Кінець третьої глави[/font_size]
+do dialogue_ended()

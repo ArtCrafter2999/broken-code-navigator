@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://b1lkftndb7spf"]
+[gd_resource type="Resource" script_class="Character" load_steps=7 format=3 uid="uid://b1lkftndb7spf"]
 
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_hs100"]
 [ext_resource type="Texture2D" uid="uid://gyk2d42dw1jj" path="res://characters/stark/Stark.png" id="2_paolc"]
 [ext_resource type="Texture2D" uid="uid://bt6t2l48a6bih" path="res://characters/stark/Stark_angry.png" id="3_6qkn5"]
 [ext_resource type="Texture2D" uid="uid://da5jui2lmr4dx" path="res://characters/stark/Stark_happy.png" id="4_4pxkl"]
 [ext_resource type="Texture2D" uid="uid://b37v5hasp3ev2" path="res://characters/stark/Stark_sad.png" id="5_1hunt"]
+[ext_resource type="Texture2D" uid="uid://c7w4s0b887efm" path="res://characters/stark/Stark_dead.png" id="6_6qkn5"]
 
 [resource]
 script = ExtResource("1_hs100")
@@ -12,6 +13,7 @@ name = "Старк"
 color = Color(0.776471, 0.498039, 0, 1)
 sprites = Dictionary[StringName, Texture2D]({
 &"angry": ExtResource("3_6qkn5"),
+&"dead": ExtResource("6_6qkn5"),
 &"happy": ExtResource("4_4pxkl"),
 &"neutral": ExtResource("2_paolc"),
 &"sad": ExtResource("5_1hunt")

@@ -63,11 +63,9 @@ func _process(_delta: float) -> void:
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
 	DialogueManager.got_dialogue.connect(_got_dialogue)
-	DialogueManager.dialogue_ended.connect(_dialogue_ended)
 	visible = true;
 	resource = load(dialogue_path)
 	#dialogue.dialogue_ended.connect(_dialogue_ended)
-	
 	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, resource, line_id, \
 			[self, screen_text]
 	)
@@ -120,20 +118,24 @@ func set_background(bg_name: String, options: Dictionary = {}):
 			await fade_out(background, fade_out_value)
 		return;
 	
+	
 	var new_background = TextureRect.new();
 	new_background.name = bg_name
-	new_background.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var viewport_size = get_viewport_rect().size;
+	new_background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	new_background.size = Vector2(viewport_size.x, viewport_size.y)
 	
 	
 	var file = "res://backgrounds/%s.png" % bg_name
 	if ResourceLoader.exists(file):
-		if is_instance_valid(background):
-			await fade_out(background, fade_out_value)
-		background = new_background;
 		new_background.texture = load(file)
 		backgrounds_container.add_child(new_background)
 	
 		await fade_in(new_background, fade_in_value)
+		
+		if is_instance_valid(background):
+			await fade_out(background, fade_out_value)
+		background = new_background
 	else:
 		push_warning("no '%s' background found" % bg_name)
 		if is_instance_valid(background):
@@ -308,6 +310,7 @@ func restore_state(state: Dictionary):
 	var scene_background = state.get("background", "")
 	var sprites_on_scene = state.get("sprites", {})
 	var line_id = state.get("line_id")
+	var next_id = state.get("next_id")
 	voiced = state.get("voiced", false)
 	
 	_clear_scene(
@@ -322,7 +325,10 @@ func restore_state(state: Dictionary):
 	music(music_name)
 	ambience(ambience_name)
 	
-	ballon.set_line(line_id)
+	var stack: Array = next_id.split("|")
+	stack.pop_front()
+	var id_trail: String = "" if stack.size() == 0 else "|" + "|".join(stack)
+	ballon.set_line(line_id + id_trail)
 
 func get_current_state():
 	return _save_step(ballon.dialogue_line)
@@ -371,6 +377,7 @@ func _clear_scene(clear_music: bool = false, clear_ambience: bool = false):
 func _save_step(line: DialogueLine) -> Dictionary:
 	var step = {}
 	step.line_id = line.id
+	step.next_id = line.next_id
 	
 	if background:
 		step.background = background.name
@@ -540,6 +547,5 @@ func _on_skip_interval_timeout() -> void:
 	if is_skipping and ballon and not DialogueManager.is_mutating:
 		ballon.next(ballon.dialogue_line.next_id)
 
-func _dialogue_ended(ended_resoruce: DialogueResource):
-	if ended_resoruce == resource:
-		main_menu.emit()
+func dialogue_ended(ended_resoruce: DialogueResource):
+	main_menu.emit()

@@ -40,18 +40,22 @@ metadata/_edit_group_ = true
 [node name="Play" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Грати"
+font_size = null
 
 [node name="Archive" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Архів"
+font_size = null
 
 [node name="Settings" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Налаштування"
+font_size = null
 
 [node name="Quit" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Вийти"
+font_size = null
 
 [node name="PlayButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -69,18 +73,22 @@ metadata/_edit_group_ = true
 [node name="NewGame" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Нова гра"
+font_size = null
 
 [node name="Test" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Тест"
+font_size = null
 
 [node name="Load" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Продовжити"
+font_size = null
 
 [node name="Back" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Назад"
+font_size = null
 
 [connection signal="pressed" from="MainButtons/Play" to="." method="slide_play_buttons" binds= [true]]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]

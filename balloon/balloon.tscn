@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cwe46fe62ssm7"]
+[gd_scene load_steps=21 format=3 uid="uid://cwe46fe62ssm7"]
 
 [ext_resource type="Script" uid="uid://cdbkdebocbfhy" path="res://balloon/balloon.gd" id="1_jra6m"]
 [ext_resource type="AudioStream" uid="uid://q7wpi8ab51jm" path="res://sound/letter_click.mp3" id="2_cwey4"]
@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://c0hcdrpugul21" path="res://fonts/OpenSans_Condensed-Bold.ttf" id="10_mp4s2"]
 [ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="10_pos5u"]
 [ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="11_q3h3j"]
+[ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="13_q871c"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_2rviv"]
 script = ExtResource("5_2rviv")
@@ -241,32 +242,32 @@ theme_override_fonts/font = ExtResource("8_q871c")
 text = "Назад"
 flat = true
 
-[node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" node_paths=PackedStringArray("response_template")]
+[node name="ResponsesMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -290.5
-offset_top = -35.0
-offset_right = 290.5
-offset_bottom = 35.0
+offset_left = -360.5
+offset_top = -150.0
+offset_right = 360.5
+offset_bottom = -43.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 8
 theme_override_constants/separation = 2
 alignment = 1
 script = ExtResource("3_ug21d")
 response_template = NodePath("ResponseExample")
+metadata/_edit_group_ = true
 
-[node name="ResponseExample" type="Button" parent="Balloon/ResponsesMenu"]
+[node name="ResponseExample" parent="ResponsesMenu" instance=ExtResource("13_q871c")]
 layout_mode = 2
-text = "Response example"
+size_flags_vertical = 3
+font_size = 60
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="button_down" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_down"]
 [connection signal="button_up" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_up"]
 [connection signal="pressed" from="Balloon/TextPanels/PanelContainer/BackButton" to="." method="_on_back_pressed"]
-[connection signal="response_selected" from="Balloon/ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
+[connection signal="response_selected" from="ResponsesMenu" to="." method="_on_responses_menu_response_selected"]

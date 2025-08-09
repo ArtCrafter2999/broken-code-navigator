@@ -9,7 +9,22 @@ extends BaseButton
 		text = value;
 		if is_instance_valid(%Label):
 			%Label.text = value;
-			
+		elif is_instance_valid($CenterContainer/Label):
+			$CenterContainer/Label.text = value;
+		elif is_instance_valid(label):
+			label.text = value;
+@export var font_size: int:
+	get:
+		return font_size;
+	set(value): 
+		font_size = value
+		if is_instance_valid(%Label):
+			%Label.add_theme_font_size_override("font_size", value);
+		elif is_instance_valid($CenterContainer/Label):
+			$CenterContainer/Label.add_theme_font_size_override("font_size", value);
+		elif is_instance_valid(label):
+			label.add_theme_font_size_override("font_size", value);
+
 @onready var outline: TextureRect = $Outline
 @onready var hover_outline: TextureRect = $HoverOutline
 @onready var pressed_outline: TextureRect = $PressedOutline
@@ -18,7 +33,7 @@ extends BaseButton
 @onready var pressed_background: TextureRect = $MarginContainer/PressedBackground
 @onready var disabled_background: TextureRect = $MarginContainer/DisabledBackground
 
-@onready var label: Label = %Label
+@onready var label: Label = $CenterContainer/Label
 
 func _ready() -> void:
 	mouse_entered.connect(func (): 

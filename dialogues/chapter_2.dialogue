@@ -1,7 +1,7 @@
-~ start
+~ chapter
 do ambience("ambience_main_hall", {"fade_in": 1})
 do music("Наступний день", {"fade_in": 1}) # TODO змінити
-do set_background("Коридор") # TODO змінити
+do set_background("hall")
 
 do add_character("Руї", {"fade_in": 1})
 Як і минулого разу, я прийшла на місце зустрічі раніше за всіх. 
@@ -69,7 +69,7 @@ do change_character("Кіра", {"variant": "neutral"})
 
 do remove_all_characters({"fade_out": 1}) # Фон: Немає, спрайти зникли
 do set_background("", {"fade_out": 1})
-do music("", {"fade_out": 1}) # TODO змінити
+do music("", {"fade_out": 1})
 do ambience("Транспортний відсік", {"fade_out": 1, "fade_in": 1}) # TODO змінити
 
 Там, нам видають потрібне спорядження, та наземний транспорт, зазвичай це броньований автомобіль. 
@@ -78,8 +78,8 @@ do ambience("Транспортний відсік", {"fade_out": 1, "fade_in": 
 Через годину ми вже були всі зібрані і їхали в напрямку сектору проведення завдання. 
 Що ближче ми ставали до поля бою, тим гучніші ставали звуки вибухів та стрільби. А загальна атмосфера ставала лише більш гнітючою.
 
-do ambience("", {"fade_out": 1}) # TODO змінити
-do set_background("Руїни") # TODO змінити
+do ambience("", {"fade_out": 1})
+do set_background("ruins")
 do music("Перше завдання, в авто", {"fade_in": 1}) # TODO змінити
 Пейзажі за вікном змінились на руїни. 
 Це було невелике місто. Колись тут було мирно, люди проживали своє життя. 
@@ -159,9 +159,9 @@ do ambience("ambience_city_ruins_far_warfare_in_a_car", {"fade_in": 1})
 Старк: Такс, тепер бігом повилізали. Я встановлю маскувальний бар’єр на транспорт.
 Старк: І одразу розходимось по позиціях.
 
-do ambience("", {"fade_out": 1}) # TODO змінити
-do music("", {"fade_out": 1}) # TODO змінити
-do ambience("ambience_city_ruins_far_warfare", {"fade_in": 1}) # TODO змінити
+do ambience("", {"fade_out": 1})
+do music("", {"fade_out": 1})
+do ambience("ambience_city_ruins_far_warfare", {"fade_in": 1})
 do music("Перше завдання", {"fade_in": 1}) # TODO змінити
 do add_character("Руї", {"fade_in": 1, "align": 0, "holographic": true})
 do add_character("Кіра", {"fade_in": 1, "align": 0.26, "holographic": true})
@@ -275,7 +275,7 @@ do change_character("Вайен", {"variant": "sad"})
 Господи, я відчуваю їх присутність, проте крім неї нічого. Це мене лякає...
 Але немає часу. Стоп. Пан Старк був правий!
 
-do music("", {"fade_out": 1}) # TODO змінити
+do music("", {"fade_out": 1})
 
 
 Руї: [#angry] Увага, Кіро!
@@ -362,7 +362,7 @@ do sound("Наведення") # TODO змінити
 
 Вайен: [#angry] Заходжу на ціль!
 do sound("Постріли і кілька вибухів", {"await": true}) # TODO змінити
-do music("", {"fade_out": 1}) # TODO змінити
+do music("", {"fade_out": 1})
 Момент. Постріли, вибухи, і вибух емоцій. 
 Ми змогли, ми знищили ворожий загін. 
 Ми впорались без втрат та поранень. 
@@ -389,14 +389,14 @@ do music("", {"fade_out": 1}) # TODO змінити
 do change_character("Старк", {"variant": "neutral"})
 do change_character("Кіра", {"variant": "neutral"})
 
-do ambience("ambience_city_ruins_close_warfare", {"fade_out": 1, "fade_in": 1}) # TODO змінити
+do ambience("ambience_city_ruins_close_warfare", {"fade_out": 1, "fade_in": 1})
 do music("Перше завдання, зіткнення 2", {"fade_in": 0.1}) # TODO змінити
 
 Руї: [#angry] Увага всім, зафіксовано наведення..
 Руї: [#angry] Ні, ракети вже летять по всім нам!
 
 do remove_all_characters({"fade_out": 0.1}) # Фон: Руїни Легеньке мерехтіння, спрайти зникли
-do set_background("Руїни Легеньке мерехтіння") # TODO змінити
+do set_background("ruins") # TODO Легеньке мерехтіння
 Я біжу, біжу по зруйнованим будинках через густий дим. 
 Страшно, я боюся. 
 Падаю, і знов підводжуся. 
@@ -421,7 +421,7 @@ do set_background("")
 Слава Богу, він теж живий. 
 Трусить, не можу підвестись. 
 Момент, і я вже в машині.
-do set_background("Руїни-затемненні") # TODO змінити
+do set_background("ruins_darkened")
 
 Кіра: Вайене, швидше!
 
@@ -433,9 +433,9 @@ do set_background("Руїни-затемненні") # TODO змінити
 Я навіть не розумію чи я ще жива, чи просто повільно вмираю. 
 Зір знову втрачається, бачу лише як дві розмиті фігури сідають до машини. 
 Вибухи, багато вибухів. Спалахи. Щ.. Я... ч... м....
-do ambience("", {"fade_out": 1}) # TODO змінити
-do music("", {"fade_out": 1}) # TODO змінити
-do set_background("") # TODO змінити
+do ambience("", {"fade_out": 1})
+do music("", {"fade_out": 1})
+do set_background("")
 do wait(3)
 
 Старк: З нею все добре?
@@ -464,10 +464,11 @@ do wait(1)
 Було виправлено близько 30 помилок, це серйозне накопичення. Благо не критичне. 
 Загалом, мені полегшало, стан свідомості стабілізувався. 
 Але як же все болить.
-do ambience("ambience_main_hall", {"fade_out": 1, "fade_in": 1}) # TODO змінити
+do ambience("ambience_main_hall", {"fade_out": 1, "fade_in": 1})
+do sound("ruie_open_door_walk_close_door")
 Я вийшла до коридору. 
 На моє здивування я побачила всю нашу команду.
-do set_background("Коридор") # TODO змінити
+do set_background("hall")
 do add_character("Руї", {"fade_in": 1, "align": 0})
 do add_character("Кіра", {"fade_in": 1, "align": 0.26})
 do add_character("Старк", {"fade_in": 1, "align": 0.64})
@@ -665,7 +666,7 @@ do change_character("Вайен", {"variant": "happy"})
 do remove_all_characters({"fade_out": 1})
 
 do wait(1)
-do ambience("ambience_private_room", {"fade_out": 1, "fade_in": 1}) # TODO змінити
+do ambience("ambience_private_room", {"fade_out": 1, "fade_in": 1})
 do music("Ruie 2", {"fade_in": 1}) # TODO змінити
 do set_background("room_darkened") # TODO змінити
 # Великий текст, без спрайтів та інтерсфесу
@@ -680,6 +681,6 @@ do set_background("")
 [#screen][font_size=40]Ми часто кажемо «О Боже!», та якщо Він і справді існує, чому Він прирікає нас на це? Війна це пекло на землі, і я не впевнена чи існує з нього вихід.[/font_size]
 [#screen][font_size=40]Однак, щоб там не було. На мене покладаються мої друзі, а я на них. Наш ментальний звʼязкок стає дедалі глибшим, після кожного нашого завдання. Разом, ми воюємо за свободу нашої країни. Щоб ніхто більше не пережив того, що пережили ми. І яким би не був важким цей світ, яким б складним завдання не було — я, і ми всі, впораємося. Наша надія і віра палає в серцях. Ми або будемо боротись до кінця, або зникнемо. Я захищу їх, я захищу всіх.[/font_size]
 [#screen][font_size=40]Реальність жахлива, але мій світ буде існувати, доки є вони — мої друзі.[/font_size]
-do music("", {"fade_out": 1}) # TODO змінити
-do ambience("", {"fade_out": 1}) # TODO змінити
+do music("", {"fade_out": 1})
+do ambience("", {"fade_out": 1})
 

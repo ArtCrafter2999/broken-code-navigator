@@ -129,6 +129,7 @@ shortcut = null
 shortcut_feedback = true
 shortcut_in_tooltip = true
 script = ExtResource("1_ce4xl")
+font_size = null
 metadata/_custom_type_script = "uid://gslnavsr0psx"
 
 [node name="Outline" type="TextureRect" parent="."]
