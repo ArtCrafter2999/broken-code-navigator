@@ -20,7 +20,7 @@ func close():
 	if tween:
 		tween.kill();
 		
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	tween.tween_property(panel, "modulate", Color.TRANSPARENT, 0.2)
 	await tween.finished
 	
@@ -35,7 +35,7 @@ func open():
 	if tween:
 		tween.kill();
 		
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	tween.tween_property(panel, "modulate", Color.WHITE, 0.2)
 	await tween.finished
 	

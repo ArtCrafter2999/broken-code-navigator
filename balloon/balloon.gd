@@ -96,6 +96,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
 	get_viewport().set_input_as_handled()
 
+#func _unhandled_input(event: InputEvent) -> void:
+	
 
 func _notification(what: int) -> void:
 	## Detect a change of locale and update the current dialogue line to show the new language
@@ -124,6 +126,7 @@ func apply_dialogue_line() -> void:
 	balloon.grab_focus()
 	
 	if dialogue_line.tags.has("screen"): 
+		balloon.show()
 		text_panels.hide()
 		
 		screen_text.show();
@@ -185,7 +188,7 @@ func set_line(line_id: String):
 
 ## Go to the next line
 func next(next_id: String) -> void:
-	if dialogue_line:
+	if dialogue_line and not dialogue_line.tags.has("screen"):
 		history.push_back(dialogue_line.id)
 	var prev_line = dialogue_line
 	set_line(next_id);
@@ -217,7 +220,9 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
 	# See if we need to skip typing of the dialogue
-	
+	if Input.is_action_just_pressed("Back"):
+		_on_back_pressed();
+		get_viewport().set_input_as_handled()
 	#print("gui 1")
 	if dialogue_label.is_typing or screen_text.is_typing:
 		var mouse_was_clicked: bool = \

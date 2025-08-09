@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://blcp24u7tec8y"]
+
+[ext_resource type="Shader" uid="uid://b4pre6irjpotg" path="res://styles/holographic.gdshader" id="1_aep2q"]
+[ext_resource type="Texture2D" uid="uid://cgmtsffdwqopj" path="res://styles/hologram_lines.png" id="2_475s8"]
+
+[resource]
+shader = ExtResource("1_aep2q")
+shader_parameter/baseColor = Color(0.307, 0.84, 0.96, 0.282)
+shader_parameter/speed = 4.0
+shader_parameter/linesColor = Color(0.61, 1, 0.954, 1)
+shader_parameter/linesColorIntensity = 0.1
+shader_parameter/hologramTexture = ExtResource("2_475s8")
+shader_parameter/hologramTextureTiling = Vector2(1, 5)

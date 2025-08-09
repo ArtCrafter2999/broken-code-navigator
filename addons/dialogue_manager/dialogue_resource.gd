@@ -4,6 +4,7 @@
 ## A collection of dialogue lines for use with [code]DialogueManager[/code].
 class_name DialogueResource extends Resource
 
+signal dialogue_ended
 
 const DialogueLine = preload("./dialogue_line.gd")
 

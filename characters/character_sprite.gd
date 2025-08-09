@@ -4,6 +4,7 @@ extends TextureRect
 var variant: String;
 var align: float
 var talking: bool = false;
+var holographic: bool = false;
 
 func _ready():
 	if not talking:

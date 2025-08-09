@@ -215,6 +215,7 @@ seconds_per_pause_step = 0.5
 
 [node name="SkipButton" type="Button" parent="Balloon/TextPanels/PanelContainer"]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 1310.0
 offset_top = 208.0
 offset_right = 1434.0

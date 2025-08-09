@@ -20,7 +20,7 @@ var in_main_menu: bool = true:
 func _ready() -> void:
 	pause_screen.closed.connect(play_scene.resume)
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if in_main_menu: return
 	if Input.is_action_just_pressed("Pause"):
 		if pause_screen.is_open:

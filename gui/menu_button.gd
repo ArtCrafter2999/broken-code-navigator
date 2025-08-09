@@ -41,7 +41,7 @@ func _ready() -> void:
 		to_white(label, 0.1))
 
 var _prev_disabled = false;
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not _prev_disabled and disabled:
 		fade_in(disabled_background, 0.1)
 	elif _prev_disabled and not disabled:
@@ -51,17 +51,21 @@ func _process(delta: float) -> void:
 	_prev_disabled = disabled
 
 func fade_in(texture: Control, time: float):
+	if not texture: return;
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, time).from(Color.TRANSPARENT)
 	
 func fade_out(texture: Control, time: float):
+	if not texture: return;
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.TRANSPARENT, time).from(Color.WHITE)
 
 func to_black(texture: Control, time: float):
+	if not texture: return;
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.BLACK, time)
 	
 func to_white(texture: Control, time: float):
+	if not texture: return;
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, time)

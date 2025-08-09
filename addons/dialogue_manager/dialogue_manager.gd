@@ -129,6 +129,7 @@ func get_next_dialogue_line(resource: DialogueResource, key: String = "", extra_
 		is_mutating = false;
 		if actual_next_id in [DMConstants.ID_END_CONVERSATION, DMConstants.ID_NULL, null]:
 			# End the conversation
+			#resource.dialogue_ended.emit()
 			dialogue_ended.emit.call_deferred(resource)
 			return null
 		else:

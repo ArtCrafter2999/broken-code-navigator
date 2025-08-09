@@ -15,11 +15,11 @@ func _ready():
 func _hover():
 	if tween:
 		tween.kill()
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	tween.tween_property(self, "modulate", hover_modulate, 0.3)
 	
 func _hover_out():
 	if tween:
 		tween.kill()
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	tween.tween_property(self, "modulate", begnining_modulate, 0.3)
