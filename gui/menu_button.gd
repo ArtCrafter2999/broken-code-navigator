@@ -67,7 +67,7 @@ func _process(_delta: float) -> void:
 	elif _prev_disabled and not disabled:
 		fade_out(disabled_background, 0.1)
 	
-	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if not disabled else Control.CURSOR_ARROW
+	#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if not disabled else Control.CURSOR_ARROW
 	_prev_disabled = disabled
 
 func fade_in(texture: Control, time: float):

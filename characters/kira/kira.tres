@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://dd88m8r02r3jv"]
+[gd_resource type="Resource" script_class="Character" load_steps=7 format=3 uid="uid://dd88m8r02r3jv"]
 
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_1whqn"]
 [ext_resource type="Texture2D" uid="uid://bkqj3f3d15say" path="res://characters/kira/Kira.png" id="2_03x83"]
+[ext_resource type="AudioStream" uid="uid://mw8no0kpa7g6" path="res://sound/voice_kira.mp3" id="2_u76h8"]
 [ext_resource type="Texture2D" uid="uid://y2ik06sfkmt7" path="res://characters/kira/Kira_angry.png" id="3_5sorp"]
 [ext_resource type="Texture2D" uid="uid://cp0amexujga0b" path="res://characters/kira/Kira_happy.png" id="4_u76h8"]
 [ext_resource type="Texture2D" uid="uid://beguhw4n4rruu" path="res://characters/kira/Kira_dead.png" id="5_5sorp"]
@@ -16,4 +17,5 @@ sprites = Dictionary[StringName, Texture2D]({
 &"happy": ExtResource("4_u76h8"),
 &"neutral": ExtResource("2_03x83")
 })
+sound = ExtResource("2_u76h8")
 metadata/_custom_type_script = "uid://b2o4rsmyktar7"

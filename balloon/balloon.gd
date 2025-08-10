@@ -19,6 +19,7 @@ signal on_next(prev_line: DialogueLine, new_line: DialogueLine)
 
 ## The dialogue resource
 var resource: DialogueResource
+var clicking := true
 
 ## Temporary game states
 var temporary_game_states: Array = []
@@ -283,7 +284,7 @@ func _on_back_pressed() -> void:
 	prev()
 
 func _spoke(_letter: String, _letter_index: int, _speed: float):
-	if dialogue_line.tags.has("clicking"):
+	if dialogue_line.tags.has("clicking") or clicking:
 		letter_click.play()
 
 func _on_skip_button_button_down() -> void:

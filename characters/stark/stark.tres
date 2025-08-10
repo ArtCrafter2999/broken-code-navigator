@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Character" load_steps=7 format=3 uid="uid://b1lkftndb7spf"]
+[gd_resource type="Resource" script_class="Character" load_steps=8 format=3 uid="uid://b1lkftndb7spf"]
 
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_hs100"]
+[ext_resource type="AudioStream" uid="uid://dduct7ggqmf3w" path="res://sound/voice_stark.mp3" id="2_4pxkl"]
 [ext_resource type="Texture2D" uid="uid://gyk2d42dw1jj" path="res://characters/stark/Stark.png" id="2_paolc"]
 [ext_resource type="Texture2D" uid="uid://bt6t2l48a6bih" path="res://characters/stark/Stark_angry.png" id="3_6qkn5"]
 [ext_resource type="Texture2D" uid="uid://da5jui2lmr4dx" path="res://characters/stark/Stark_happy.png" id="4_4pxkl"]
@@ -18,4 +19,5 @@ sprites = Dictionary[StringName, Texture2D]({
 &"neutral": ExtResource("2_paolc"),
 &"sad": ExtResource("5_1hunt")
 })
+sound = ExtResource("2_4pxkl")
 metadata/_custom_type_script = "uid://b2o4rsmyktar7"

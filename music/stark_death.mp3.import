@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/stark_death.mp3-16ded0b93fadabf87d19e318ed77b
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

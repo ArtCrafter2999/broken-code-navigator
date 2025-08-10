@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1wxsghutirw0"]
+[gd_scene load_steps=16 format=3 uid="uid://b1wxsghutirw0"]
 
 [ext_resource type="Script" uid="uid://04c5iy7xunf5" path="res://play_scene/play_scene.gd" id="1_a0jw4"]
+[ext_resource type="AudioStream" uid="uid://q7wpi8ab51jm" path="res://sound/letter_click.mp3" id="2_1i840"]
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="2_5i074"]
 [ext_resource type="Resource" uid="uid://0bgbunfojqx2" path="res://characters/ruie/ruie.tres" id="3_que2y"]
 [ext_resource type="Resource" uid="uid://dd88m8r02r3jv" path="res://characters/kira/kira.tres" id="4_btd5q"]
@@ -9,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="7_dqfbp"]
 [ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="8_1i840"]
 [ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://styles/obfuscated.gd" id="8_if7y8"]
+[ext_resource type="Resource" uid="uid://cul8acw5pnvtg" path="res://characters/system.tres" id="8_igwta"]
 [ext_resource type="Script" uid="uid://cl0w6uwhleqn1" path="res://play_scene/screen_text.gd" id="8_tve3q"]
 [ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="9_igwta"]
 [ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="10_p8y65"]
@@ -25,7 +27,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a0jw4")
-characters = Array[ExtResource("2_5i074")]([ExtResource("3_que2y"), ExtResource("4_btd5q"), ExtResource("5_7pyap"), ExtResource("6_uyxvy")])
+none_clicking = ExtResource("2_1i840")
+characters = Array[ExtResource("2_5i074")]([ExtResource("3_que2y"), ExtResource("4_btd5q"), ExtResource("5_7pyap"), ExtResource("6_uyxvy"), ExtResource("8_igwta")])
 defaut_character_color = Color(0.6642, 0.692763, 0.82, 1)
 
 [node name="SkipInterval" type="Timer" parent="."]

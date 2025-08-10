@@ -12,9 +12,11 @@ var moving = false;
 var leaving = false;
 
 @onready var v_box_container: VBoxContainer = $VBoxContainer
+@onready var credits_music: AudioStreamPlayer = $CreditsMusic
 
 func start() -> void:
 	show();
+	set_music_playing(true)
 	v_box_container.position.y = 1090;
 	modulate = Color.BLACK;
 	var tween = create_tween()
@@ -23,6 +25,7 @@ func start() -> void:
 	moving = true;
 	
 func quit():
+	set_music_playing(false)
 	v_box_container.position.y = 1090;
 	started = false
 	moving = false;
@@ -45,3 +48,14 @@ func _process(delta: float) -> void:
 		tween.tween_property(self, "modulate", Color.BLACK, 2)
 		await tween.finished
 		credits_ended.emit();
+
+func set_music_playing(value: bool):
+	if value:
+		credits_music.play(0)
+		var tween = get_tree().create_tween()
+		tween.tween_property(credits_music, "volume_linear", 1, 1).from(0)
+	else:
+		var tween = get_tree().create_tween()
+		tween.tween_property(credits_music, "volume_linear", 0, 1)
+		await tween.finished
+		credits_music.stop();

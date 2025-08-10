@@ -8,6 +8,8 @@ signal removed_saves
 const BALLOON = preload("res://balloon/balloon.tscn")
 const HOLOGRAPHIC = preload("res://styles/holographic.tres")
 
+@export var none_clicking: AudioStream
+
 @export var characters: Array[Character] = []
 @export var defaut_character_color: Color = Color.WHITE
 const DIM_CHARACTER_COLOR: Color = Color(0.8, 0.8, 0.8)
@@ -41,7 +43,13 @@ var is_skipping: bool:
 			voice_player.stop()
 		else:
 			skip_interval.stop()
-var voiced: bool = false;
+var voiced: bool = false:
+	get:
+		return voiced;
+	set(value):
+		voiced = value
+		if is_instance_valid(ballon):
+			ballon.clicking = true;
 var _is_paused = false;
 var resource: DialogueResource
 
@@ -58,7 +66,7 @@ func _process(_delta: float) -> void:
 			#ballon.dialogue_line.responses.size() == 0)
 	is_skipping = (Input.is_action_pressed("Skip") or (ballon and ballon.is_skip_button_pressed)) and \
 			is_instance_valid(ballon) and \
-			ballon.dialogue_line.id in GameState.read_messages and \
+			#ballon.dialogue_line.id in GameState.read_messages and \
 			not _is_paused and \
 			ballon.dialogue_line.responses.size() == 0
 
@@ -510,8 +518,15 @@ func _got_dialogue(line: DialogueLine):
 			set_talking(null)
 		else:
 			ballon.character_label.modulate = Color.WHITE
+		if Array(line.tags).has("screen"):
+			ballon.clicking = true;
+			ballon.letter_click.stream = none_clicking;
+		else:
+			ballon.clicking = false;
 	else:
+		ballon.clicking = true;
 		ballon.character_label.modulate = character.color;
+		ballon.letter_click.stream = character.sound;
 		var texture_rect: CharacterSprite = sprites.find_child(character_name, false, false)
 		
 		if texture_rect: 

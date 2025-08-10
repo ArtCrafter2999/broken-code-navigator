@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7n7oudkkwr62"]
+[gd_scene load_steps=9 format=3 uid="uid://c7n7oudkkwr62"]
 
 [ext_resource type="Texture2D" uid="uid://bcahoipmofmm2" path="res://backgrounds/credits.png" id="1_8gwij"]
 [ext_resource type="Script" uid="uid://w6bysyppe2d6" path="res://scenes/credits.gd" id="2_kyhnv"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="4_ooihk"]
 [ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="5_ih6pn"]
 [ext_resource type="Texture2D" uid="uid://bj7ej6iw2588n" path="res://gui/game title.png" id="7_ooihk"]
+[ext_resource type="AudioStream" uid="uid://gptkqup1oabw" path="res://music/ruie_briefing.mp3" id="8_ooihk"]
 
 [node name="Credits" type="Control"]
 layout_mode = 3
@@ -16,6 +17,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_kyhnv")
+
+[node name="CreditsMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ooihk")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(0.7, 0.7, 0.7, 1)

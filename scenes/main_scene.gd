@@ -7,6 +7,7 @@ extends Node
 @onready var pause_screen: PauseScreen = $PauseScreen
 @onready var back_button: CanvasLayer = $PlayScene/BackButton
 @onready var credits: Credits = $Credits
+@onready var disclaimer: TextureRect = $Disclaimer
 
 var in_main_menu: bool = true:
 	get:
@@ -20,10 +21,6 @@ var in_main_menu: bool = true:
 
 func _ready() -> void:
 	pause_screen.closed.connect(play_scene.resume)
-	main_menu.open();
-	#var texture = ImageTexture.new()
-	#texture.set_image(save_load_manager.load_image())
-	#main_menu.iamge.texture = texture;
 
 func _input(_event: InputEvent) -> void:
 	if in_main_menu: return
@@ -79,3 +76,7 @@ func _on_play_scene_game_ended() -> void:
 func _on_credits_credits_ended() -> void:
 	credits.quit()
 	main_menu.open()
+
+
+func _on_disclaimer_finished() -> void:
+	main_menu.open();

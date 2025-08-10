@@ -766,7 +766,7 @@ do remove_all_characters({"fade_out": 1})
 
 do sound("ruie_open_door_walk_close_door", {"await": true})
 do ambience("ambience_private_room", {"fade_out": 1, "fade_in": 1})
-do music("ruie_room_after_meet", {"fade_out": 1, "fade_in": 1})  #TODO Змінити якщо треба
+do music("ruie_room", {"fade_out": 1, "fade_in": 1})
 do set_background("room", {"fade_in": 1})
 
 Зрештою, після вечірньої рутини, я просто звалилася на ліжко. 

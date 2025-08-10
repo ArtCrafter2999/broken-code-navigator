@@ -29,7 +29,7 @@ func _ready() -> void:
 		if disabled: return)
 
 func _process(delta: float) -> void:
-	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND;
+	#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND;
 	if not screen.texture:
 		screen.texture = ImageTexture.new();
 	
