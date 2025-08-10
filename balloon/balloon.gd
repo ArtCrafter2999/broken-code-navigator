@@ -52,6 +52,7 @@ var dialogue_line: DialogueLine:
 var mutation_cooldown: Timer = Timer.new()
 
 var is_skip_button_pressed: bool = false;
+var show_buttons = true;
 
 ## The base balloon anchor
 @onready var balloon: Control = %Balloon
@@ -64,6 +65,7 @@ var is_skip_button_pressed: bool = false;
 
 ## The menu of responses
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
+@onready var one_response_menu: DialogueResponsesMenu = %OneResponseMenu
 @onready var character_label_container: TextureRect = %CharacterLabelContainer
 @onready var back_button: Button = %BackButton
 @onready var skip_button: Button = %SkipButton
@@ -86,6 +88,8 @@ func _ready() -> void:
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
 		responses_menu.next_action = next_action
+	if one_response_menu.next_action.is_empty():
+		one_response_menu.next_action = next_action
 
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
@@ -129,6 +133,12 @@ func apply_dialogue_line() -> void:
 		balloon.show()
 		text_panels.hide()
 		
+		responses_menu.hide()
+		responses_menu.responses = dialogue_line.responses
+		
+		one_response_menu.hide()
+		one_response_menu.responses = dialogue_line.responses
+		
 		screen_text.show();
 		screen_text.modulate = Color.WHITE;
 		screen_text.dialogue_line = dialogue_line
@@ -153,10 +163,18 @@ func apply_dialogue_line() -> void:
 		responses_menu.hide()
 		responses_menu.responses = dialogue_line.responses
 		
-		back_button.visible = not history.is_empty()
+		one_response_menu.hide()
+		one_response_menu.responses = dialogue_line.responses
 		
-		skip_button.visible = GameState.read_messages.has(dialogue_line.id)
-		if not skip_button.visible:
+		if show_buttons:
+			back_button.visible = not history.is_empty()
+			
+			skip_button.visible = GameState.read_messages.has(dialogue_line.id)
+			if not skip_button.visible:
+				is_skip_button_pressed = false;
+		else:
+			back_button.visible = false;
+			skip_button.visible = false;
 			is_skip_button_pressed = false;
 	
 		# Show our balloon
@@ -171,7 +189,10 @@ func apply_dialogue_line() -> void:
 	# Wait for input
 	if dialogue_line.responses.size() > 0:
 		balloon.focus_mode = Control.FOCUS_NONE
-		responses_menu.show()
+		if dialogue_line.responses.size() > 1:
+			responses_menu.show()
+		else:
+			one_response_menu.show();
 	elif dialogue_line.time != "":
 		var time = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		if not is_skipping:
@@ -254,6 +275,8 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	one_response_menu.hide();
+	responses_menu.hide();
 	next(response.next_id)
 
 func _on_back_pressed() -> void:

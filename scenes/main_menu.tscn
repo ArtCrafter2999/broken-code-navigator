@@ -29,66 +29,66 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 180.0
-offset_top = -169.0
-offset_right = 359.0
-offset_bottom = 169.0
+offset_left = 77.0
+offset_top = -338.0
+offset_right = 397.0
+offset_bottom = 338.0
 grow_vertical = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 100
 metadata/_edit_group_ = true
 
 [node name="Play" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Грати"
-font_size = null
+font_size = 40
 
 [node name="Archive" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Архів"
-font_size = null
+font_size = 40
 
 [node name="Settings" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Налаштування"
-font_size = null
+font_size = 40
 
 [node name="Quit" parent="MainButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Вийти"
-font_size = null
+font_size = 40
 
 [node name="PlayButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -119.0
-offset_right = -1.0
-offset_bottom = 219.0
+offset_left = -320.0
+offset_top = -242.0
+offset_bottom = 434.0
 grow_vertical = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 100
 metadata/_edit_group_ = true
 
 [node name="NewGame" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Нова гра"
-font_size = null
+font_size = 40
 
 [node name="Test" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
+visible = false
 layout_mode = 2
 text = "Тест"
-font_size = null
+font_size = 40
 
 [node name="Load" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Продовжити"
-font_size = null
+font_size = 40
 
 [node name="Back" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 layout_mode = 2
 text = "Назад"
-font_size = null
+font_size = 40
 
 [connection signal="pressed" from="MainButtons/Play" to="." method="slide_play_buttons" binds= [true]]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]

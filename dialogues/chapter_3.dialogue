@@ -8,7 +8,7 @@ do set_background("room")
 Я ще ні разу не зустрічала аномалій. 
 Але чим більше разів я підключаюсь, тим більший шанс, що я от-от їх зустріну. 
 І це тисне на мене.
-do ambience("cyberspace", {"fade_out": 1,"fade_in": 1})
+do ambience("ambience_cyberspace", {"fade_out": 1,"fade_in": 1})
 do music("cyberspace", {"fade_in": 1})
 do set_background("cyberspace")
 do add_character("Руї", {"fade_in": 1, "holographic": true})
@@ -96,7 +96,7 @@ do ambience("ambience_private_room", {"fade_in": 1,"fade_out": 1})
 Вийшовши з кіберпростору, я досі відчуваю його на собі. 
 Моторошно до мурах. Чому Шепіт це зробив? Який в цьому сенс?
 do ambience("ambience_main_hall", {"fade_out": 1, "fade_in": 1})
-do set_background("hall")
+do set_background("hall_night")
 do sound("ruie_open_door_walk_close_door")
 Я вийшла з кімнати і попрямувала до сходів, там зазвичай серед ночі доволі самотньо, на фоні всього коридору. 
 Мені хотілося змінити обстановку, а тому це буде хорошим варіантом.
@@ -106,7 +106,7 @@ do add_character("Руї")
 Як ж мені хочеться завжди жити в спокої. Як раніше... 
 Я почула впевнені кроки що наближались до мене. Це...
 
-do add_character("Старк", {"align": 0.64, "fade_in": 1})
+do add_character("Старк", {"align": 0.64, "fade_in": 1, "z_index": -1})
 Старк: [#happy] Що, не спиться?
 
 ...був пан Старк. Його голос звучав легко, але з нотками якогось... Суму?
@@ -227,7 +227,7 @@ do set_background("ruins")
 # ВСІ
 do add_character("Руї", {"variant": "angry", "fade_in": 1, "align": 0, "holographic": true})
 do add_character("Кіра", {"variant": "angry","fade_in": 1, "align": 0.26, "holographic": true})
-do add_character("Старк", {"variant": "angry", "fade_in": 1, "align": 0.64, "holographic": true})
+do add_character("Старк", {"variant": "angry", "fade_in": 1, "align": 0.64, "holographic": true, "z_index": -1})
 do add_character("Вайен", {"variant": "angry", "fade_in": 1, "align": 1, "holographic": true})
 Руї: [#angry] Кіра, ворог на 70, 2 цілі.
 Руї: [#angry] Вайен, легкоброньований транспорт заходить на 120.
@@ -372,7 +372,7 @@ do ambience("", {"fade_out": 1})
 do remove_character("Кіра", {"fade_out": 1})
 do remove_character("Вайен", {"fade_out": 1})
 do set_background("ruins_darkened")
-do add_character("Старк", {"variant": "dead", "fade_in": 1, "align": 0.64})
+do add_character("Старк", {"variant": "dead", "fade_in": 1, "align": 0.64, "z_index": -1, "holographic": true})
 do ambience("ambience_city_ruins_close_warfare_high_cut", {"fade_in": 1})
 Старк: ...Ось і все...
 Старк: ...Все ж, вони пережили більше ніж я міг сподіватись...
@@ -432,7 +432,7 @@ do ambience("ambience_city_ruins_far_warfare_in_a_car", {"fade_out": 1, "fade_in
 do ambience("", {"fade_out": 1})
 do set_background("")
 do wait(2)
-do set_background("hall")
+do set_background("hall_night")
 do ambience("ambience_main_hall", {"fade_in": 1})
 Понівечені боєм ми насилу повернулись на базу... 
 Кожен день фронт рухається в нашу сторону... Напевно, скоро і ця база переїде.
@@ -595,7 +595,7 @@ do set_background("")
 do sound("ruie_open_door_walk_close_door")
 Після всього я повернулася до кімнати, де провела планове підключення до системи. 
 Спокій...
-do ambience("cyberspace", {"fade_out": 1, "fade_in": 1})
+do ambience("ambience_cyberspace", {"fade_out": 1, "fade_in": 1})
 do music("cyberspace", {"fade_in": 1})
 do set_background("cyberspace")
 Але і цей раз став черговим із зустріччю Аномалії...

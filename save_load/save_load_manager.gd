@@ -55,3 +55,14 @@ func _is_save_dir_empty():
 	dir.list_dir_end()
 	
 	return file_name == ""
+
+func remove_all_saves():
+	var dir = DirAccess.open("user://saves");
+	if not dir: return;
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir():
+			dir.remove("user://saves".path_join(file_name))
+		file_name = dir.get_next()
+	main_menu.load_button.disabled = true

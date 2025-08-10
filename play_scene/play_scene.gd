@@ -2,7 +2,8 @@ class_name PlayScene
 extends Control
 
 signal resumed
-signal main_menu
+signal game_ended
+signal removed_saves
 
 const BALLOON = preload("res://balloon/balloon.tscn")
 const HOLOGRAPHIC = preload("res://styles/holographic.tres")
@@ -63,9 +64,9 @@ func _process(_delta: float) -> void:
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
 	DialogueManager.got_dialogue.connect(_got_dialogue)
+	DialogueManager.dialogue_ended.connect(dialogue_ended)
 	visible = true;
 	resource = load(dialogue_path)
-	#dialogue.dialogue_ended.connect(_dialogue_ended)
 	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, resource, line_id, \
 			[self, screen_text]
 	)
@@ -96,6 +97,7 @@ func resume():
 
 func quit():
 	DialogueManager.got_dialogue.disconnect(_got_dialogue)
+	DialogueManager.dialogue_ended.disconnect(dialogue_ended)
 	if is_instance_valid(ballon):
 		ballon.queue_free();
 	ballon = null;
@@ -358,6 +360,9 @@ func fade_out(texture: Control, fade_duration: float, remove: bool = true):
 	if remove:
 		remove_node.queue_free()
 
+func remove_all_saves():
+	removed_saves.emit();
+
 func _clear_scene(clear_music: bool = false, clear_ambience: bool = false):
 	var remove_node = Node.new();
 	add_child(remove_node)
@@ -405,19 +410,31 @@ func _get_line(line_id: String) -> DialogueLine:
 	var value = ballon.resource.lines[line_id]
 	return DialogueLine.new(value)
 
-func _set_talking(character_sprite: CharacterSprite = null):
+func set_talking(character_sprite: Variant = null, second: String = ""):
+	if second:
+		character_sprite = [character_sprite, second]
 	var dim_characters = sprites.get_children()\
 			.filter(func (node): return node is CharacterSprite) as Array[CharacterSprite]
+	var light_characters: Array[Node] = [] 
+	if character_sprite is Array:
+		light_characters = dim_characters.filter(func (ch): return ch.name in character_sprite)
+	elif character_sprite is String:
+		light_characters = dim_characters.filter(func (ch): return ch.name == character_sprite)
+	elif character_sprite is CharacterSprite:
+		light_characters = [character_sprite]
+		
 	var tween: Tween = null
 	
-	if character_sprite and character_sprite in dim_characters:
-		dim_characters.erase(character_sprite)
-		if not character_sprite.talking:
-			if not tween:
-				tween = get_tree().create_tween().set_parallel(true)
-			character_sprite.talking = true;
-			tween.tween_property(character_sprite, "self_modulate", Color.WHITE, 0.1)
-			tween.tween_property(character_sprite, "scale", Vector2(1, 1), 0.1)
+	for sprite in light_characters:
+		if sprite in dim_characters:
+			dim_characters.erase(sprite)
+		if sprite.talking:
+			continue;
+		if not tween:
+			tween = get_tree().create_tween().set_parallel(true)
+		sprite.talking = true;
+		tween.tween_property(sprite, "self_modulate", Color.WHITE, 0.1)
+		tween.tween_property(sprite, "scale", Vector2(1, 1), 0.1)
 	
 	for sprite in dim_characters:
 		if not sprite.talking:
@@ -488,8 +505,11 @@ func _got_dialogue(line: DialogueLine):
 	
 	
 	if not character:
-		ballon.character_label.modulate = defaut_character_color;
-		_set_talking(null)
+		if not Array(line.tags).has("no_talk_calc"):
+			ballon.character_label.modulate = defaut_character_color;
+			set_talking(null)
+		else:
+			ballon.character_label.modulate = Color.WHITE
 	else:
 		ballon.character_label.modulate = character.color;
 		var texture_rect: CharacterSprite = sprites.find_child(character_name, false, false)
@@ -501,9 +521,10 @@ func _got_dialogue(line: DialogueLine):
 				var variant = variants.back()
 				texture_rect.texture = character.sprites[variant];
 				texture_rect.variant = variant
-			_set_talking(texture_rect)
-		else:
-			_set_talking(null)
+			if not Array(line.tags).has("no_talk_calc"):
+				set_talking(texture_rect)
+		elif not Array(line.tags).has("no_talk_calc"):
+			set_talking(null)
 	
 	history[line.id] = _save_step(line)
 
@@ -547,5 +568,5 @@ func _on_skip_interval_timeout() -> void:
 	if is_skipping and ballon and not DialogueManager.is_mutating:
 		ballon.next(ballon.dialogue_line.next_id)
 
-func dialogue_ended(ended_resoruce: DialogueResource):
-	main_menu.emit()
+func dialogue_ended(_resource: DialogueResource):
+	game_ended.emit()

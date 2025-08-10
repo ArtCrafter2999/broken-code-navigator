@@ -6,6 +6,7 @@ extends Node
 @onready var save_load_manager: SaveLoadManager = $SaveLoadManager
 @onready var pause_screen: PauseScreen = $PauseScreen
 @onready var back_button: CanvasLayer = $PlayScene/BackButton
+@onready var credits: Credits = $Credits
 
 var in_main_menu: bool = true:
 	get:
@@ -19,6 +20,7 @@ var in_main_menu: bool = true:
 
 func _ready() -> void:
 	pause_screen.closed.connect(play_scene.resume)
+	main_menu.open();
 
 func _input(_event: InputEvent) -> void:
 	if in_main_menu: return
@@ -58,3 +60,19 @@ func _on_main_menu_test_pressed() -> void:
 func _pause() -> void:
 	pause_screen.open()
 	play_scene.pause()
+
+
+func _on_play_scene_removed_saves() -> void:
+	save_load_manager.remove_all_saves()
+
+
+func _on_play_scene_game_ended() -> void:
+	in_main_menu = true;
+	play_scene.quit()
+	pause_screen.close()
+	credits.start()
+
+
+func _on_credits_credits_ended() -> void:
+	credits.quit()
+	main_menu.open()

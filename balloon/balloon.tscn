@@ -118,7 +118,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_2rviv")]
 seconds_per_step = 0.04
-seconds_per_pause_step = 0.6
+seconds_per_pause_step = 0.2
 
 [node name="Balloon" type="Control" parent="."]
 unique_name_in_owner = true
@@ -212,7 +212,7 @@ theme_override_font_sizes/bold_font_size = 28
 text = "Dialogue..."
 custom_effects = [SubResource("RichTextEffect_cwey4")]
 seconds_per_step = 0.04
-seconds_per_pause_step = 0.5
+seconds_per_pause_step = 0.2
 
 [node name="SkipButton" type="Button" parent="Balloon/TextPanels/PanelContainer"]
 unique_name_in_owner = true
@@ -242,8 +242,9 @@ theme_override_fonts/font = ExtResource("8_q871c")
 text = "Назад"
 flat = true
 
-[node name="ResponsesMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
+[node name="OneResponseMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -261,13 +262,37 @@ script = ExtResource("3_ug21d")
 response_template = NodePath("ResponseExample")
 metadata/_edit_group_ = true
 
-[node name="ResponseExample" parent="ResponsesMenu" instance=ExtResource("13_q871c")]
+[node name="ResponseExample" parent="OneResponseMenu" instance=ExtResource("13_q871c")]
 layout_mode = 2
 size_flags_vertical = 3
 font_size = 60
+
+[node name="ResponsesMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -546.0
+offset_top = -150.0
+offset_right = 546.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+script = ExtResource("3_ug21d")
+response_template = NodePath("ResponseExample")
+metadata/_edit_group_ = true
+
+[node name="ResponseExample" parent="ResponsesMenu" instance=ExtResource("13_q871c")]
+layout_mode = 2
+font_size = 45
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="button_down" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_down"]
 [connection signal="button_up" from="Balloon/TextPanels/PanelContainer/SkipButton" to="." method="_on_skip_button_button_up"]
 [connection signal="pressed" from="Balloon/TextPanels/PanelContainer/BackButton" to="." method="_on_back_pressed"]
+[connection signal="response_selected" from="OneResponseMenu" to="." method="_on_responses_menu_response_selected"]
 [connection signal="response_selected" from="ResponsesMenu" to="." method="_on_responses_menu_response_selected"]

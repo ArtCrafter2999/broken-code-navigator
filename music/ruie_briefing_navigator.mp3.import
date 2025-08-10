@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/ruie_briefing_navigator.mp3-45682eeb78ab8ef6b
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

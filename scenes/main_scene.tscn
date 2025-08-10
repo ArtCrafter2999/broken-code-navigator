@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8s6j6x6100y3"]
+[gd_scene load_steps=9 format=3 uid="uid://b8s6j6x6100y3"]
 
 [ext_resource type="Script" uid="uid://bma5lnvk8a3nd" path="res://scenes/main_scene.gd" id="1_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://0nfip0jqf6j6" path="res://scenes/main_menu.tscn" id="1_pw63i"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://11bnygwu7cr4" path="res://balloon/sprites/back_button.svg" id="5_c16ls"]
 [ext_resource type="PackedScene" uid="uid://4dq358ewkgdq" path="res://scenes/pause_sreen.tscn" id="5_rt2n2"]
 [ext_resource type="Script" uid="uid://cs70f0otc6h8p" path="res://gui/hover_modulate.gd" id="6_18nlu"]
+[ext_resource type="PackedScene" uid="uid://c7n7oudkkwr62" path="res://scenes/credits.tscn" id="8_18nlu"]
 
 [node name="MainScene" type="Node"]
 script = ExtResource("1_7ykc4")
@@ -43,9 +44,14 @@ hover_modulate = Color(1, 1, 1, 1)
 visible = false
 save_load_manager = NodePath("../SaveLoadManager")
 
+[node name="Credits" parent="." instance=ExtResource("8_18nlu")]
+visible = false
+
 [connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
 [connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]
 [connection signal="test_pressed" from="MainMenu" to="." method="_on_main_menu_test_pressed"]
-[connection signal="main_menu" from="PlayScene" to="." method="_on_pause_screen_main_menu"]
+[connection signal="game_ended" from="PlayScene" to="." method="_on_play_scene_game_ended"]
+[connection signal="removed_saves" from="PlayScene" to="." method="_on_play_scene_removed_saves"]
 [connection signal="pressed" from="PlayScene/BackButton/BackButton" to="." method="_pause"]
 [connection signal="main_menu" from="PauseScreen" to="." method="_on_pause_screen_main_menu"]
+[connection signal="credits_ended" from="Credits" to="." method="_on_credits_credits_ended"]

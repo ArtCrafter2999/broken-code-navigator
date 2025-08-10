@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ers0am2unkoa"
+path="res://.godot/imported/ambience_city_ruins_far_warfare _in_a_car.mp3-e36b06f2fdca24a70a7eee319c428d47.mp3str"
+
+[deps]
+
+source_file="res://ambience/ambience_city_ruins_far_warfare _in_a_car.mp3"
+dest_files=["res://.godot/imported/ambience_city_ruins_far_warfare _in_a_car.mp3-e36b06f2fdca24a70a7eee319c428d47.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

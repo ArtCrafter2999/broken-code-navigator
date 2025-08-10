@@ -25,12 +25,11 @@ func close():
 	await create_tween() \
 			.tween_property(self, "modulate", Color.TRANSPARENT, 0.5) \
 			.finished
-	main_buttons.position.x = 180
-	play_buttons.position.x = -180
+	main_buttons.position.x = 75
+	play_buttons.position.x = -320
 	visible = false;
 
 func _ready() -> void:
-	open();
 	if OS.get_name() == "Web":
 		quit_button.hide();
 
@@ -42,9 +41,9 @@ func slide_play_buttons(in_view: bool):
 	
 	_is_sliding = true
 	create_tween().tween_property(
-		out_buttons, "position", Vector2(-180, out_buttons.position.y), 0.5)
+		out_buttons, "position", Vector2(-320, out_buttons.position.y), 0.5)
 	await create_tween().tween_property(
-		in_buttons, "position", Vector2(180, in_buttons.position.y), 0.5)\
+		in_buttons, "position", Vector2(75, in_buttons.position.y), 0.5)\
 		.finished
 	_is_sliding = false
 

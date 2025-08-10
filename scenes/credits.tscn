@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7n7oudkkwr62"]
+
+[ext_resource type="Texture2D" uid="uid://bcahoipmofmm2" path="res://backgrounds/credits.png" id="1_8gwij"]
+[ext_resource type="Script" uid="uid://w6bysyppe2d6" path="res://scenes/credits.gd" id="2_kyhnv"]
+[ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="2_mah5v"]
+[ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="3_kyhnv"]
+[ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="4_ooihk"]
+[ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="5_ih6pn"]
+[ext_resource type="Texture2D" uid="uid://bj7ej6iw2588n" path="res://gui/game title.png" id="7_ooihk"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_kyhnv")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.7, 0.7, 0.7, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8gwij")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 465.0
+offset_top = 1090.0
+offset_right = -465.0
+offset_bottom = 3461.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 300
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_ooihk")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 10
+theme_override_fonts/normal_font = ExtResource("2_mah5v")
+theme_override_fonts/italics_font = ExtResource("3_kyhnv")
+theme_override_fonts/bold_italics_font = ExtResource("4_ooihk")
+theme_override_fonts/bold_font = ExtResource("5_ih6pn")
+theme_override_font_sizes/bold_italics_font_size = 50
+theme_override_font_sizes/italics_font_size = 50
+theme_override_font_sizes/mono_font_size = 50
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[font_size=70][b]Розробка:[/b][/font_size]
+
+[b]Сценарист, та автор ідеї:[/b]
+Liberty
+
+[b]Редактор[/b]
+FelicityRW
+
+[b]Художник персонажів, UI, фонів:[/b]
+blkpur
+
+[b]Художник фонів:[/b]
+Hoopykai
+
+[b]Композитор, та саунд дизайн:[/b]
+Serhii Cherednichenko
+
+[b]Програміст:[/b]
+ArtCrafter2999
+
+
+[font_size=70][b]Озвучка:[/b][/font_size]
+
+[b]Руї:[/b]
+Cara Linne
+
+[b]Старк:[/b]
+Вадим Руснак (olderix)
+
+[b]Кіра, Система:[/b]
+Лазаренко Любов (Chisana)
+
+[b]Вайен, Інструктор, Працівник складу:[/b]
+Liberty
+"
+fit_content = true
+horizontal_alignment = 1

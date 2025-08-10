@@ -9,6 +9,8 @@ set voiced = true
 Руї: Я часто думаю про Бога, який заклав в наш світ цю дивну головоломку.
 Руї: І я справді розмірковую над тим, чи вдасться кинути Йому виклик
 
+[#screen][next=2][font_size=50]Розділ 1: Знайомство.[/font_size]
+
 [#screen][#clicking][next=2][font_size=40][p]2122 Рік.[/p][p]Рік, який змінив життя кожного на “до” та “після”.[/p][p]Рік, котрий забрав у мене все.[/p][p]Рік, котрий змінив мене.[/p][/font_size]
 
 do music("ruie_story", {"fade_in": 1})
@@ -158,7 +160,7 @@ do set_background("")
 Проте практика їх застосування стає дедалі масовішою.
 Я тільки-но закінчила навчання, і мене направили в загін флангового прикриття, до прифронтової бази
 
-do ambience("private_room", {"fade_in": 1})
+do ambience("ambience_private_room", {"fade_in": 1})
 do music("ruie_room", {"fade_in": 1})
 do set_background("room")
 
@@ -182,10 +184,10 @@ do set_background("room")
 do ambience("", {"fade_out": 1, "fade_out": 1})
 do music("", {"fade_out": 1})
 do set_background("") 
-do ambience("main_hall", {"fade_out": 1, "fade_out": 1})
+do ambience("ambience_main_hall", {"fade_out": 1, "fade_out": 1})
 do sound("ruie_open_door_walk_close_door", {"await": true})
 
-do set_background("hall")
+do set_background("hall_day")
 
 Переступивши за двері, я вийшла в круговий коридор, котрий з’єднує всі корпуси.
 Єдине що мене хвилює в цій базі, це те що вона наземна, а не підземна.
@@ -212,9 +214,9 @@ do wait(2)
 Його пронизливий суворий погляд пробирав не просто до кісток, а до самої душі.
 До того ж, на його руках видно дивні сліди імплантів. Раніше я таких не бачила.
 
-do music("stark_first_meet", {"fade_in": 1}) # TODO Змінити якщо треба
+do music("stark_first_met", {"fade_in": 1})
 
-do add_character("Старк", {"fade_in": 0.1, "align": 1})
+do add_character("Старк", {"fade_in": 0.1, "align": 1, "z_index": -1})
 ???: [#ch=Старк] Вітаю, солдатко! Ти ж наш Навігатор, чи не так?
 
 Голос чоловіка швидко привів мене до тями, і я зніяковіло помітила як він стояв вже зовсім близько до мене.
@@ -243,7 +245,7 @@ do music("", {"fade_out": 1})
 Руї: Т-так, звісно.
 ???: [#ch=Старк] Он схоже вже підходить ще один учасник команди.
 
-do music("vayen", {"fade_in": 1}) # TODO Змінити якщо треба
+do music("vayen_first_met", {"fade_in": 1})
 
 Відносно недалеко, я побачила постать трішки вищого за мене зросту.
 Він йшов доволі невпевнено, скуто, як ніби перманентно чогось боячись. 
@@ -304,7 +306,7 @@ do change_character("Старк", {"variant": "neutral"})
 ???: [#ch=Старк] Але що там коїться?
 ???: [#ch=Старк] Вона ж не до нас, сподіваюсь...
 
-do music("kira")
+do music("kira_first_met")
 
 ???: [#ch=Кіра] Я не віддам вам свою зброю, навіть не думайте!
 
@@ -337,7 +339,7 @@ do music("kira")
 По її голосу, зовнішності і поведінці я вже відчуваю як нам з нею буде складно. 
 
 do music("", {"fade_out": 1})
-do change_character("Старк", {"align": 0.64, "z_index": 0}) # TODO: поки нуль, потім перенести на передній план
+do change_character("Старк", {"align": 0.64})
 do add_character("Кіра", {"align": 0.26, "fade_in": 0.2})
 
 ???: [#ch=Кіра] Ну привіт, командо. 
@@ -384,7 +386,7 @@ do change_character("Кіра", {"variant": "neutral"})
 ???: [#ch=Кіра] ...
 ???: [#ch=Кіра] Ну давай, кажи вже, ніхто не проти.
 
-do music("stark_meet", {"fade_in": 1})  # TODO Змінити якщо треба
+do music("stark_introduction", {"fade_in": 1})
 
 Старк: Чудово, мене звати Старк, я кіборг спеціалізації захист. Буду вступати в бій першим, і захищати вас за допомогою бар’єрів.
 Старк: Я маю великий досвід в ролі й солдата, й кіборга.
@@ -425,7 +427,7 @@ do music("", {"fade_out": 1})
 Старк: Ну так, чисто в освітніх цілях.
 Старк: А поки, раз ти така допитлива і активна, дівчино-халепо, хотілось би послухати тебе.
 
-do music("kira_meet", {"fade_in": 1}) # TODO Змінити якщо треба
+do music("kira_introduction", {"fade_in": 1})
 
 ???: [#ch=Кіра] Як це люб’язно з вашого боку, ви прямо джентльмен, пане Старку.
 Кіра: Всі ви можете звати мене Кіра, моя спеціальність Ганер, або ж просто стрілець.
@@ -460,7 +462,7 @@ do change_character("Вайен", {"variant": "neutral"})
 
 Після моїх слів хлопець видихнув. Я вчинила правильно.
 
-do music("ruie_meet", {"fade_in": 1})  # TODO Змінити якщо треба
+do music("ruie_introduction", {"fade_in": 1})
 
 Руї: Мене звати Руї, я кіборг новачок спеціалізації навігатор. 
 Руї: Я буду координувати наші дії під час бою та допомагати в виявлені загроз в реальному часі.
@@ -489,7 +491,7 @@ do music("", {"fade_out": 1})
 
 Хлопець невпевнено переступив з ноги на ногу. Проте через декілька секунд, прочистивши горло, він почав говорити.
 
-do music("vayen_meet", {"fade_in": 1}) # TODO Змінити якщо треба
+do music("vayen_introduction", {"fade_in": 1})
 
 Вайен: [#sad] М-мене звати Вайен, і я...
 Вайен: Я...
@@ -507,7 +509,7 @@ do music("vayen_meet", {"fade_in": 1}) # TODO Змінити якщо треба
 Старк: Ми всі по-різному сприймаємо те, що з нами відбувається.
 Старк: І як бачиш, йому складно.
 
-Кіра: [#neutral] Ой, та я ж нічого такого не сказала.
+Кіра: [#neutral] Ой, та я ж нічого такого не сказала. [#v=кіра_ой_та_я_2]
 
 Старк: [#happy] Гм.
 Старк: Нічого, Вайене, прорвемось.
@@ -590,16 +592,16 @@ do change_character("Вайен", {"variant": "neutral"})
 
 Старк: Ну що ж, тоді, кроком руш, солдати! [#v=старк_ну_що_ж_тоді]
 
-do music("squad_hall_run", {"fade_out": 1, "fade_in": 1}) #TODO Змінити якщо треба
+do music("team_run_hall", {"fade_out": 1, "fade_in": 1})
 
 Пан Старк першим зірвався в легкий біг, за ним Кіра і я. Вайен, як не дивно, був останнім. 
 Ми бігли по коридору, оббігаючи всі перешкоди в вигляді людей, транспорту та різного грузу. 
 Напевно збоку ми вже виглядаємо як справжня команда. 
 
-do ambience("command_hall", {"fade_out": 1, "fade_in": 1})
-do music("command_hall", {"fade_out": 1, "fade_in": 1}) #TODO Змінити якщо треба
+do ambience("ambience_command_hall", {"fade_out": 1, "fade_in": 1})
+do music("command_center", {"fade_out": 1, "fade_in": 1})
 do remove_all_characters({"fade_out": 0.5})
-do set_background("command_hall", {"fade_in": 1})
+do set_background("", {"fade_out": 1})
 
 Доволі швидко, і якраз вчасно, ми прибули до місця призначення. 
 Командний центр — це доволі простора зала, з купою комп’ютерних столів. 
@@ -613,13 +615,13 @@ do set_background("command_hall", {"fade_in": 1})
 Проте, зараз ситуація більш критична. Тому, для кращого стримування та розвідки, командування вирішило направити саме наш загін. 
 Разом зі мною — навігатором. Страх не зник, але тепер я хоча б знаю більше.
 
-do ambience("main_hall", {"fade_out": 1, "fade_in": 1})
+do ambience("ambience_main_hall", {"fade_out": 1, "fade_in": 1})
 do music("main_hall", {"fade_in": 1, "fade_out": 1})
-do set_background("hall")
+do set_background("hall_night")
 
 do add_character("Руї", {"fade_in": 1, "align": 0})
 do add_character("Кіра", {"fade_in": 1, "align": 0.26})
-do add_character("Старк", {"fade_in": 1, "align": 0.64})
+do add_character("Старк", {"fade_in": 1, "align": 0.64, "z_index": -1})
 do add_character("Вайен", {"fade_in": 1, "align": 1})
 
 Зрештою, ми всім загоном вийшли з командного центру. 
@@ -655,8 +657,6 @@ do add_character("Вайен", {"fade_in": 1, "align": 1})
 do change_character("Руї", {"variant": "neutral"})
 Кіра: Всі ми проходили навчання, і всі ми знаємо на що йдемо.
 Кіра: Особливо ти, Старку.
-
-Як сказав пан Старк — це нормально. Схоже вона не така впевнена, як хоче здаватись.
 
 Старк: [#happy] Ну гаразд, тоді гайда всі по кімнатах. Готуйтесь і всяке таке.
 Старк: Але найголовніше — виспіться!
@@ -765,7 +765,7 @@ do remove_all_characters({"fade_out": 1})
 Я теж пішла до своєї кімнати, по дорозі роздумуючи про нову команду. 
 
 do sound("ruie_open_door_walk_close_door", {"await": true})
-do ambience("private_room", {"fade_out": 1, "fade_in": 1})
+do ambience("ambience_private_room", {"fade_out": 1, "fade_in": 1})
 do music("ruie_room_after_meet", {"fade_out": 1, "fade_in": 1})  #TODO Змінити якщо треба
 do set_background("room", {"fade_in": 1})
 
@@ -790,7 +790,7 @@ do set_background("room", {"fade_in": 1})
 І чесно, я в тривожному, але захопливому передчутті.
 
 do music("cyberspace", {"fade_in": 1, "fade_out": 1})
-do ambience("cyberspace", {"fade_in": 1, "fade_out": 1})
+do ambience("ambience_cyberspace", {"fade_in": 1, "fade_out": 1})
 do set_background("cyberspace". {"fade_out": 1, "fade_in": 1})
 
 do add_character("Руї", {"fade_in": 1, "holographic": true})

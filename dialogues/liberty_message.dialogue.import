@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b0t314vf0xqh4"
+path="res://.godot/imported/liberty_message.dialogue-b5edea94d1e94387959b9d9ef8a93f9e.tres"
+
+[deps]
+
+source_file="res://dialogues/liberty_message.dialogue"
+dest_files=["res://.godot/imported/liberty_message.dialogue-b5edea94d1e94387959b9d9ef8a93f9e.tres"]
+
+[params]
+
+defaults=true
