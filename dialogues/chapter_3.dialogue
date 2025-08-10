@@ -224,6 +224,7 @@ do ambience("", {"fade_out": 1})
 Через декілька днів, нас відправили на чергову місію. Ми працювали за стандартною схемою.
 do ambience("ambience_city_ruins_far_warfare", {"fade_in": 1})
 do set_background("ruins")
+do music("battle", {"fade_out": 1, "fade_in": 1})
 # ВСІ
 do add_character("Руї", {"variant": "angry", "fade_in": 1, "align": 0, "holographic": true})
 do add_character("Кіра", {"variant": "angry","fade_in": 1, "align": 0.26, "holographic": true})
@@ -237,7 +238,7 @@ do add_character("Вайен", {"variant": "angry", "fade_in": 1, "align": 1, "h
 Вайен: [#angry] Заходжу на транспорт!
 
 do wait(1)
-do sound("Кілька пострілів, вибух") # TODO змінити
+do sound("kira_vayen_shots_2")
 Руї: [#neutral] Всі цілі знищено, гарна робота.
 Руї: [#neutral] ...
 Руї: [#neutral] Увага, в напрямку Кіри зафіксована загроза.
@@ -374,6 +375,7 @@ do remove_character("Вайен", {"fade_out": 1})
 do set_background("ruins_darkened")
 do add_character("Старк", {"variant": "dead", "fade_in": 1, "align": 0.64, "z_index": -1, "holographic": true})
 do ambience("ambience_city_ruins_close_warfare_high_cut", {"fade_in": 1})
+do music("start_death", {"fade_in": 1})
 Старк: ...Ось і все...
 Старк: ...Все ж, вони пережили більше ніж я міг сподіватись...
 Старк: ...Вони молодці, з них вже вийшли гарні солдати, і друзі...
@@ -414,6 +416,7 @@ do ambience("ambience_city_ruins_close_warfare_high_cut", {"fade_in": 1})
 Старк: ...Я вже поряд...
 do remove_all_characters({"fade_out": 1}) # [Спрайти: зникли]
 do ambience("ambience_city_ruins_far_warfare_in_a_car", {"fade_out": 1, "fade_in": 1})
+do music("battle", {"fade_out": 1, "fade_in": 1})
 Я відчула, як мої імпланти нагрілися... 
 Його більше немає. Немає... Чому!? Чому ви так вчинили!? 
 На кого ви нас залишили? Хто буде нас повчати? Хто буде нас підтримувати? 

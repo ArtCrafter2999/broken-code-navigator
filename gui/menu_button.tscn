@@ -5,12 +5,12 @@
 [ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="2_oe1n5"]
 [ext_resource type="AudioStream" uid="uid://nt58omx85e7" path="res://sound/button_hover.mp3" id="3_425lk"]
 
-[sub_resource type="Gradient" id="Gradient_ce4xl"]
+[sub_resource type="Gradient" id="Gradient_425lk"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_425lk"]
-gradient = SubResource("Gradient_ce4xl")
+gradient = SubResource("Gradient_425lk")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_ubt2c"]
@@ -21,42 +21,42 @@ colors = PackedColorArray(0.364706, 0.819608, 0.941176, 1, 0.639216, 0.905882, 0
 gradient = SubResource("Gradient_ubt2c")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_rsb8p"]
+[sub_resource type="Gradient" id="Gradient_ylg51"]
 offsets = PackedFloat32Array(0, 0.47, 1)
 colors = PackedColorArray(0.639216, 0.905882, 0.933333, 1, 0.929412, 1, 1, 1, 0.639216, 0.905882, 0.933333, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fxyqe"]
-gradient = SubResource("Gradient_rsb8p")
+gradient = SubResource("Gradient_ylg51")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_fwkj4"]
+[sub_resource type="Gradient" id="Gradient_rsb8p"]
 colors = PackedColorArray(0.117647, 0.243137, 0.403922, 1, 0.192157, 0.513726, 0.654902, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3d41w"]
-gradient = SubResource("Gradient_fwkj4")
+gradient = SubResource("Gradient_rsb8p")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_y8ne0"]
+[sub_resource type="Gradient" id="Gradient_fxyqe"]
 offsets = PackedFloat32Array(0, 0.25, 0.61, 0.77, 0.99)
 colors = PackedColorArray(0.117647, 0.243137, 0.403922, 1, 0.117647, 0.329412, 0.47451, 1, 0.12549, 0.607843, 0.701961, 1, 0.129412, 0.839216, 0.890196, 1, 0.952941, 0.996078, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_u4kif"]
-gradient = SubResource("Gradient_y8ne0")
+gradient = SubResource("Gradient_fxyqe")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_hau36"]
+[sub_resource type="Gradient" id="Gradient_fwkj4"]
 offsets = PackedFloat32Array(0, 0.15, 0.33, 0.51, 0.7, 0.84, 1)
 colors = PackedColorArray(0.117647, 0.243137, 0.403922, 1, 0.12549, 0.607843, 0.701961, 1, 0.639216, 0.905882, 0.933333, 1, 0.952941, 0.996078, 1, 1, 0.639216, 0.905882, 0.933333, 1, 0.12549, 0.670588, 0.752941, 1, 0.117647, 0.27451, 0.427451, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wvltg"]
-gradient = SubResource("Gradient_hau36")
+gradient = SubResource("Gradient_fwkj4")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_oe1n5"]
+[sub_resource type="Gradient" id="Gradient_3d41w"]
 colors = PackedColorArray(0.29, 0.29, 0.29, 1, 0.46, 0.46, 0.46, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_c3334"]
-gradient = SubResource("Gradient_oe1n5")
+gradient = SubResource("Gradient_3d41w")
 fill_to = Vector2(0, 1)
 
 [node name="MenuButton" type="BaseButton"]

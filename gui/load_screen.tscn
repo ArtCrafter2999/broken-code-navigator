@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://byvmmq1h54blk"]
+
+[ext_resource type="Script" uid="uid://dkykfsnns5g2k" path="res://gui/load_screen.gd" id="1_puesy"]
+[ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="2_puesy"]
+
+[node name="LoadScreen" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_puesy")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+offset_left = 407.0
+offset_right = 1888.0
+offset_bottom = 1080.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 50
+columns = 2
+
+[node name="MenuButton" parent="." instance=ExtResource("2_puesy")]
+offset_left = 75.0
+offset_top = 948.0
+offset_right = 395.0
+offset_bottom = 1042.0
+text = "Назад"
+font_size = 40
+
+[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

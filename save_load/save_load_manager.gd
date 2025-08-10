@@ -13,19 +13,35 @@ func _ready() -> void:
 	elif _is_save_dir_empty():
 		main_menu.load_button.disabled = true
 
-func save_file(file_name: String = "quick"):
+func save_file(image: Image = null):
+	var file_name = Time.get_datetime_string_from_system().replace(":", "")
+	print(file_name)
 	var file := FileAccess.open("user://saves/%s" % file_name, FileAccess.WRITE)
+	image.compress(Image.COMPRESS_S3TC)
+	file.store_var(image.data, true)
 	file.store_var(play_scene.get_current_state(), true)
 	file.store_var(play_scene.history, true)
 	file.store_var(play_scene.ballon.history, true)
+	
 	main_menu.load_button.disabled = false
 	file.close();
 
-func load_file(file_name: String = "quick", from_menu: bool = false):
+func load_image(file_name: String):
+	if not FileAccess.file_exists("user://saves/%s" % file_name):
+		push_error("Trying to load savefile '%s' that doesnt exist" % file_name)
+		return null;
+	var file := FileAccess.open("user://saves/%s" % file_name, FileAccess.READ)
+	var data = file.get_var(true)
+	var image = Image.create_empty(0, 0, true, Image.Format.FORMAT_RGBA8)
+	image.data = data
+	return image;
+
+func load_file(file_name: String, from_menu: bool = false):
 	if not FileAccess.file_exists("user://saves/%s" % file_name):
 		push_error("Trying to load savefile '%s' that doesnt exist" % file_name)
 		return;
 	var file := FileAccess.open("user://saves/%s" % file_name, FileAccess.READ)
+	file.get_var(true)
 	var state = file.get_var(true);
 	play_scene.history = file.get_var(true);
 	if from_menu:
@@ -36,10 +52,13 @@ func load_file(file_name: String = "quick", from_menu: bool = false):
 		play_scene.restore_state(state)
 	file.close();
 
-func load_read():
-	var file := FileAccess.open("user://read_data", FileAccess.READ)
-	if not file: return;
-	file.get_var()
+func get_save_files() -> Array[Dictionary]:
+	var dir = DirAccess.open("user://saves")
+	var files = dir.get_files()
+	var response: Array[Dictionary] = []
+	for file in files:
+		response.append({"file": file, "image": load_image(file)})
+	return response
 
 func _is_save_dir_empty():
 	var dir = DirAccess.open("user://saves")

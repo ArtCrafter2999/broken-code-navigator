@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://4dq358ewkgdq"]
+[gd_scene load_steps=4 format=3 uid="uid://4dq358ewkgdq"]
 
 [ext_resource type="Script" uid="uid://dxgmsdglfank5" path="res://scenes/pause_screen.gd" id="1_gvjuy"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="2_pcldp"]
+[ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://gui/load_screen.tscn" id="3_m85lv"]
 
 [node name="PauseSreen" type="CanvasLayer"]
 layer = 50
@@ -20,9 +21,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 159.0
+offset_left = 75.0
 offset_top = -335.0
-offset_right = 474.0
+offset_right = 390.0
 offset_bottom = 335.0
 grow_vertical = 2
 theme_override_constants/separation = 50
@@ -53,7 +54,12 @@ layout_mode = 2
 text = "Головне меню"
 font_size = 40
 
+[node name="LoadScreen" parent="Panel" instance=ExtResource("3_m85lv")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="Panel/VBoxContainer/Continue" to="." method="close"]
 [connection signal="pressed" from="Panel/VBoxContainer/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="loaded_file" from="Panel/LoadScreen" to="." method="_on_load_screen_loaded_file"]

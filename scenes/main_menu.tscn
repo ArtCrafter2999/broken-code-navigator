@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://0nfip0jqf6j6"]
+[gd_scene load_steps=7 format=3 uid="uid://0nfip0jqf6j6"]
 
 [ext_resource type="Script" uid="uid://tutidkrnyxi5" path="res://scenes/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://b5666hqp5air6" path="res://sound/ui_slide.mp3" id="2_8ln24"]
 [ext_resource type="Texture2D" uid="uid://rg6heryvtbea" path="res://backgrounds/main_menu.png" id="2_bqqt6"]
 [ext_resource type="AudioStream" uid="uid://ddwgbbkfhmdx" path="res://music/main_menu.mp3" id="4_rtw2f"]
+[ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://gui/load_screen.tscn" id="6_rtw2f"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -35,9 +36,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 77.0
+offset_left = 75.0
 offset_top = -338.0
-offset_right = 397.0
+offset_right = 395.0
 offset_bottom = 338.0
 grow_vertical = 2
 theme_override_constants/separation = 100
@@ -96,9 +97,14 @@ layout_mode = 2
 text = "Назад"
 font_size = 40
 
+[node name="LoadScreen" parent="." instance=ExtResource("6_rtw2f")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="MainButtons/Play" to="." method="slide_play_buttons" binds= [true]]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="PlayButtons/Test" to="." method="_on_test_pressed"]
 [connection signal="pressed" from="PlayButtons/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="PlayButtons/Back" to="." method="slide_play_buttons" binds= [false]]
+[connection signal="loaded_file" from="LoadScreen" to="." method="_on_load_screen_loaded_file"]

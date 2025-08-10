@@ -80,7 +80,7 @@ do ambience("ambience_warehouse", {"fade_out": 1, "fade_in": 1})
 
 do ambience("", {"fade_out": 1})
 do set_background("ruins")
-do music("Перше завдання, в авто", {"fade_in": 1}) # TODO змінити
+do music("battle", {"fade_out": 1, "fade_in": 1})
 Пейзажі за вікном змінились на руїни. 
 Це було невелике місто. Колись тут було мирно, люди проживали своє життя. 
 А зараз цього всього немає.. Домівки знищені, багато хто загинув чи був змушений виїхати. 
@@ -162,7 +162,6 @@ do ambience("ambience_city_ruins_far_warfare_in_a_car", {"fade_in": 1})
 do ambience("", {"fade_out": 1})
 do music("", {"fade_out": 1})
 do ambience("ambience_city_ruins_far_warfare", {"fade_in": 1})
-do music("Перше завдання", {"fade_in": 1}) # TODO змінити
 do add_character("Руї", {"fade_in": 1, "align": 0, "holographic": true})
 do add_character("Кіра", {"fade_in": 1, "align": 0.26, "holographic": true})
 do add_character("Старк", {"fade_in": 1, "align": 0.64, "z_index": -1, "holographic": true})
@@ -283,8 +282,6 @@ do music("", {"fade_out": 1})
 Руї: [#angry] Час прильоту 15 секунд.
 Руї: [#angry] Біжи!
 
-do music("Перше завдання, зіткнення", {"fade_in": 0.2}) # TODO змінити
-
 
 Кіра: [#angry] От бляха!
 
@@ -390,7 +387,6 @@ do change_character("Старк", {"variant": "neutral"})
 do change_character("Кіра", {"variant": "neutral"})
 
 do ambience("ambience_city_ruins_close_warfare", {"fade_out": 1, "fade_in": 1})
-do music("Перше завдання, зіткнення 2", {"fade_in": 0.1}) # TODO змінити
 
 Руї: [#angry] Увага всім, зафіксовано наведення..
 Руї: [#angry] Ні, ракети вже летять по всім нам!

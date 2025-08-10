@@ -3,7 +3,8 @@ extends Control
 
 signal new_game_pressed
 signal load_pressed
-signal test_pressed
+
+@export var save_load_manager: SaveLoadManager
 
 @onready var main_menu_music: AudioStreamPlayer = $MainMenuMusic
 @onready var quit_button: GeneralMenuButton = $MainButtons/Quit
@@ -11,6 +12,7 @@ signal test_pressed
 @onready var play_buttons: VBoxContainer = $PlayButtons
 @onready var load_button: GeneralMenuButton = $PlayButtons/Load
 @onready var audio_slide: AudioStreamPlayer = $AudioSlide
+@onready var load_screen: LoadScreen = $LoadScreen
 
 var _is_sliding := false;
 
@@ -31,11 +33,13 @@ func close():
 	visible = false;
 
 func _ready() -> void:
+	load_screen.save_load_manager = save_load_manager;
 	if OS.get_name() == "Web":
 		quit_button.hide();
 
 func slide_play_buttons(in_view: bool):
 	if _is_sliding: return;
+	load_screen.close();
 	audio_slide.play();
 	
 	var out_buttons = main_buttons if in_view else play_buttons
@@ -66,12 +70,15 @@ func _on_new_game_pressed() -> void:
 	close()
 
 func _on_load_pressed() -> void:
-	load_pressed.emit()
-	close();
+	#load_pressed.emit()
+	load_screen.open();
+	#close();
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 
-func _on_test_pressed() -> void:
-	test_pressed.emit()
-	close()
+
+func _on_load_screen_loaded_file(file_name: String) -> void:
+	save_load_manager.load_file(file_name, true);
+	load_pressed.emit()
+	close();

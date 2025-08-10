@@ -10,6 +10,7 @@ do set_background("")
 ...
 do set_background("ruins")
 do ambience("ambience_city_ruins_far_warfare", {"fade_in": 1})
+do music("battle", {"fade_out": 1, "fade_in": 1})
 
 Отже, ми на позиціях. 
 Наше головне завдання це проведення розвідки за допомогою дрона. 
@@ -107,6 +108,7 @@ do wait(1)
 do remove_character("Вайен", {"fade_out": 1})
 do add_character("Кіра", { "variant": "dead", "fade_in": 2, "align": 0.5, "holographic": true})
 do set_background("ruins_darkened")
+do music("kira_death", {"fade_in": 1})
 Кіра: [#dead] ...Що зі мною?...
 Кіра: [#dead] ...Не відчуваю тіла...
 Кіра: [#dead] ...Я сплю?...
@@ -141,6 +143,7 @@ do set_background("")
 А розпач лише ускладнює становище...
 do wait(1)
 Системи потроху відновлюють свою роботу..
+do music("battle", {"fade_out": 1, "fade_in": 1})
 do add_character("Вайен", {"fade_in": 1, "align": 1, "holographic": true})
 do set_background("ruins")
 Вайен: [#angry] ...
@@ -222,6 +225,8 @@ do ambience("", {"fade_out": 1})
 do sound("ruie_open_door_walk_close_door")
 do set_background("room")
 Я повернулася до кімнати, та провела чергове планове підключення.
+do ambience("ambience_cyberspace", {"fade_out": 1, "fade_in": 1})
+do music("cyberspace", {"fade_out": 1, "fade_in": 1})
 do set_background("cyberspace")
 do add_character("Руї", {"fade_in": 1, "holographic": true})
 
@@ -445,7 +450,7 @@ do set_talking("Кіра", "Старк")
 - Зберегти все, друзів та спогади про них => leave_all
 
 ~ remove_all
-do set_background("cyberspace")
+do music("cyberspace", {"fade_out": 1, "fade_in": 1})
 Руї: [#sad] Пробачте мені...
 Руї: [#sad] Але, я мушу...
 
@@ -523,7 +528,6 @@ do set_background("room")
 => END
 
 ~ leave_all
-
 do set_background("cyberspace")
 Руї: [#sad] Так...
 Руї: [#sad] Я залишусь з вами, друзі!

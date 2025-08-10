@@ -17,7 +17,8 @@ script = ExtResource("2_pu3yx")
 play_scene = NodePath("../PlayScene")
 main_menu = NodePath("../MainMenu")
 
-[node name="MainMenu" parent="." instance=ExtResource("1_pw63i")]
+[node name="MainMenu" parent="." node_paths=PackedStringArray("save_load_manager") instance=ExtResource("1_pw63i")]
+save_load_manager = NodePath("../SaveLoadManager")
 
 [node name="PlaySceneContainer" type="Node" parent="."]
 
@@ -49,7 +50,6 @@ visible = false
 
 [connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
 [connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]
-[connection signal="test_pressed" from="MainMenu" to="." method="_on_main_menu_test_pressed"]
 [connection signal="game_ended" from="PlayScene" to="." method="_on_play_scene_game_ended"]
 [connection signal="removed_saves" from="PlayScene" to="." method="_on_play_scene_removed_saves"]
 [connection signal="pressed" from="PlayScene/BackButton/BackButton" to="." method="_pause"]

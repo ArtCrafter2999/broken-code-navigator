@@ -21,6 +21,9 @@ var in_main_menu: bool = true:
 func _ready() -> void:
 	pause_screen.closed.connect(play_scene.resume)
 	main_menu.open();
+	#var texture = ImageTexture.new()
+	#texture.set_image(save_load_manager.load_image())
+	#main_menu.iamge.texture = texture;
 
 func _input(_event: InputEvent) -> void:
 	if in_main_menu: return
@@ -39,7 +42,7 @@ func _on_main_menu_new_game_pressed() -> void:
 
 func _on_main_menu_load_pressed() -> void:
 	in_main_menu = false;
-	save_load_manager.load_file("quick", true);
+	#save_load_manager.load_file("quick", true);
 
 
 func _on_pause_screen_main_menu() -> void:
