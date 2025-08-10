@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/kira_introduction.mp3-88387820fe01df354882318
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

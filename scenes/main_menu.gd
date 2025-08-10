@@ -10,6 +10,7 @@ signal test_pressed
 @onready var main_buttons: VBoxContainer = $MainButtons
 @onready var play_buttons: VBoxContainer = $PlayButtons
 @onready var load_button: GeneralMenuButton = $PlayButtons/Load
+@onready var audio_slide: AudioStreamPlayer = $AudioSlide
 
 var _is_sliding := false;
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 
 func slide_play_buttons(in_view: bool):
 	if _is_sliding: return;
+	audio_slide.play();
 	
 	var out_buttons = main_buttons if in_view else play_buttons
 	var in_buttons = play_buttons if in_view else main_buttons

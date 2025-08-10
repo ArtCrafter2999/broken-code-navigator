@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5alugxtb238t"]
+[gd_scene load_steps=19 format=3 uid="uid://b5alugxtb238t"]
 
 [ext_resource type="Script" uid="uid://gslnavsr0psx" path="res://gui/menu_button.gd" id="1_ce4xl"]
+[ext_resource type="AudioStream" uid="uid://ccdbiok202b11" path="res://sound/button_click.mp3" id="2_c3334"]
 [ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="2_oe1n5"]
+[ext_resource type="AudioStream" uid="uid://nt58omx85e7" path="res://sound/button_hover.mp3" id="3_425lk"]
 
 [sub_resource type="Gradient" id="Gradient_ce4xl"]
 offsets = PackedFloat32Array(1)
@@ -130,6 +132,12 @@ shortcut_feedback = true
 shortcut_in_tooltip = true
 script = ExtResource("1_ce4xl")
 metadata/_custom_type_script = "uid://gslnavsr0psx"
+
+[node name="AudioClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_c3334")
+
+[node name="AudioHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_425lk")
 
 [node name="Outline" type="TextureRect" parent="."]
 layout_mode = 1

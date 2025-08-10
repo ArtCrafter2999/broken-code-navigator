@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/team_run_hall.mp3-340ca50f606a723793da09b1636
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

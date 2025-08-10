@@ -12,6 +12,8 @@ config_version=5
 
 config/name="Broken Code: Navigator"
 run/main_scene="uid://b8s6j6x6100y3"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Broken Code Navigator"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

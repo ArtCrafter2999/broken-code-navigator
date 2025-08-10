@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/ambience_command_hall.mp3-96d702ac522018218d9
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

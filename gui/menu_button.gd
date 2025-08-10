@@ -2,6 +2,9 @@
 class_name GeneralMenuButton
 extends BaseButton
 
+@onready var audio_click: AudioStreamPlayer = $AudioClick
+@onready var audio_hover: AudioStreamPlayer = $AudioHover
+
 @export var text: String:
 	get: 
 		return text;
@@ -38,6 +41,7 @@ extends BaseButton
 func _ready() -> void:
 	mouse_entered.connect(func (): 
 		if disabled: return;
+		audio_hover.play()
 		fade_in(hover_background, 0.3)
 		fade_in(hover_outline, 0.3))
 	mouse_exited.connect(func (): 
@@ -46,6 +50,7 @@ func _ready() -> void:
 		fade_out(hover_outline, 0.3))
 	button_down.connect(func ():
 		if disabled: return;
+		audio_click.play()
 		fade_in(pressed_background, 0.1)
 		fade_in(pressed_background, 0.1)
 		to_black(label, 0.1))

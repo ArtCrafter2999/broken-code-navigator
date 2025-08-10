@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/ambience_warehouse.mp3-d67ee5fb06e21b09a0ab51
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

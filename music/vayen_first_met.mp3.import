@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/vayen_first_met.mp3-e4083263d18b67fe1f54c4a20
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

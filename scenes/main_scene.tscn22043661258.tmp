@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://b8s6j6x6100y3"]
+
+[ext_resource type="Script" uid="uid://bma5lnvk8a3nd" path="res://scenes/main_scene.gd" id="1_7ykc4"]
+[ext_resource type="PackedScene" uid="uid://0nfip0jqf6j6" path="res://scenes/main_menu.tscn" id="1_pw63i"]
+[ext_resource type="PackedScene" uid="uid://b1wxsghutirw0" path="res://play_scene/play_scene.tscn" id="2_7ykc4"]
+[ext_resource type="Script" uid="uid://s3lmam86urra" path="res://save_load/save_load_manager.gd" id="2_pu3yx"]
+[ext_resource type="Texture2D" uid="uid://11bnygwu7cr4" path="res://balloon/sprites/back_button.svg" id="5_c16ls"]
+[ext_resource type="PackedScene" uid="uid://4dq358ewkgdq" path="res://scenes/pause_sreen.tscn" id="5_rt2n2"]
+[ext_resource type="Script" uid="uid://cs70f0otc6h8p" path="res://gui/hover_modulate.gd" id="6_18nlu"]
+[ext_resource type="PackedScene" uid="uid://c7n7oudkkwr62" path="res://scenes/credits.tscn" id="8_18nlu"]
+
+[node name="MainScene" type="Node"]
+script = ExtResource("1_7ykc4")
+
+[node name="SaveLoadManager" type="Node" parent="." node_paths=PackedStringArray("play_scene", "main_menu")]
+script = ExtResource("2_pu3yx")
+play_scene = NodePath("../PlayScene")
+main_menu = NodePath("../MainMenu")
+
+[node name="MainMenu" parent="." instance=ExtResource("1_pw63i")]
+
+[node name="PlaySceneContainer" type="Node" parent="."]
+
+[node name="PlayScene" parent="." instance=ExtResource("2_7ykc4")]
+visible = false
+
+[node name="BackButton" type="CanvasLayer" parent="PlayScene"]
+layer = 12
+visible = false
+
+[node name="BackButton" type="Button" parent="PlayScene/BackButton"]
+modulate = Color(0.486275, 0.486275, 0.486275, 1)
+offset_right = 66.0
+offset_bottom = 66.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+icon = ExtResource("5_c16ls")
+flat = true
+icon_alignment = 1
+script = ExtResource("6_18nlu")
+hover_modulate = Color(1, 1, 1, 1)
+
+[node name="PauseScreen" parent="." node_paths=PackedStringArray("save_load_manager") instance=ExtResource("5_rt2n2")]
+visible = false
+save_load_manager = NodePath("../SaveLoadManager")
+
+[node name="Credits" parent="." instance=ExtResource("8_18nlu")]
+visible = false
+
+[connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
+[connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]
+[connection signal="test_pressed" from="MainMenu" to="." method="_on_main_menu_test_pressed"]
+[connection signal="game_ended" from="PlayScene" to="." method="_on_play_scene_game_ended"]
+[connection signal="removed_saves" from="PlayScene" to="." method="_on_play_scene_removed_saves"]
+[connection signal="pressed" from="PlayScene/BackButton/BackButton" to="." method="_pause"]
+[connection signal="main_menu" from="PauseScreen" to="." method="_on_pause_screen_main_menu"]
+[connection signal="credits_ended" from="Credits" to="." method="_on_credits_credits_ended"]

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/ruie_footsteps_hall.mp3-5e7639ed263dd2e506052
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
