@@ -519,12 +519,12 @@ func _got_dialogue(line: DialogueLine):
 		else:
 			ballon.character_label.modulate = Color.WHITE
 		if Array(line.tags).has("screen"):
-			ballon.clicking = true;
+			ballon.clicking = not voiced;
 			ballon.letter_click.stream = none_clicking;
 		else:
 			ballon.clicking = false;
 	else:
-		ballon.clicking = true;
+		ballon.clicking = not voiced;
 		ballon.character_label.modulate = character.color;
 		ballon.letter_click.stream = character.sound;
 		var texture_rect: CharacterSprite = sprites.find_child(character_name, false, false)
