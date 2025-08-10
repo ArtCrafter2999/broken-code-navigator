@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Character" load_steps=6 format=3 uid="uid://cll88o6de06gg"]
+[gd_resource type="Resource" script_class="Character" load_steps=7 format=3 uid="uid://cll88o6de06gg"]
 
 [ext_resource type="Script" uid="uid://b2o4rsmyktar7" path="res://characters/character.gd" id="1_iq8m6"]
+[ext_resource type="AudioStream" uid="uid://cx5ug4dojxui6" path="res://sound/voice_vayen.mp3" id="2_aj1dg"]
 [ext_resource type="Texture2D" uid="uid://bya55j6n0wust" path="res://characters/vayen/Vayen.png" id="2_gof2p"]
 [ext_resource type="Texture2D" uid="uid://bo4nurqeqnfvi" path="res://characters/vayen/Vayen_angry.png" id="3_aj1dg"]
 [ext_resource type="Texture2D" uid="uid://bde6vt2cd72rq" path="res://characters/vayen/Vayen_happy.png" id="4_tdjf3"]
@@ -16,4 +17,5 @@ sprites = Dictionary[StringName, Texture2D]({
 &"neutral": ExtResource("2_gof2p"),
 &"sad": ExtResource("5_1j0gs")
 })
+sound = ExtResource("2_aj1dg")
 metadata/_custom_type_script = "uid://b2o4rsmyktar7"
