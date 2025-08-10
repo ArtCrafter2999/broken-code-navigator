@@ -14,8 +14,9 @@ script = ExtResource("1_puesy")
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
 offset_left = 407.0
-offset_right = 1888.0
+offset_right = 1920.0
 offset_bottom = 1080.0
+horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 layout_mode = 2
