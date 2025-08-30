@@ -73,6 +73,7 @@ wait_time = 11.0
 autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 z_index = 110
 material = SubResource("ShaderMaterial_mngbo")
 anchors_preset = 15

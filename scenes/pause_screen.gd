@@ -17,6 +17,12 @@ var image: Image
 func _ready() -> void:
 	load_screen.save_load_manager = save_load_manager
 
+func _process(delta: float) -> void:
+	if Input.is_action_pressed("HideUI"):
+		panel.modulate = Color.TRANSPARENT;
+	else:
+		panel.modulate = Color.WHITE;
+
 func close():
 	if not is_open: return;
 	closed.emit()

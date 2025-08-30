@@ -64,6 +64,12 @@ func _process(_delta: float) -> void:
 			#ballon.dialogue_line.id in GameState.read_messages, " and ", \
 			#not _is_paused, " and ", \
 			#ballon.dialogue_line.responses.size() == 0)
+	
+	if Input.is_action_pressed("HideUI"):
+		ballon.balloon.modulate = Color.TRANSPARENT;
+	else:
+		ballon.balloon.modulate = Color.WHITE;
+	
 	is_skipping = (Input.is_action_pressed("Skip") or (ballon and ballon.is_skip_button_pressed)) and \
 			is_instance_valid(ballon) and \
 			#ballon.dialogue_line.id in GameState.read_messages and \

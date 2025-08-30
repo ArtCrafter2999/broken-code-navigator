@@ -11,6 +11,11 @@ func _ready():
 	mouse_entered.connect(_hover)
 	mouse_exited.connect(_hover_out)
 	
+func _process(delta: float) -> void:
+	if Input.is_action_pressed("HideUI"):
+		modulate = Color.TRANSPARENT;
+	else:
+		modulate = Color.WHITE;
 
 func _hover():
 	if tween:
