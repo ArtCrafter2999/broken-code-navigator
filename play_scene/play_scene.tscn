@@ -35,8 +35,10 @@ defaut_character_color = Color(0.6642, 0.692763, 0.82, 1)
 wait_time = 0.1
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Voice"
 
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
 
 [node name="Backgrounds" type="Control" parent="."]
 z_index = -1

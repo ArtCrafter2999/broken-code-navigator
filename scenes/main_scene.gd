@@ -21,6 +21,9 @@ var in_main_menu: bool = true:
 
 func _ready() -> void:
 	pause_screen.closed.connect(play_scene.resume)
+	#if OS.is_debug_build():
+	#get_window().size = Vector2i(1152, 648)
+	#DisplayServer.window_set_size(Vector2i(1152, 648))
 
 func _input(_event: InputEvent) -> void:
 	if in_main_menu: return
@@ -41,14 +44,12 @@ func _on_main_menu_load_pressed() -> void:
 	in_main_menu = false;
 	#save_load_manager.load_file("quick", true);
 
-
 func _on_pause_screen_main_menu() -> void:
 	#save_load_manager.save_file()
 	in_main_menu = true;
 	play_scene.quit()
 	pause_screen.close()
 	main_menu.open()
-
 
 func _on_main_menu_test_pressed() -> void:
 	await get_tree().create_timer(1).timeout
@@ -60,7 +61,6 @@ func _on_main_menu_test_pressed() -> void:
 func _pause() -> void:
 	pause_screen.open()
 	play_scene.pause()
-
 
 func _on_play_scene_removed_saves() -> void:
 	save_load_manager.remove_all_saves()

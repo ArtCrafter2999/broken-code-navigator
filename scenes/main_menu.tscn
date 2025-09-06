@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://0nfip0jqf6j6"]
+[gd_scene load_steps=10 format=3 uid="uid://0nfip0jqf6j6"]
 
 [ext_resource type="Script" uid="uid://tutidkrnyxi5" path="res://scenes/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="1_l6cm7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dlcftmprpobqj" path="res://backgrounds/main_menu_Ruie.png" id="4_jk1qb"]
 [ext_resource type="AudioStream" uid="uid://ddwgbbkfhmdx" path="res://music/main_menu.mp3" id="4_rtw2f"]
 [ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://gui/load_screen.tscn" id="6_rtw2f"]
+[ext_resource type="PackedScene" uid="uid://lt8rsgd8fj0v" path="res://settings/settings_screen.tscn" id="9_jk1qb"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -21,6 +22,7 @@ backgrounds = Array[Texture2D]([ExtResource("2_bqqt6"), ExtResource("3_tbmy8"), 
 
 [node name="AudioSlide" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_8ln24")
+bus = &"SFX"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -33,6 +35,7 @@ texture = ExtResource("2_bqqt6")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rtw2f")
+bus = &"Music"
 
 [node name="MainButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -104,10 +107,17 @@ font_size = 40
 visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="MainButtons/Play" to="." method="slide_play_buttons" binds= [true]]
+[node name="SettingsScreen" parent="." instance=ExtResource("9_jk1qb")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MainButtons/Play" to="." method="_open_play_buttons"]
+[connection signal="pressed" from="MainButtons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="PlayButtons/Test" to="." method="_on_test_pressed"]
 [connection signal="pressed" from="PlayButtons/Load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="PlayButtons/Back" to="." method="slide_play_buttons" binds= [false]]
+[connection signal="pressed" from="PlayButtons/Back" to="." method="_back_to_main_buttons"]
+[connection signal="back_pressed" from="LoadScreen" to="." method="_back_to_play_buttons"]
 [connection signal="loaded_file" from="LoadScreen" to="." method="_on_load_screen_loaded_file"]
+[connection signal="back_pressed" from="SettingsScreen" to="." method="_back_to_main_buttons"]

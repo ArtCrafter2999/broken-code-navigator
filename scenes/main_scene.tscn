@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8s6j6x6100y3"]
+[gd_scene load_steps=14 format=3 uid="uid://b8s6j6x6100y3"]
 
 [ext_resource type="Script" uid="uid://bma5lnvk8a3nd" path="res://scenes/main_scene.gd" id="1_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://0nfip0jqf6j6" path="res://scenes/main_menu.tscn" id="1_pw63i"]
@@ -10,10 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://c7n7oudkkwr62" path="res://scenes/credits.tscn" id="8_18nlu"]
 [ext_resource type="Texture2D" uid="uid://dadh8rtanpjau" path="res://backgrounds/disclaimer.png" id="9_c1pb6"]
 [ext_resource type="Script" uid="uid://crd3trp2r02ht" path="res://scenes/disclaimer.gd" id="10_6wevv"]
-[ext_resource type="Shader" uid="uid://bonmnh5trb6tt" path="res://styles/abberation.gdshader" id="11_e1cbu"]
+[ext_resource type="Shader" uid="uid://bonmnh5trb6tt" path="res://styles/vfx.gdshader" id="11_e1cbu"]
+[ext_resource type="Script" uid="uid://cbaqny1piksl5" path="res://styles/vfx.gd" id="12_mngbo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mngbo"]
 shader = ExtResource("11_e1cbu")
+shader_parameter/noise = true
+shader_parameter/chromatic_abberation = true
 shader_parameter/aberration_intensity = 1.0
 shader_parameter/r_displacement = Vector2(1, 0)
 shader_parameter/g_displacement = Vector2(0, 0)
@@ -73,7 +76,6 @@ wait_time = 11.0
 autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 z_index = 110
 material = SubResource("ShaderMaterial_mngbo")
 anchors_preset = 15
@@ -82,6 +84,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("12_mngbo")
 
 [connection signal="load_pressed" from="MainMenu" to="." method="_on_main_menu_load_pressed"]
 [connection signal="new_game_pressed" from="MainMenu" to="." method="_on_main_menu_new_game_pressed"]

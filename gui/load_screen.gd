@@ -2,6 +2,7 @@ class_name LoadScreen;
 extends Control
 
 signal loaded_file(file_name: String)
+signal back_pressed
 
 @export var save_load_manager: SaveLoadManager;
 const LOAD_SLOT = preload("res://gui/load_slot.tscn")
@@ -38,6 +39,5 @@ func close():
 		node.queue_free()
 	hide();
 
-
-func _on_menu_button_pressed() -> void:
-	close();
+func _on_back_button_pressed() -> void:
+	back_pressed.emit();

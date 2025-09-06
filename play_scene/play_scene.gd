@@ -265,11 +265,13 @@ func ambience(file_name: String, options: Dictionary = {}):
 	music(file_name, options)
 
 func music(file_name: String, options: Dictionary = {}):
-	if music_player and music_player.name == file_name: return
 	
 	var fade_in_value = options.get("fade_in", 0)
 	var fade_out_value = options.get("fade_out", 0)
 	var is_ambience = options.get("ambience", false)
+	
+	if not is_ambience and music_player and music_player.name == file_name: return
+	if is_ambience and ambience_player and ambience_player.name == file_name: return
 	
 	var new_player: AudioStreamPlayer = null
 	var file = "res://%s/%s.mp3" % \
@@ -279,6 +281,7 @@ func music(file_name: String, options: Dictionary = {}):
 			new_player = AudioStreamPlayer.new()
 			new_player.name = file_name
 			new_player.stream = load(file)
+			new_player.bus = &"Music"
 		else:
 			push_warning("no '%s' %s found" % [file_name, "ambience" if is_ambience else "music"])
 	

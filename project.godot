@@ -26,8 +26,9 @@ GameState="*res://save_load/game_state.gd"
 [display]
 
 window/size/viewport_width=1920
-window/size/viewport_height=1280
-window/size/borderless=true
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 mouse_cursor/custom_image="uid://6i68vacjaild"
 
