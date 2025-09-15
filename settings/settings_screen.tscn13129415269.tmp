@@ -1,13 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://lt8rsgd8fj0v"]
+[gd_scene load_steps=9 format=3 uid="uid://lt8rsgd8fj0v"]
 
 [ext_resource type="Script" uid="uid://0x7mo7ma3y4p" path="res://settings/settings_screen.gd" id="1_lmvfa"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="2_dygcn"]
-[ext_resource type="PackedScene" uid="uid://bmonxfo02bye3" path="res://gui/RadioButton.tscn" id="3_dygcn"]
+[ext_resource type="Texture2D" uid="uid://cklb2i26tg5wu" path="res://gui/radio_checked.png" id="3_jksw5"]
+[ext_resource type="Texture2D" uid="uid://bqn52fnpu5db" path="res://gui/radio_unchecked.png" id="4_edhl5"]
 [ext_resource type="PackedScene" uid="uid://d3o0ic0ya37i3" path="res://settings/labeled_slider.tscn" id="5_dygcn"]
-[ext_resource type="PackedScene" uid="uid://cjqfqdvm6ttuu" path="res://gui/checkbox.tscn" id="6_lmvfa"]
+[ext_resource type="Texture2D" uid="uid://ddlltl6bthu7t" path="res://gui/checkbox_checked.png" id="5_uoxw7"]
+[ext_resource type="Texture2D" uid="uid://dbqawm1u4s0d2" path="res://gui/checkbox_outlined.png" id="6_gitnv"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_vgh8t"]
-resource_local_to_scene = false
+[sub_resource type="ButtonGroup" id="ButtonGroup_t5cru"]
 
 [node name="SettingsScreen" type="Panel"]
 anchors_preset = 15
@@ -52,17 +53,36 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Екран"
 
-[node name="WindowButton" parent="VBoxContainer" instance=ExtResource("3_dygcn")]
-unique_name_in_owner = true
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Вікно"
-button_group = SubResource("ButtonGroup_vgh8t")
+theme_override_constants/margin_left = -26
 
-[node name="FullScreenButton" parent="VBoxContainer" instance=ExtResource("3_dygcn")]
+[node name="WindowButton" type="CheckBox" parent="VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/radio_checked = ExtResource("3_jksw5")
+theme_override_icons/radio_unchecked = ExtResource("4_edhl5")
+button_pressed = true
+button_group = SubResource("ButtonGroup_t5cru")
+text = "Вікно"
+flat = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = -26
+
+[node name="FullScreenButton" type="CheckBox" parent="VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/radio_checked = ExtResource("3_jksw5")
+theme_override_icons/radio_unchecked = ExtResource("4_edhl5")
+button_group = SubResource("ButtonGroup_t5cru")
 text = "На весь екран"
-button_group = SubResource("ButtonGroup_vgh8t")
+flat = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -72,9 +92,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 260.0
-offset_top = -417.0
+offset_top = -425.0
 offset_right = 573.0
-offset_bottom = -36.0
+offset_bottom = -222.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_group_ = true
@@ -97,7 +117,6 @@ theme_override_font_sizes/font_size = 40
 text = "Звукові Ефекти"
 
 [node name="SfxSlider" parent="VBoxContainer2/Control2" instance=ExtResource("5_dygcn")]
-unique_name_in_owner = true
 
 [node name="Control3" type="Control" parent="VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
@@ -112,7 +131,6 @@ theme_override_font_sizes/font_size = 40
 text = "Музика"
 
 [node name="MusicSlider" parent="VBoxContainer2/Control3" instance=ExtResource("5_dygcn")]
-unique_name_in_owner = true
 offset_top = 67.0
 offset_bottom = 67.0
 
@@ -129,7 +147,6 @@ theme_override_font_sizes/font_size = 40
 text = "Голос"
 
 [node name="VoiceSlider" parent="VBoxContainer2/Control4" instance=ExtResource("5_dygcn")]
-unique_name_in_owner = true
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -151,19 +168,29 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Ефекти"
 
-[node name="Noise" parent="VBoxContainer3" instance=ExtResource("6_lmvfa")]
+[node name="Noise" type="CheckBox" parent="VBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("5_uoxw7")
+theme_override_icons/unchecked = ExtResource("6_gitnv")
 text = "Шум"
+flat = true
 
-[node name="ChromaticAbberation" parent="VBoxContainer3" instance=ExtResource("6_lmvfa")]
+[node name="ChromaticAbberation" type="CheckBox" parent="VBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("5_uoxw7")
+theme_override_icons/unchecked = ExtResource("6_gitnv")
 text = "Хроматична аберація"
+flat = true
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/WindowButton" to="." method="_on_window_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/FullScreenButton" to="." method="_on_full_screen_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/WindowButton" to="." method="_on_window_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/FullScreenButton" to="." method="_on_full_screen_button_pressed"]
 [connection signal="value_changed" from="VBoxContainer2/Control2/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer2/Control3/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer2/Control4/VoiceSlider" to="." method="_on_voice_slider_value_changed"]

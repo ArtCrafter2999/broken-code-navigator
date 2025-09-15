@@ -5,15 +5,14 @@ var read_messages = []
 
 func _ready() -> void:
 	_load()
-
-func _process(delta: float) -> void:
-	_apply_settings()
+	_apply_settings();
 
 func save():
 	var file := FileAccess.open("user://saved_data", FileAccess.WRITE)
 	file.store_var(settings, true)
 	file.store_var(read_messages, true)
 	file.close();
+	_apply_settings();
 
 func _load():
 	if not FileAccess.file_exists("user://saved_data"):
@@ -45,5 +44,5 @@ func _apply_settings():
 		AudioServer.get_bus_index("Music"), 
 		linear_to_db(settings[&"music_volume"] / 100.0))
 	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("SFX"), 
+		AudioServer.get_bus_index("Voice"), 
 		linear_to_db(settings[&"voice_volume"] / 100.0))

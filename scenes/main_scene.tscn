@@ -75,8 +75,11 @@ script = ExtResource("10_6wevv")
 wait_time = 11.0
 autostart = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = 110
+[node name="VFX" type="CanvasLayer" parent="."]
+layer = 101
+
+[node name="VFXRect" type="ColorRect" parent="VFX"]
+z_index = 1010
 material = SubResource("ShaderMaterial_mngbo")
 anchors_preset = 15
 anchor_right = 1.0

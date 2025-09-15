@@ -3,11 +3,11 @@ extends Control
 
 signal back_pressed;
 
-@onready var window_button: CheckBox = %WindowButton
-@onready var full_screen_button: CheckBox = %FullScreenButton
-@onready var sfx_slider: HSlider = %SfxSlider
-@onready var music_slider: HSlider = %MusicSlider
-@onready var voice_slider: HSlider = %VoiceSlider
+@onready var window_button: RadioButton = %WindowButton
+@onready var full_screen_button: RadioButton = %FullScreenButton
+@onready var sfx_slider: LabeledSlider = %SfxSlider
+@onready var music_slider: LabeledSlider = %MusicSlider
+@onready var voice_slider: LabeledSlider = %VoiceSlider
 @onready var noise: CheckBox = %Noise
 @onready var chromatic_abberation: CheckBox = %ChromaticAbberation
 
@@ -32,6 +32,7 @@ func close():
 	if not opened: return;
 	opened = false;
 	await create_tween().tween_property(self, "modulate", Color.TRANSPARENT, 0.5).finished
+	print("hidden")
 	hide();
 
 func _on_window_button_pressed() -> void:

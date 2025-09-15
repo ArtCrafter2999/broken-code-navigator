@@ -17,7 +17,7 @@ var is_open = false;
 var tween: Tween
 var image: Image
 
-var _buttons_sliding : Array[Control] = [];
+var _buttons_sliding : Dictionary[Control, Tween] = {};
 
 func _ready() -> void:
 	load_screen.save_load_manager = save_load_manager
@@ -33,20 +33,22 @@ func slide_buttons(buttons: Control, in_view: bool):
 	load_screen.close();
 	audio_slide.play();
 	
-	_buttons_sliding.append(buttons)
+	var tween = create_tween();
+	_buttons_sliding.set(buttons, tween);
 	if in_view:
-		await create_tween().tween_property(
-			buttons, "position", Vector2(75, buttons.position.y), 0.5)\
-			.finished
+		tween.tween_property(
+			buttons, "position", Vector2(75, buttons.position.y), 0.5)
 	else:
-		await create_tween().tween_property(
+		tween.tween_property(
 			buttons, "position", Vector2(-320, buttons.position.y), 0.5)
+	await tween.finished
 	_buttons_sliding.erase(buttons)
 
 func close():
 	if not is_open: return;
 	closed.emit()
 	load_screen.close()
+	settings_screen.close()
 	is_open = false;
 	
 	if tween:
@@ -58,6 +60,11 @@ func close():
 	
 	if is_open: return;
 	
+	var sliding_tween: Tween = _buttons_sliding.get(buttons, null);
+	if sliding_tween:
+		sliding_tween.kill();
+		_buttons_sliding.erase(buttons)
+	buttons.position.x = 75
 	visible = false
 
 func open():

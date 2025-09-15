@@ -66,8 +66,7 @@ layout_mode = 1
 
 [node name="SettingsScreen" parent="Panel" instance=ExtResource("4_rot57")]
 visible = false
-layout_mode = 0
-anchors_preset = 0
+layout_mode = 1
 
 [connection signal="pressed" from="Panel/Buttons/Continue" to="." method="close"]
 [connection signal="pressed" from="Panel/Buttons/Save" to="." method="_on_save_pressed"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjqfqdvm6ttuu"]
+
+[ext_resource type="Texture2D" uid="uid://ddlltl6bthu7t" path="res://gui/checkbox_checked.png" id="1_fc2hx"]
+[ext_resource type="Texture2D" uid="uid://dbqawm1u4s0d2" path="res://gui/checkbox_outlined.png" id="2_xc6qy"]
+[ext_resource type="AudioStream" uid="uid://ccdbiok202b11" path="res://sound/button_click.mp3" id="3_kpdl1"]
+[ext_resource type="AudioStream" uid="uid://nt58omx85e7" path="res://sound/button_hover.mp3" id="4_1exch"]
+
+[node name="Noise" type="CheckBox"]
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("1_fc2hx")
+theme_override_icons/unchecked = ExtResource("2_xc6qy")
+text = "Чекбокc"
+flat = true
+
+[node name="AudioClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kpdl1")
+bus = &"SFX"
+
+[node name="AudioHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1exch")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="." to="AudioHover" method="play"]
+[connection signal="mouse_exited" from="." to="AudioHover" method="play"]
+[connection signal="pressed" from="." to="AudioClick" method="play"]

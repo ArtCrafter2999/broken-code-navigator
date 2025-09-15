@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmonxfo02bye3"]
+
+[ext_resource type="Script" uid="uid://boyfvrtlk16f2" path="res://gui/radio_button.gd" id="1_tg2i8"]
+[ext_resource type="AudioStream" uid="uid://ccdbiok202b11" path="res://sound/button_click.mp3" id="2_r3rmf"]
+[ext_resource type="Texture2D" uid="uid://cklb2i26tg5wu" path="res://gui/radio_checked.png" id="2_xvpqk"]
+[ext_resource type="Texture2D" uid="uid://bqn52fnpu5db" path="res://gui/radio_unchecked.png" id="3_cv01w"]
+[ext_resource type="AudioStream" uid="uid://nt58omx85e7" path="res://sound/button_hover.mp3" id="3_olo5q"]
+
+[node name="RadioButton" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 63)
+offset_right = 116.0
+offset_bottom = 63.0
+focus_mode = 2
+theme_override_constants/margin_left = -26
+script = ExtResource("1_tg2i8")
+text = "Радіо"
+
+[node name="Button" type="CheckBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+theme_override_icons/radio_checked = ExtResource("2_xvpqk")
+theme_override_icons/radio_unchecked = ExtResource("3_cv01w")
+theme_override_icons/radio_checked_disabled = ExtResource("2_xvpqk")
+theme_override_icons/radio_unchecked_disabled = ExtResource("3_cv01w")
+text = "Радіо"
+flat = true
+
+[node name="AudioClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_r3rmf")
+bus = &"SFX"
+
+[node name="AudioHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_olo5q")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="Button" to="AudioHover" method="play"]
+[connection signal="mouse_exited" from="Button" to="AudioHover" method="play"]
+[connection signal="pressed" from="Button" to="AudioClick" method="play"]
