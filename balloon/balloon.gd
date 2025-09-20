@@ -101,8 +101,15 @@ func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
 	get_viewport().set_input_as_handled()
 
-#func _unhandled_input(event: InputEvent) -> void:
-	
+func _process(delta: float) -> void:
+	var value = GameState.get_setting(&"font_size")
+	dialogue_label.add_theme_font_size_override("bold_font_size", value)
+	dialogue_label.add_theme_font_size_override("bold_italics_font_size", value)
+	dialogue_label.add_theme_font_size_override("italics_font_size", value)
+	dialogue_label.add_theme_font_size_override("mono_font_size", value)
+	dialogue_label.add_theme_font_size_override("normal_font_size", value)
+	print(dialogue_label.get_theme_font_size("normal_font_size"))
+	# TODO видає правильне значення але чомусь не змінює розмір тексту
 
 func _notification(what: int) -> void:
 	## Detect a change of locale and update the current dialogue line to show the new language

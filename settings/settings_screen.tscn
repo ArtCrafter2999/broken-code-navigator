@@ -77,7 +77,6 @@ offset_right = 573.0
 offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="VBoxContainer2"]
 layout_mode = 2
@@ -98,6 +97,9 @@ text = "Звукові Ефекти"
 
 [node name="SfxSlider" parent="VBoxContainer2/Control2" instance=ExtResource("5_dygcn")]
 unique_name_in_owner = true
+layout_mode = 0
+offset_top = 67.0
+offset_bottom = 83.0
 
 [node name="Control3" type="Control" parent="VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
@@ -113,6 +115,7 @@ text = "Музика"
 
 [node name="MusicSlider" parent="VBoxContainer2/Control3" instance=ExtResource("5_dygcn")]
 unique_name_in_owner = true
+layout_mode = 0
 offset_top = 67.0
 offset_bottom = 67.0
 
@@ -130,6 +133,9 @@ text = "Голос"
 
 [node name="VoiceSlider" parent="VBoxContainer2/Control4" instance=ExtResource("5_dygcn")]
 unique_name_in_owner = true
+layout_mode = 0
+offset_top = 67.0
+offset_bottom = 83.0
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -161,6 +167,48 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Хроматична аберація"
 
+[node name="VBoxContainer4" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 260.0
+offset_top = 76.0
+offset_right = 753.0
+offset_bottom = 279.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Текст"
+
+[node name="Control2" type="Control" parent="VBoxContainer4"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer4/Control2"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 313.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 40
+text = "Розмір тексту"
+
+[node name="TextSizeSlider" parent="VBoxContainer4/Control2" instance=ExtResource("5_dygcn")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 67.0
+offset_bottom = 83.0
+min_value = 20.0
+max_value = 50.0
+value = 28.0
+tick_count = 5
+
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/WindowButton" to="." method="_on_window_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/FullScreenButton" to="." method="_on_full_screen_button_pressed"]
@@ -169,3 +217,4 @@ text = "Хроматична аберація"
 [connection signal="value_changed" from="VBoxContainer2/Control4/VoiceSlider" to="." method="_on_voice_slider_value_changed"]
 [connection signal="toggled" from="VBoxContainer3/Noise" to="." method="_on_noise_toggled"]
 [connection signal="toggled" from="VBoxContainer3/ChromaticAbberation" to="." method="_on_chromatic_abberation_toggled"]
+[connection signal="value_changed" from="VBoxContainer4/Control2/TextSizeSlider" to="." method="_on_text_size_slider_value_changed"]
