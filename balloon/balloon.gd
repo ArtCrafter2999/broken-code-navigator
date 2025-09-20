@@ -108,8 +108,6 @@ func _process(delta: float) -> void:
 	dialogue_label.add_theme_font_size_override("italics_font_size", value)
 	dialogue_label.add_theme_font_size_override("mono_font_size", value)
 	dialogue_label.add_theme_font_size_override("normal_font_size", value)
-	print(dialogue_label.get_theme_font_size("normal_font_size"))
-	# TODO видає правильне значення але чомусь не змінює розмір тексту
 
 func _notification(what: int) -> void:
 	## Detect a change of locale and update the current dialogue line to show the new language
@@ -252,7 +250,6 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("Back"):
 		_on_back_pressed();
 		get_viewport().set_input_as_handled()
-	#print("gui 1")
 	if dialogue_label.is_typing or screen_text.is_typing:
 		var mouse_was_clicked: bool = \
 				event is InputEventMouseButton and \
@@ -267,8 +264,6 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 			else:
 				screen_text.skip_typing()
 			return
-
-	#print("gui 2")
 
 	if not is_waiting_for_input: return
 	if dialogue_line.responses.size() > 0: return

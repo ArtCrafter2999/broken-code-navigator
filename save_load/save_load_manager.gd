@@ -15,7 +15,6 @@ func _ready() -> void:
 
 func save_file(image: Image = null):
 	var file_name = Time.get_datetime_string_from_system().replace(":", "")
-	print(file_name)
 	var file := FileAccess.open("user://saves/%s" % file_name, FileAccess.WRITE)
 	image.compress(Image.COMPRESS_S3TC)
 	file.store_var(image.data, true)

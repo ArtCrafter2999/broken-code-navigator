@@ -5,10 +5,12 @@ signal main_menu
 signal closed
 
 @export var save_load_manager: SaveLoadManager;
+@export var play_scene: PlayScene;
 
 @onready var panel: Panel = $Panel
 @onready var load_screen: LoadScreen = $Panel/LoadScreen
 @onready var settings_screen: SettingsScreen = $Panel/SettingsScreen
+@onready var history_screen: HistoryScreen = $Panel/HistoryScreen
 @onready var buttons: VBoxContainer = $Panel/Buttons
 @onready var audio_slide: AudioStreamPlayer = $AudioSlide
 
@@ -21,6 +23,7 @@ var _buttons_sliding : Dictionary[Control, Tween] = {};
 
 func _ready() -> void:
 	load_screen.save_load_manager = save_load_manager
+	history_screen.play_scene = play_scene
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("HideUI"):
@@ -30,7 +33,6 @@ func _process(delta: float) -> void:
 
 func slide_buttons(buttons: Control, in_view: bool):
 	if _buttons_sliding.has(buttons): return;
-	load_screen.close();
 	audio_slide.play();
 	
 	var tween = create_tween();
@@ -49,6 +51,7 @@ func close():
 	closed.emit()
 	load_screen.close()
 	settings_screen.close()
+	history_screen.close()
 	is_open = false;
 	
 	if tween:
@@ -84,7 +87,6 @@ func open():
 	if not is_open: return;
 
 func _on_save_pressed() -> void:
-	print(image.data.width)
 	save_load_manager.save_file(image)
 
 func _on_load_pressed() -> void:
@@ -108,3 +110,11 @@ func _on_settings_pressed() -> void:
 func _on_settings_screen_back_pressed() -> void:
 	slide_buttons(buttons, true)
 	settings_screen.close()
+	
+func _on_history_screen_back_pressed() -> void:
+	slide_buttons(buttons, true)
+	history_screen.close()
+
+func _on_history_pressed() -> void:
+	slide_buttons(buttons, false)
+	history_screen.open()

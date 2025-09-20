@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://djoxys77ftvr1"]
 
-[ext_resource type="Script" uid="uid://dspovn1bwmtgr" path="res://gui/load_slot.gd" id="1_2bckr"]
+[ext_resource type="Script" uid="uid://dspovn1bwmtgr" path="res://load_screen/load_slot.gd" id="1_2bckr"]
 [ext_resource type="AudioStream" uid="uid://ccdbiok202b11" path="res://sound/button_click.mp3" id="2_5md8o"]
 [ext_resource type="AudioStream" uid="uid://nt58omx85e7" path="res://sound/button_hover.mp3" id="3_742xb"]
 
@@ -104,9 +104,11 @@ metadata/_custom_type_script = "uid://dspovn1bwmtgr"
 
 [node name="AudioClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_5md8o")
+bus = &"SFX"
 
 [node name="AudioHover" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_742xb")
+bus = &"SFX"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(640, 360)

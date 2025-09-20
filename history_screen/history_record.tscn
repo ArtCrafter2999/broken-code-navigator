@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnubrhia1o0rm"]
+
+[ext_resource type="Script" uid="uid://d2a7mt37mef82" path="res://history_screen/history_record.gd" id="1_akdgh"]
+[ext_resource type="FontFile" uid="uid://c0hcdrpugul21" path="res://fonts/OpenSans_Condensed-Bold.ttf" id="1_sw7e5"]
+[ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="3_hbm8d"]
+[ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="4_jh31b"]
+[ext_resource type="FontFile" uid="uid://c8dur41icydv1" path="res://fonts/Arimo-BoldItalic.ttf" id="5_ummdo"]
+[ext_resource type="FontFile" uid="uid://bgdab0ixjcgq1" path="res://fonts/Arimo-Bold.ttf" id="6_6kxva"]
+[ext_resource type="Script" uid="uid://biyuj5ekuta5x" path="res://styles/obfuscated.gd" id="7_h82rw"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_cwey4"]
+script = ExtResource("7_h82rw")
+metadata/_custom_type_script = "uid://biyuj5ekuta5x"
+
+[node name="HistoryRecord" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+script = ExtResource("1_akdgh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="CharacterLabel" type="RichTextLabel" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_fonts/normal_font = ExtResource("1_sw7e5")
+theme_override_font_sizes/normal_font_size = 33
+bbcode_enabled = true
+text = "Character"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 12
+
+[node name="DialogueLabel" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_hbm8d")
+theme_override_fonts/italics_font = ExtResource("4_jh31b")
+theme_override_fonts/bold_italics_font = ExtResource("5_ummdo")
+theme_override_fonts/bold_font = ExtResource("6_6kxva")
+theme_override_font_sizes/bold_italics_font_size = 28
+theme_override_font_sizes/italics_font_size = 28
+theme_override_font_sizes/mono_font_size = 28
+theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/bold_font_size = 28
+bbcode_enabled = true
+text = "Dialogue..."
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+custom_effects = [SubResource("RichTextEffect_cwey4")]
+meta_underlined = false
+hint_underlined = false
+deselect_on_focus_loss_enabled = false

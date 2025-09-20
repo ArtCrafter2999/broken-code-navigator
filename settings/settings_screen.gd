@@ -34,7 +34,6 @@ func close():
 	if not opened: return;
 	opened = false;
 	await create_tween().tween_property(self, "modulate", Color.TRANSPARENT, 0.5).finished
-	print("hidden")
 	hide();
 
 func _on_window_button_pressed() -> void:

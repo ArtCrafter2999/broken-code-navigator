@@ -72,7 +72,7 @@ func _process(_delta: float) -> void:
 	
 	is_skipping = (Input.is_action_pressed("Skip") or (ballon and ballon.is_skip_button_pressed)) and \
 			is_instance_valid(ballon) and \
-			#ballon.dialogue_line.id in GameState.read_messages and \
+			ballon.dialogue_line.id in GameState.read_messages and \
 			not _is_paused and \
 			ballon.dialogue_line.responses.size() == 0
 
@@ -380,6 +380,10 @@ func fade_out(texture: Control, fade_duration: float, remove: bool = true):
 func remove_all_saves():
 	removed_saves.emit();
 
+func get_line(line_id: String) -> DialogueLine:
+	var value = ballon.resource.lines[line_id]
+	return DialogueLine.new(value)
+
 func _clear_scene(clear_music: bool = false, clear_ambience: bool = false):
 	var remove_node = Node.new();
 	add_child(remove_node)
@@ -422,10 +426,6 @@ func _save_step(line: DialogueLine) -> Dictionary:
 			}
 	
 	return step;
-
-func _get_line(line_id: String) -> DialogueLine:
-	var value = ballon.resource.lines[line_id]
-	return DialogueLine.new(value)
 
 func set_talking(character_sprite: Variant = null, second: String = ""):
 	if second:
@@ -497,7 +497,6 @@ func _load_voice(character_name: String, line: DialogueLine):
 		
 		voice_file_name = voice_file_name.replace(" ", "_")
 	
-	print(voice_file_name.to_lower())
 	var voice_file = "res://voice/%s.mp3" % voice_file_name.to_lower()
 	
 	if ResourceLoader.exists(voice_file):
@@ -574,7 +573,7 @@ func _on_prev(line_id: String):
 		
 		if not saved_step: return;
 		
-		var line = _get_line(saved_step["line_id"])
+		var line = get_line(saved_step["line_id"])
 		
 		if line.tags.has("screen"):
 			var index = ballon.history.find(line.id)
@@ -588,7 +587,6 @@ func _on_prev(line_id: String):
 	restore_state(step)
 
 func _on_skip_interval_timeout() -> void:
-	#print(ballon.history, " ", ballon.dialogue_line.next_id)
 	if is_skipping and ballon and not DialogueManager.is_mutating:
 		ballon.next(ballon.dialogue_line.next_id)
 

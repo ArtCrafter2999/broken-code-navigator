@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqa8cxvsy46mm"]
+
+[ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="1_ok6t1"]
+[ext_resource type="Script" uid="uid://cifjyrrgu4xi6" path="res://history_screen/history_screen.gd" id="1_rhwlx"]
+[ext_resource type="PackedScene" uid="uid://bnubrhia1o0rm" path="res://history_screen/history_record.tscn" id="2_clhad"]
+
+[node name="HistoryScreen" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rhwlx")
+
+[node name="BackButton" parent="." instance=ExtResource("1_ok6t1")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.5
+offset_top = -155.0
+offset_right = 134.5
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Назад"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="RecordsContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HistoryRecord" parent="MarginContainer/ScrollContainer/RecordsContainer" instance=ExtResource("2_clhad")]
+layout_mode = 2
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="gui_input" from="MarginContainer/ScrollContainer" to="." method="_on_scroll_container_gui_input"]
+[connection signal="scroll_ended" from="MarginContainer/ScrollContainer" to="." method="_on_scroll_container_scroll_ended"]

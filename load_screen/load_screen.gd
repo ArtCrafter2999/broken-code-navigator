@@ -5,11 +5,17 @@ signal loaded_file(file_name: String)
 signal back_pressed
 
 @export var save_load_manager: SaveLoadManager;
-const LOAD_SLOT = preload("res://gui/load_slot.tscn")
+const LOAD_SLOT = preload("res://load_screen/load_slot.tscn")
 
 @onready var grid_container: GridContainer = $ScrollContainer/MarginContainer/GridContainer
 
 var opened = false;
+var load_slot_template: LoadSlot
+
+func _ready() -> void:
+	var child = grid_container.get_child(0)
+	load_slot_template = child.duplicate()
+	child.queue_free();
 
 func load_file(file_name: String):
 	if not opened: return;
@@ -24,7 +30,7 @@ func open():
 	for save in saves:
 		var file = save["file"]
 		var image = save["image"]
-		var load_slot = LOAD_SLOT.instantiate() as LoadSlot
+		var load_slot = load_slot_template.duplicate() as LoadSlot
 		load_slot.image = image
 		load_slot.pressed.connect(func (): load_file(file))
 		grid_container.add_child(load_slot)

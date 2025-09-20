@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b1wxsghutirw0" path="res://play_scene/play_scene.tscn" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://s3lmam86urra" path="res://save_load/save_load_manager.gd" id="2_pu3yx"]
 [ext_resource type="Texture2D" uid="uid://11bnygwu7cr4" path="res://balloon/sprites/back_button.svg" id="5_c16ls"]
-[ext_resource type="PackedScene" uid="uid://4dq358ewkgdq" path="res://scenes/pause_sreen.tscn" id="5_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://4dq358ewkgdq" path="res://scenes/pause_screen.tscn" id="5_rt2n2"]
 [ext_resource type="Script" uid="uid://cs70f0otc6h8p" path="res://gui/hover_modulate.gd" id="6_18nlu"]
 [ext_resource type="PackedScene" uid="uid://c7n7oudkkwr62" path="res://scenes/credits.tscn" id="8_18nlu"]
 [ext_resource type="Texture2D" uid="uid://dadh8rtanpjau" path="res://backgrounds/disclaimer.png" id="9_c1pb6"]
@@ -57,9 +57,10 @@ icon_alignment = 1
 script = ExtResource("6_18nlu")
 hover_modulate = Color(1, 1, 1, 1)
 
-[node name="PauseScreen" parent="." node_paths=PackedStringArray("save_load_manager") instance=ExtResource("5_rt2n2")]
+[node name="PauseScreen" parent="." node_paths=PackedStringArray("save_load_manager", "play_scene") instance=ExtResource("5_rt2n2")]
 visible = false
 save_load_manager = NodePath("../SaveLoadManager")
+play_scene = NodePath("../PlayScene")
 
 [node name="Credits" parent="." instance=ExtResource("8_18nlu")]
 visible = false
