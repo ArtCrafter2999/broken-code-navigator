@@ -28,21 +28,7 @@ var background: TextureRect
 var music_player: AudioStreamPlayer
 var ambience_player: AudioStreamPlayer
 var history: Dictionary
-var is_skipping: bool:
-	get:
-		return DialogueManager.is_skipping;
-	set(value):
-		if not DialogueManager.is_skipping and value:
-			DialogueManager.is_skipping = value
-			_on_skip_interval_timeout();
-		else:
-			DialogueManager.is_skipping = value
-		if value:
-			if skip_interval.is_stopped():
-				skip_interval.start()
-			voice_player.stop()
-		else:
-			skip_interval.stop()
+
 var voiced: bool = false:
 	get:
 		return voiced;
@@ -59,22 +45,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if not visible: return;
-	#print(Input.is_action_pressed("Skip"), " or ",
-			#ballon.is_skip_button_pressed, " and ", is_instance_valid(ballon), " and ",
-			#ballon.dialogue_line.id in GameState.read_messages, " and ", \
-			#not _is_paused, " and ", \
-			#ballon.dialogue_line.responses.size() == 0)
-	
 	if Input.is_action_pressed("HideUI"):
 		ballon.balloon.modulate = Color.TRANSPARENT;
 	else:
 		ballon.balloon.modulate = Color.WHITE;
-	
-	is_skipping = (Input.is_action_pressed("Skip") or (ballon and ballon.is_skip_button_pressed)) and \
-			is_instance_valid(ballon) and \
-			ballon.dialogue_line.id in GameState.read_messages and \
-			not _is_paused and \
-			ballon.dialogue_line.responses.size() == 0
 
 func play(dialogue_path: String, line_id: String = "start") -> void:
 	DialogueManager.got_dialogue.connect(_got_dialogue)
@@ -84,8 +58,11 @@ func play(dialogue_path: String, line_id: String = "start") -> void:
 	ballon = DialogueManager.show_dialogue_balloon_scene(BALLOON, resource, line_id, \
 			[self, screen_text]
 	)
+	ballon.reparent(self)
 	ballon.on_prev.connect(_on_prev)
 	ballon.on_next.connect(_on_next)
+	SkipManager.check_skip = _check_skip
+	SkipManager.skip_changed.connect(_on_change_skip)
 	
 	if line_id != "start":
 		var step = history.get(line_id, null);
@@ -232,7 +209,7 @@ func change_character(ch_name: String, options: Dictionary = {}):
 		character_sprite.align = align
 		var new_pivot = Vector2(sprite.get_width() * align, sprite.get_height());
 		var new_position = Vector2((get_viewport_rect().size.x - sprite.get_width()) * align, get_viewport_rect().size.y - sprite.get_height());
-		if not is_skipping:
+		if not SkipManager.is_skipping:
 			var tween = create_tween().set_trans(Tween.TRANS_SINE)
 			tween.tween_property(character_sprite, 
 					"pivot_offset", 
@@ -353,7 +330,7 @@ func get_current_state():
 	return _save_step(ballon.dialogue_line)
 
 func fade_in(texture: Control, fade_duration: float):
-	if is_skipping or not fade_duration: return
+	if SkipManager.is_skipping or not fade_duration: return
 	texture.modulate = Color.TRANSPARENT
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, fade_duration)
@@ -366,7 +343,7 @@ func fade_out(texture: Control, fade_duration: float, remove: bool = true):
 		remove_node = Control.new()
 		texture.add_sibling(remove_node)
 		texture.reparent(remove_node)
-	if is_skipping:
+	if SkipManager.is_skipping:
 		if remove:
 			texture.queue_free()
 		return;
@@ -463,7 +440,7 @@ func set_talking(character_sprite: Variant = null, second: String = ""):
 		tween.tween_property(sprite, "scale", DIM_CHARACTER_SCALE, 0.1)
 
 func _load_voice(character_name: String, line: DialogueLine):
-	if is_skipping: return;
+	if SkipManager.is_skipping: return;
 	
 	var voice_file_name = line.get_tag_value("v")
 	
@@ -587,8 +564,23 @@ func _on_prev(line_id: String):
 	restore_state(step)
 
 func _on_skip_interval_timeout() -> void:
-	if is_skipping and ballon and not DialogueManager.is_mutating:
+	if SkipManager.is_skipping and ballon and not DialogueManager.is_mutating:
 		ballon.next(ballon.dialogue_line.next_id)
 
 func dialogue_ended(_resource: DialogueResource):
 	game_ended.emit()
+
+func _check_skip():
+	return is_instance_valid(ballon) and \
+			ballon.dialogue_line.id in GameState.read_messages and \
+			not _is_paused and \
+			ballon.dialogue_line.responses.size() == 0
+
+func _on_change_skip(value: bool):
+	if value:
+		_on_skip_interval_timeout();
+		if skip_interval.is_stopped():
+			skip_interval.start()
+		voice_player.stop()
+	else:
+		skip_interval.stop()

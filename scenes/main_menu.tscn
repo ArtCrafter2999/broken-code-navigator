@@ -38,7 +38,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_bqqt6")
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("controls")]
+[node name="BackgroundParalax" type="Control" parent="." node_paths=PackedStringArray("controls")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,7 +49,7 @@ script = ExtResource("6_flqon")
 controls = [NodePath("Background"), NodePath("Foreground")]
 maximum_movement = Vector2(100, 50)
 
-[node name="Background" type="TextureRect" parent="Control"]
+[node name="Background" type="TextureRect" parent="BackgroundParalax"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,7 +62,7 @@ texture = ExtResource("6_lgwnu")
 script = ExtResource("8_rcqid")
 modifier = 0.1
 
-[node name="Foreground" type="TextureRect" parent="Control"]
+[node name="Foreground" type="TextureRect" parent="BackgroundParalax"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

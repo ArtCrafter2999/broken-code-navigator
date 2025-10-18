@@ -15,7 +15,7 @@ func screen_text(bbcode_text: String, options: Dictionary = {}):
 	parse_bbcode(bbcode_text);
 	
 	await play_scene.fade_in(self, fade_in);
-	if not play_scene.is_skiping:
+	if not SkipManager.is_skipping:
 		await get_tree().create_timer(wait).timeout
 	await play_scene.fade_out(self, fade_out, false);
 	visible = false;

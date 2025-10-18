@@ -52,7 +52,6 @@ var dialogue_line: DialogueLine:
 ## A cooldown timer for delaying the balloon hide when encountering a mutation.
 var mutation_cooldown: Timer = Timer.new()
 
-var is_skip_button_pressed: bool = false;
 var show_buttons = true;
 
 ## The base balloon anchor
@@ -75,12 +74,6 @@ var show_buttons = true;
 
 @onready var screen_text: DialogueLabel = %ScreenText
 @onready var letter_click: AudioStreamPlayer = $LetterClick
-
-var is_skipping: bool:
-	get():
-		return DialogueManager.is_skipping
-	set(value):
-		DialogueManager.is_skipping = value
 
 func _ready() -> void:
 	balloon.hide()
@@ -177,11 +170,11 @@ func apply_dialogue_line() -> void:
 			
 			skip_button.visible = GameState.read_messages.has(dialogue_line.id)
 			if not skip_button.visible:
-				is_skip_button_pressed = false;
+				SkipManager.should_skip = false;
 		else:
 			back_button.visible = false;
 			skip_button.visible = false;
-			is_skip_button_pressed = false;
+			SkipManager.should_skip = false;
 	
 		# Show our balloon
 		balloon.show()
@@ -201,7 +194,7 @@ func apply_dialogue_line() -> void:
 			one_response_menu.show();
 	elif dialogue_line.time != "":
 		var time = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
-		if not is_skipping:
+		if not SkipManager.is_skipping:
 			await get_tree().create_timer(time).timeout
 		next(dialogue_line.next_id)
 	else:
@@ -290,10 +283,10 @@ func _spoke(_letter: String, _letter_index: int, _speed: float):
 		letter_click.play()
 
 func _on_skip_button_button_down() -> void:
-	is_skip_button_pressed = true;
+	SkipManager.should_skip = true;
 	#print("button_down") #TODO чомусь іноді кнопка не клікається коли пишеться текст
 
 func _on_skip_button_button_up() -> void:
-	is_skip_button_pressed = false;
+	SkipManager.should_skip = false;
 
 #endregion

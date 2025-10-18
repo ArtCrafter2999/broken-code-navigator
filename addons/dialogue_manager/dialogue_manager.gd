@@ -69,9 +69,6 @@ var _expression_parser: DMExpressionParser = DMExpressionParser.new()
 
 var is_mutating: bool = false;
 
-var is_skipping: bool = false;
-
-
 func _ready() -> void:
 	# Cache the known Node2D properties
 	_node_properties = ["Script Variables"]
@@ -83,7 +80,6 @@ func _ready() -> void:
 	# Make the dialogue manager available as a singleton
 	if not Engine.has_singleton("DialogueManager"):
 		Engine.register_singleton("DialogueManager", self)
-
 
 ## Step through lines and run any mutations until we either hit some dialogue or the end of the conversation
 func get_next_dialogue_line(resource: DialogueResource, key: String = "", extra_game_states: Array = [], mutation_behaviour: DMConstants.MutationBehaviour = DMConstants.MutationBehaviour.Wait) -> DialogueLine:
@@ -118,7 +114,7 @@ func get_next_dialogue_line(resource: DialogueResource, key: String = "", extra_
 		is_mutating = true
 		match mutation_behaviour:
 			DMConstants.MutationBehaviour.Wait:
-				if is_skipping:
+				if SkipManager.is_skipping:
 					_mutate(dialogue.mutation, extra_game_states)
 				else:
 					await _mutate(dialogue.mutation, extra_game_states)

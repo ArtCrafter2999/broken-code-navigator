@@ -40,12 +40,6 @@ signal finished_typing()
 @export var seconds_per_pause_step: float = 0.3
 
 var _already_mutated_indices: PackedInt32Array = []
-var is_skipping: bool:
-	get:
-		return DialogueManager.is_skipping;
-	set(value):
-		DialogueManager.is_skipping = value;
-
 
 ## The current line of dialogue.
 var dialogue_line:
@@ -117,7 +111,7 @@ func type_out() -> void:
 
 	if get_total_character_count() == 0:
 		self.is_typing = false
-	elif is_skipping or seconds_per_step == 0:
+	elif SkipManager.is_skipping or seconds_per_step == 0:
 		_mutate_remaining_mutations()
 		visible_characters = get_total_character_count()
 		self.is_typing = false
