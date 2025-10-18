@@ -75,4 +75,5 @@ locale/translations_pot_files=PackedStringArray("res://dialogues/test dialogue.d
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 viewport/transparent_background=true

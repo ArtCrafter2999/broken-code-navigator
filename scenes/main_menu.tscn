@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://0nfip0jqf6j6"]
+[gd_scene load_steps=14 format=3 uid="uid://0nfip0jqf6j6"]
 
 [ext_resource type="Script" uid="uid://tutidkrnyxi5" path="res://scenes/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="1_l6cm7"]
@@ -7,7 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://snkl6rwi0pwp" path="res://backgrounds/main_menu_2.png" id="3_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://dlcftmprpobqj" path="res://backgrounds/main_menu_Ruie.png" id="4_jk1qb"]
 [ext_resource type="AudioStream" uid="uid://ddwgbbkfhmdx" path="res://music/main_menu.mp3" id="4_rtw2f"]
+[ext_resource type="Script" uid="uid://b0jsmoc5ghvjs" path="res://gui/paralax.gd" id="6_flqon"]
+[ext_resource type="Texture2D" uid="uid://dvmqm13aprjnq" path="res://backgrounds/paralax-bg.png" id="6_lgwnu"]
 [ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://load_screen/load_screen.tscn" id="6_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://df3tvufb0ami8" path="res://backgrounds/Char.png" id="7_flqon"]
+[ext_resource type="Script" uid="uid://jc2hevtaiear" path="res://gui/paralax_element.gd" id="8_rcqid"]
 [ext_resource type="PackedScene" uid="uid://lt8rsgd8fj0v" path="res://settings/settings_screen.tscn" id="9_jk1qb"]
 
 [node name="MainMenu" type="Control"]
@@ -24,7 +28,8 @@ backgrounds = Array[Texture2D]([ExtResource("2_bqqt6"), ExtResource("3_tbmy8"), 
 stream = ExtResource("2_8ln24")
 bus = &"SFX"
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="BackgroundOld" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,6 +37,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_bqqt6")
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("controls")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_flqon")
+controls = [NodePath("Background"), NodePath("Foreground")]
+maximum_movement = Vector2(100, 50)
+
+[node name="Background" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.05)
+pivot_offset = Vector2(960, 540)
+texture = ExtResource("6_lgwnu")
+script = ExtResource("8_rcqid")
+modifier = 0.1
+
+[node name="Foreground" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.05)
+pivot_offset = Vector2(960, 540)
+texture = ExtResource("7_flqon")
+script = ExtResource("8_rcqid")
+modifier = 1.0
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rtw2f")

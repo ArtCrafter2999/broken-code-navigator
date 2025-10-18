@@ -7,7 +7,7 @@ signal load_pressed
 @export var backgrounds: Array[Texture2D]
 @export var save_load_manager: SaveLoadManager
 
-@onready var background: TextureRect = $Background
+@onready var background: TextureRect = $BackgroundOld
 @onready var main_menu_music: AudioStreamPlayer = $MainMenuMusic
 @onready var quit_button: GeneralMenuButton = $MainButtons/Quit
 @onready var main_buttons: VBoxContainer = $MainButtons

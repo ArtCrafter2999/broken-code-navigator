@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c7n7oudkkwr62"]
 
-[ext_resource type="Texture2D" uid="uid://bcahoipmofmm2" path="res://backgrounds/credits.png" id="1_8gwij"]
+[ext_resource type="Texture2D" uid="uid://bcahoipmofmm2" path="res://backgrounds/paralax-fg.png" id="1_8gwij"]
 [ext_resource type="Script" uid="uid://w6bysyppe2d6" path="res://scenes/credits.gd" id="2_kyhnv"]
 [ext_resource type="FontFile" uid="uid://ccdhcyg2isuc6" path="res://fonts/Arimo-Regular.ttf" id="2_mah5v"]
 [ext_resource type="FontFile" uid="uid://bb68hs3tjamjk" path="res://fonts/Arimo-Italic.ttf" id="3_kyhnv"]
@@ -64,7 +64,7 @@ theme_override_font_sizes/bold_font_size = 50
 bbcode_enabled = true
 text = "[font_size=70][b]Розробка:[/b][/font_size]
 
-[b]Сценарист, та автор ідеї:[/b]
+[b]Сценарист та автор ідеї:[/b]
 Liberty
 
 [b]Редактор[/b]
@@ -76,7 +76,7 @@ blkpur
 [b]Художник фонів:[/b]
 Hoopykai
 
-[b]Композитор, та саунд дизайн:[/b]
+[b]Композитор та саунд дизайн:[/b]
 Serhii Cherednichenko
 
 [b]Програміст:[/b]
