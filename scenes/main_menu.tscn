@@ -47,7 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_flqon")
 controls = [NodePath("Background"), NodePath("Foreground")]
-maximum_movement = Vector2(100, 50)
+maximum_movement = Vector2(60, 30)
 
 [node name="Background" type="TextureRect" parent="BackgroundParalax"]
 layout_mode = 1
@@ -60,7 +60,7 @@ scale = Vector2(1.05, 1.05)
 pivot_offset = Vector2(960, 540)
 texture = ExtResource("6_lgwnu")
 script = ExtResource("8_rcqid")
-modifier = 0.1
+modifier = 0.3
 
 [node name="Foreground" type="TextureRect" parent="BackgroundParalax"]
 layout_mode = 1
