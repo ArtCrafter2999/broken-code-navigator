@@ -52,12 +52,12 @@ func _ready() -> void:
 		if disabled: return;
 		audio_click.play()
 		fade_in(pressed_background, 0.1)
-		fade_in(pressed_background, 0.1)
+		fade_in(pressed_outline, 0.1)
 		to_black(label, 0.1))
 	button_up.connect(func ():
 		if disabled: return;
 		fade_out(pressed_background, 0.1)
-		fade_out(pressed_background, 0.1)
+		fade_out(pressed_outline, 0.1)
 		to_white(label, 0.1))
 
 var _prev_disabled = false;

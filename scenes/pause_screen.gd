@@ -102,6 +102,7 @@ func _on_load_screen_loaded_file(file_name: String) -> void:
 
 func _on_load_screen_back_pressed() -> void:
 	slide_buttons(buttons, true)
+	load_screen.close();
 
 func _on_settings_pressed() -> void:
 	slide_buttons(buttons, false)

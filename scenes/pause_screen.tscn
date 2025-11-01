@@ -37,31 +37,37 @@ theme_override_constants/separation = 50
 metadata/_edit_group_ = true
 
 [node name="Continue" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Продовжити"
 font_size = 40
 
 [node name="History" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Історія"
 font_size = 40
 
 [node name="Save" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Зберегти"
 font_size = 40
 
 [node name="Load" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Завантажити"
 font_size = 40
 
 [node name="Settings" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Налаштування"
 font_size = 40
 
 [node name="MainMenu" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Головне меню"
 font_size = 40

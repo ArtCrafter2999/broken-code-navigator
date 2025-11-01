@@ -24,9 +24,11 @@ func _ready() -> void:
 		fade_out(hover_outline, 0.3))
 	button_down.connect(func ():
 		if disabled: return;
-		audio_click.play())
+		audio_click.play()
+		fade_in(pressed_outline, 0.3))
 	button_up.connect(func ():
-		if disabled: return)
+		if disabled: return;
+		fade_out(pressed_outline, 0.3))
 
 func _process(delta: float) -> void:
 	#mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND;

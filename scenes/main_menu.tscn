@@ -93,21 +93,25 @@ theme_override_constants/separation = 100
 metadata/_edit_group_ = true
 
 [node name="Play" parent="MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Грати"
 font_size = 40
 
 [node name="Archive" parent="MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Архів"
 font_size = 40
 
 [node name="Settings" parent="MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Налаштування"
 font_size = 40
 
 [node name="Quit" parent="MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Вийти"
 font_size = 40
@@ -125,22 +129,26 @@ theme_override_constants/separation = 100
 metadata/_edit_group_ = true
 
 [node name="NewGame" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Нова гра"
 font_size = 40
 
 [node name="Test" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
 visible = false
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Тест"
 font_size = 40
 
 [node name="Load" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Продовжити"
 font_size = 40
 
 [node name="Back" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Назад"
 font_size = 40
