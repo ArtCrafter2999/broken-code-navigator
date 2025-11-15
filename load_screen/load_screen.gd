@@ -52,7 +52,8 @@ func _render(page: int = 1):
 		var file = save["file"]
 		var image = save["image"]
 		var load_slot = load_slot_template.duplicate() as LoadSlot
-		load_slot.image = image
+		load_slot.image = image;
+		load_slot.file_name = file;
 		load_slot.pressed.connect(func (): load_file(file))
 		grid_container.add_child(load_slot)
 	pass

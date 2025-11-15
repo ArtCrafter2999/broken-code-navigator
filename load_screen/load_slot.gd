@@ -10,9 +10,21 @@ extends BaseButton
 
 @onready var screen: TextureRect = %Screen
 
+@onready var context_menu: Panel = $ContextMenu
+
 var image: Image;
 
 var file_name: String;
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			context_menu.visible = true
+			context_menu.position = event.position
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() and \
+				context_menu.visible:
+			context_menu.visible = false;
+			get_viewport().set_input_as_handled()
 
 func _ready() -> void:
 	mouse_entered.connect(func (): 
