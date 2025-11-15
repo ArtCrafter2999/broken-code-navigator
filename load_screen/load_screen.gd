@@ -62,6 +62,7 @@ func _render(page: int = 1):
 		load_slot.pressed.connect(func (): load_file(file))
 		load_slot.context_menu_open.connect(_close_all_context_menu)
 		load_slot.on_delete.connect(func (): _on_delete_init(file))
+		load_slot.on_rename.connect(func (): _on_rename_init(file))
 		grid_container.add_child(load_slot)
 	pass
 
@@ -76,6 +77,7 @@ func _on_back_button_pressed() -> void:
 func _on_delete_init(file_name: String):
 	delete_confirmation_dialog.visible = true;
 	dialog_file_context = file_name
+	_close_all_context_menu();
 
 func _on_dialogs_close() -> void:
 	delete_confirmation_dialog.visible = false;
@@ -89,6 +91,7 @@ func _on_delete_button_pressed() -> void:
 func _on_rename_init(file_name: String):
 	rename_dialog.visible = true;
 	dialog_file_context = file_name
+	_close_all_context_menu();
 
 func _on_confirm_edit_button_pressed() -> void:
 	renamed_file.emit(dialog_file_context)
