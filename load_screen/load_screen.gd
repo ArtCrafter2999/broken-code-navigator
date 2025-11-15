@@ -2,16 +2,21 @@ class_name LoadScreen;
 extends Control
 
 signal loaded_file(file_name: String)
+signal deleted_file(file_name: String)
+signal renamed_file(old_filename: String, new_filename: String)
 signal back_pressed
 
 @export var save_load_manager: SaveLoadManager;
-@onready var pages: Pages = $Pages
 
+@onready var pages: Pages = $Pages
 @onready var grid_container: GridContainer = %GridContainer
+@onready var delete_confirmation_dialog: Panel = $DeleteConfirmationDialog
+@onready var rename_dialog: Panel = $RenameDialog
 
 var opened = false;
 var load_slot_template: LoadSlot
 var saves: Array[Dictionary]
+var dialog_file_context = null;
 
 func _ready() -> void:
 	var child = grid_container.get_child(0)
@@ -55,8 +60,36 @@ func _render(page: int = 1):
 		load_slot.image = image;
 		load_slot.file_name = file;
 		load_slot.pressed.connect(func (): load_file(file))
+		load_slot.context_menu_open.connect(_close_all_context_menu)
+		load_slot.on_delete.connect(func (): _on_delete_init(file))
 		grid_container.add_child(load_slot)
 	pass
 
+func _close_all_context_menu():
+	for child in grid_container.get_children():
+		if child is LoadSlot:
+			child.context_menu.visible = false;
+
 func _on_back_button_pressed() -> void:
 	back_pressed.emit();
+
+func _on_delete_init(file_name: String):
+	delete_confirmation_dialog.visible = true;
+	dialog_file_context = file_name
+
+func _on_dialogs_close() -> void:
+	delete_confirmation_dialog.visible = false;
+	rename_dialog.visible = false;
+	dialog_file_context = null;
+
+func _on_delete_button_pressed() -> void:
+	deleted_file.emit(dialog_file_context)
+	_on_dialogs_close();
+	
+func _on_rename_init(file_name: String):
+	rename_dialog.visible = true;
+	dialog_file_context = file_name
+
+func _on_confirm_edit_button_pressed() -> void:
+	renamed_file.emit(dialog_file_context)
+	_on_dialogs_close();

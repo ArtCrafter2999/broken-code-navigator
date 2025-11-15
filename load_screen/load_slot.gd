@@ -1,6 +1,10 @@
 class_name LoadSlot
 extends BaseButton
 
+signal context_menu_open
+signal on_delete
+signal on_rename
+
 @onready var audio_click: AudioStreamPlayer = $AudioClick
 @onready var audio_hover: AudioStreamPlayer = $AudioHover
 
@@ -19,6 +23,7 @@ var file_name: String;
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			context_menu_open.emit()
 			context_menu.visible = true
 			context_menu.position = event.position
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() and \
@@ -68,3 +73,11 @@ func to_white(texture: Control, time: float):
 	if not texture: return;
 	var tween = get_tree().create_tween()
 	tween.tween_property(texture, "modulate", Color.WHITE, time)
+
+
+func _on_rename_pressed() -> void:
+	on_rename.emit()
+
+
+func _on_delete_pressed() -> void:
+	on_delete.emit()

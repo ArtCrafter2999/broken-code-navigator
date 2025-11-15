@@ -254,3 +254,6 @@ text = "✏️Переназвати"
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "🗑️Видалити"
+
+[connection signal="pressed" from="ContextMenu/VBoxContainer/Rename" to="." method="_on_rename_pressed"]
+[connection signal="pressed" from="ContextMenu/VBoxContainer/Delete" to="." method="_on_delete_pressed"]
