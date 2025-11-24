@@ -57,7 +57,8 @@ func get_save_files() -> Array[Dictionary]:
 	var files = dir.get_files()
 	var response: Array[Dictionary] = []
 	for file in files:
-		response.append({"file": file, "image": load_image(file)})
+		if file.ends_with(".save"):
+			response.append({"file": file, "image": load_image(file)})
 	return response
 
 func remove_all_saves():
