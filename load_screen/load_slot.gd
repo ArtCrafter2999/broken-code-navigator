@@ -15,6 +15,7 @@ signal on_rename
 @onready var screen: TextureRect = %Screen
 
 @onready var context_menu: Panel = $ContextMenu
+@onready var label: Label = $CenterContainer/Screen/Panel/Label
 
 var image: Image;
 
@@ -32,6 +33,7 @@ func _gui_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 func _ready() -> void:
+	label.text = file_name.substr(0, file_name.rfind("."))
 	mouse_entered.connect(func (): 
 		if disabled: return;
 		audio_hover.play()

@@ -12,6 +12,9 @@ signal back_pressed
 @onready var grid_container: GridContainer = %GridContainer
 @onready var delete_confirmation_dialog: Panel = $DeleteConfirmationDialog
 @onready var rename_dialog: Panel = $RenameDialog
+@onready var new_name: TextEdit = %NewName
+
+const CREATE_SAVE_BUTTON = preload("res://load_screen/create_save_button.tscn")
 
 var opened = false;
 var load_slot_template: LoadSlot
@@ -34,7 +37,7 @@ func open():
 	show();
 	saves = save_load_manager.get_save_files()
 	saves.reverse();
-	_render();
+	render();
 	
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.5).from(Color.TRANSPARENT);
 	
@@ -46,10 +49,10 @@ func close():
 		node.queue_free()
 	hide();
 
-func _render(page: int = 1):
+func render(page: int = 1):
 	for child in grid_container.get_children():
 		child.queue_free();
-		
+	
 	pages.render(ceili(saves.size()/4.0));
 	
 	var pageItems = saves.slice((page - 1) * 4, ((page) * 4)) 
@@ -85,14 +88,21 @@ func _on_dialogs_close() -> void:
 	dialog_file_context = null;
 
 func _on_delete_button_pressed() -> void:
-	deleted_file.emit(dialog_file_context)
+	save_load_manager.remove_file(dialog_file_context);
 	_on_dialogs_close();
+	saves = save_load_manager.get_save_files()
+	saves.reverse();
+	render();
 	
 func _on_rename_init(file_name: String):
 	rename_dialog.visible = true;
 	dialog_file_context = file_name
+	new_name.placeholder_text = file_name.substr(0, file_name.rfind("."))
 	_close_all_context_menu();
 
 func _on_confirm_edit_button_pressed() -> void:
-	renamed_file.emit(dialog_file_context)
+	save_load_manager.rename_file(dialog_file_context, new_name.text)
 	_on_dialogs_close();
+	saves = save_load_manager.get_save_files()
+	saves.reverse();
+	render()

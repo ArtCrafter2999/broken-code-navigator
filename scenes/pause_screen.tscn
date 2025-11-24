@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4dq358ewkgdq"]
+[gd_scene load_steps=8 format=3 uid="uid://4dq358ewkgdq"]
 
 [ext_resource type="Script" uid="uid://dxgmsdglfank5" path="res://scenes/pause_screen.gd" id="1_duq8p"]
 [ext_resource type="AudioStream" uid="uid://b5666hqp5air6" path="res://sound/ui_slide.mp3" id="2_k26m1"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://load_screen/load_screen.tscn" id="4_213y4"]
 [ext_resource type="PackedScene" uid="uid://lt8rsgd8fj0v" path="res://settings/settings_screen.tscn" id="5_lubob"]
 [ext_resource type="PackedScene" uid="uid://bqa8cxvsy46mm" path="res://history_screen/history_screen.tscn" id="6_k26m1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k26m1"]
+font_size = 40
 
 [node name="PauseScreen" type="CanvasLayer"]
 layer = 50
@@ -84,9 +87,83 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="SaveNameDialog" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Panel/SaveNameDialog"]
+layout_mode = 0
+offset_left = 555.0
+offset_top = 299.0
+offset_right = 1254.0
+offset_bottom = 736.0
+color = Color(0.192157, 0.513726, 0.654902, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/SaveNameDialog/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Panel/SaveNameDialog/ColorRect/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect"]
+layout_mode = 2
+offset_left = 13.0
+offset_top = 34.0
+offset_right = 676.0
+offset_bottom = 102.0
+text = "Нова назва для збереження"
+label_settings = SubResource("LabelSettings_k26m1")
+autowrap_mode = 2
+
+[node name="SaveName" type="TextEdit" parent="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -104.5
+offset_right = -15.0
+offset_bottom = -34.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+placeholder_text = "Назва"
+
+[node name="ConfirmButton" parent="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect" instance=ExtResource("3_o31j6")]
+offset_left = 392.0
+offset_top = 313.0
+offset_right = 661.0
+offset_bottom = 409.0
+text = "Так"
+
+[node name="CancelButton" parent="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect" instance=ExtResource("3_o31j6")]
+offset_left = 28.0
+offset_top = 313.0
+offset_right = 297.0
+offset_bottom = 409.0
+text = "Відмінити"
+
 [connection signal="pressed" from="Panel/Buttons/Continue" to="." method="close"]
 [connection signal="pressed" from="Panel/Buttons/History" to="." method="_on_history_pressed"]
-[connection signal="pressed" from="Panel/Buttons/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Panel/Buttons/Save" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Panel/Buttons/Save" to="Panel/SaveNameDialog" method="show"]
 [connection signal="pressed" from="Panel/Buttons/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="Panel/Buttons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Panel/Buttons/MainMenu" to="." method="_on_main_menu_pressed"]
@@ -94,3 +171,5 @@ layout_mode = 1
 [connection signal="loaded_file" from="Panel/LoadScreen" to="." method="_on_load_screen_loaded_file"]
 [connection signal="back_pressed" from="Panel/SettingsScreen" to="." method="_on_settings_screen_back_pressed"]
 [connection signal="back_pressed" from="Panel/HistoryScreen" to="." method="_on_history_screen_back_pressed"]
+[connection signal="pressed" from="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect/ConfirmButton" to="." method="_on_save_confirm_button_pressed"]
+[connection signal="pressed" from="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect/CancelButton" to="." method="_on_cancel_save_button_pressed"]

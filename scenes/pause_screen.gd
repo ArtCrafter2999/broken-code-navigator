@@ -13,6 +13,8 @@ signal closed
 @onready var history_screen: HistoryScreen = $Panel/HistoryScreen
 @onready var buttons: VBoxContainer = $Panel/Buttons
 @onready var audio_slide: AudioStreamPlayer = $AudioSlide
+@onready var save_name_dialog: Panel = $Panel/SaveNameDialog
+@onready var save_name_field: TextEdit = %SaveName
 
 var is_open = false;
 
@@ -86,9 +88,6 @@ func open():
 	
 	if not is_open: return;
 
-func _on_save_pressed() -> void:
-	save_load_manager.save_file(image)
-
 func _on_load_pressed() -> void:
 	slide_buttons(buttons, false)
 	load_screen.open()
@@ -119,3 +118,16 @@ func _on_history_screen_back_pressed() -> void:
 func _on_history_pressed() -> void:
 	slide_buttons(buttons, false)
 	history_screen.open()
+
+func _on_save_confirm_button_pressed() -> void:
+	var save_name = save_name_field.text;
+	if !save_name: save_name = save_name_field.placeholder_text
+	save_load_manager.save_file(image, save_name)
+	save_name_dialog.hide()
+
+func _on_cancel_save_button_pressed() -> void:
+	save_name_dialog.hide()
+
+func _on_save_button_pressed() -> void:
+	save_name_dialog.show()
+	save_name_field.placeholder_text = Time.get_datetime_string_from_system().replace(":", ".").replace("T", " ")

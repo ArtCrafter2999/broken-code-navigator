@@ -13,9 +13,10 @@ func _ready() -> void:
 	elif _is_save_dir_empty():
 		main_menu.load_button.disabled = true
 
-func save_file(image: Image = null):
-	var file_name = Time.get_datetime_string_from_system().replace(":", "")
-	var file := FileAccess.open("user://saves/%s" % file_name, FileAccess.WRITE)
+func save_file(image: Image = null, file_name: String = ""):
+	if !file_name:
+		file_name = Time.get_datetime_string_from_system().replace(":", ".").replace("T", " ")
+	var file := FileAccess.open("user://saves/%s" % file_name + ".save", FileAccess.WRITE)
 	image.compress(Image.COMPRESS_S3TC)
 	file.store_var(image.data, true)
 	file.store_var(play_scene.get_current_state(), true)
@@ -59,6 +60,31 @@ func get_save_files() -> Array[Dictionary]:
 		response.append({"file": file, "image": load_image(file)})
 	return response
 
+func remove_all_saves():
+	var dir = DirAccess.open("user://saves");
+	if not dir: return;
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir():
+			dir.remove("user://saves".path_join(file_name))
+		file_name = dir.get_next()
+	main_menu.load_button.disabled = true
+
+func remove_file(file_name: String): 
+	if not FileAccess.file_exists("user://saves/%s" % file_name):
+		push_warning("Trying to delete savefile '%s' that doesnt exist" % file_name)
+		return;
+	DirAccess.remove_absolute("user://saves/%s" % file_name)
+	
+func rename_file(file_name: String, new_file_name: String): 
+	if not FileAccess.file_exists("user://saves/%s" % file_name):
+		push_warning("Trying to rename savefile '%s' that doesnt exist" % file_name)
+		return;
+	if !new_file_name:
+		new_file_name = Time.get_datetime_string_from_system().replace(":", ".").replace("T", " ")
+	DirAccess.rename_absolute("user://saves/%s" % file_name, "user://saves/%s" % new_file_name + ".save")
+
 func _is_save_dir_empty():
 	var dir = DirAccess.open("user://saves")
 	if dir == null:
@@ -73,14 +99,3 @@ func _is_save_dir_empty():
 	dir.list_dir_end()
 	
 	return file_name == ""
-
-func remove_all_saves():
-	var dir = DirAccess.open("user://saves");
-	if not dir: return;
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
-		if not dir.current_is_dir():
-			dir.remove("user://saves".path_join(file_name))
-		file_name = dir.get_next()
-	main_menu.load_button.disabled = true
