@@ -53,7 +53,7 @@ func render(page: int = 1):
 	for child in grid_container.get_children():
 		child.queue_free();
 	
-	pages.render(ceili(saves.size()/4.0));
+	pages.render(ceili(saves.size()/4.0), page);
 	
 	var pageItems = saves.slice((page - 1) * 4, ((page) * 4)) 
 	for save in pageItems:
