@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://0nfip0jqf6j6"]
+[gd_scene load_steps=15 format=3 uid="uid://0nfip0jqf6j6"]
 
 [ext_resource type="Script" uid="uid://tutidkrnyxi5" path="res://scenes/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="PackedScene" uid="uid://b5alugxtb238t" path="res://gui/menu_button.tscn" id="1_l6cm7"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://df3tvufb0ami8" path="res://backgrounds/Char.png" id="7_flqon"]
 [ext_resource type="Script" uid="uid://jc2hevtaiear" path="res://gui/paralax_element.gd" id="8_rcqid"]
 [ext_resource type="PackedScene" uid="uid://lt8rsgd8fj0v" path="res://settings/settings_screen.tscn" id="9_jk1qb"]
+[ext_resource type="Script" uid="uid://bhwpmx52fvb3e" path="res://scenes/archive_note.gd" id="14_1ajci"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -161,7 +162,48 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="ArchiveNote" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 501.0
+offset_top = 372.0
+offset_right = 969.0
+offset_bottom = 508.0
+color = Color(0.192157, 0.513726, 0.654902, 1)
+script = ExtResource("14_1ajci")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ArchiveNote"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="ArchiveNote/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="ArchiveNote/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ArchiveNote/MarginContainer/ColorRect/CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "В розробці"
+
 [connection signal="pressed" from="MainButtons/Play" to="." method="_open_play_buttons"]
+[connection signal="pressed" from="MainButtons/Archive" to="ArchiveNote" method="open"]
 [connection signal="pressed" from="MainButtons/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
