@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4dq358ewkgdq"]
+[gd_scene load_steps=9 format=3 uid="uid://4dq358ewkgdq"]
 
 [ext_resource type="Script" uid="uid://dxgmsdglfank5" path="res://scenes/pause_screen.gd" id="1_duq8p"]
 [ext_resource type="AudioStream" uid="uid://b5666hqp5air6" path="res://sound/ui_slide.mp3" id="2_k26m1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://byvmmq1h54blk" path="res://load_screen/load_screen.tscn" id="4_213y4"]
 [ext_resource type="PackedScene" uid="uid://lt8rsgd8fj0v" path="res://settings/settings_screen.tscn" id="5_lubob"]
 [ext_resource type="PackedScene" uid="uid://bqa8cxvsy46mm" path="res://history_screen/history_screen.tscn" id="6_k26m1"]
+[ext_resource type="Script" uid="uid://dnm24meabo06m" path="res://scenes/about_screen.gd" id="7_o31j6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_k26m1"]
 font_size = 40
@@ -67,6 +68,12 @@ font_size = 40
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Налаштування"
+font_size = 40
+
+[node name="About" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Про гру"
 font_size = 40
 
 [node name="MainMenu" parent="Panel/Buttons" instance=ExtResource("3_o31j6")]
@@ -160,12 +167,80 @@ offset_right = 297.0
 offset_bottom = 409.0
 text = "Відмінити"
 
+[node name="AboutScreen" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-134, 598)
+script = ExtResource("7_o31j6")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/AboutScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -458.0
+offset_top = 39.0
+offset_right = 459.0
+offset_bottom = 948.0
+grow_horizontal = 2
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+theme_override_font_sizes/mono_font_size = 22
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+bbcode_enabled = true
+text = "В цьому світі немає справедливості, а звичні нам поняття мають викривлене значення. 
+Ви  — Руї, кіборг-навігатор, що опинилася на межі між обов'язком і людяністю. 
+Чи зможе вона зберегти себе під важкістю світу та життів інших? 
+Та ким вона буде, коли настане час зробити [b]останній вибір[/b]?
+
+
+!! Гра на стадії розробки, це не фінальний її вигляд !!
+
+Над грою працювала команда [b]\"Merelyn`s Games\"[/b]
+Гра створена під час [b] Ukrainian Visual Novel Jam #6 - 17 місце [/b]
+
+[b]Розробники:[/b]
+Сценарист та автор ідеї: [b][url=https://www.youtube.com/@LibertyGame/videos]Liberty[/url][/b]
+Редактор: [b][url=https://t.me/FelicityRW]FelicityRW[/url][/b]
+Художник персонажів, UI, фонів: [b][url=https://www.instagram.com/blkpur?igsh=cGdqbHhiMHhpNnE1]blkpur[/url][/b]
+Художник фонів: [b][url=https://t.me/hoopykai_ua]Hoopykai[/url][/b]
+Композитор та саунд дизайн: [b][url=https://ser-ch.itch.io/]Serhii Cherednichenko[/url][/b]
+Програміст: [b][url=https://artcrafter2999.itch.io/]ArtCrafter2999[/url][/b]
+
+[b]Озвучення(1 Розділ):[/b]
+Руї: [b][url=https://t.me/caralinne]Cara Linne[/url][/b]
+Старк: [b][url=https://t.me/olderix]Вадим Руснак а.к.а Olderix[/url][/b]
+Кіра, Система: [b][url=https://t.me/chisana_voise]Лазаренко Любов (Chisana)[/url][/b]
+Вайен, Інструктор, Працівник складу: [b][url=https://www.youtube.com/@LibertyGame/videos]Liberty[/url][/b]"
+
+[node name="BackButton" parent="Panel/AboutScreen" instance=ExtResource("3_o31j6")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.5
+offset_top = -155.0
+offset_right = 134.5
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Назад"
+
 [connection signal="pressed" from="Panel/Buttons/Continue" to="." method="close"]
 [connection signal="pressed" from="Panel/Buttons/History" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="Panel/Buttons/Save" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Panel/Buttons/Save" to="Panel/SaveNameDialog" method="show"]
 [connection signal="pressed" from="Panel/Buttons/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="Panel/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Panel/Buttons/About" to="." method="_on_about_pressed"]
 [connection signal="pressed" from="Panel/Buttons/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="back_pressed" from="Panel/LoadScreen" to="." method="_on_load_screen_back_pressed"]
 [connection signal="loaded_file" from="Panel/LoadScreen" to="." method="_on_load_screen_loaded_file"]
@@ -173,3 +248,5 @@ text = "Відмінити"
 [connection signal="back_pressed" from="Panel/HistoryScreen" to="." method="_on_history_screen_back_pressed"]
 [connection signal="pressed" from="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect/ConfirmButton" to="." method="_on_save_confirm_button_pressed"]
 [connection signal="pressed" from="Panel/SaveNameDialog/ColorRect/MarginContainer/ColorRect/CancelButton" to="." method="_on_cancel_save_button_pressed"]
+[connection signal="meta_clicked" from="Panel/AboutScreen/RichTextLabel" to="." method="on_link_clicked"]
+[connection signal="pressed" from="Panel/AboutScreen/BackButton" to="." method="_on_about_screen_back_pressed"]

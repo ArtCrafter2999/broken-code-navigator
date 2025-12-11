@@ -15,6 +15,7 @@ signal closed
 @onready var audio_slide: AudioStreamPlayer = $AudioSlide
 @onready var save_name_dialog: Panel = $Panel/SaveNameDialog
 @onready var save_name_field: TextEdit = %SaveName
+@onready var about_screen: AboutScreen = $Panel/AboutScreen
 
 var is_open = false;
 
@@ -131,3 +132,14 @@ func _on_cancel_save_button_pressed() -> void:
 func _on_save_button_pressed() -> void:
 	save_name_dialog.show()
 	save_name_field.placeholder_text = Time.get_datetime_string_from_system().replace(":", ".").replace("T", " ")
+
+func on_link_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta))
+
+func _on_about_pressed() -> void:
+	slide_buttons(buttons, false)
+	about_screen.open()
+
+func _on_about_screen_back_pressed() -> void:
+	slide_buttons(buttons, true)
+	about_screen.close()
