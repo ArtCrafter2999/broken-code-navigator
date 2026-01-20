@@ -29,15 +29,233 @@ backgrounds = Array[Texture2D]([ExtResource("2_bqqt6"), ExtResource("3_tbmy8"), 
 stream = ExtResource("2_8ln24")
 bus = &"SFX"
 
-[node name="BackgroundOld" type="TextureRect" parent="."]
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rtw2f")
+bus = &"Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundOld" type="TextureRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
 visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bqqt6")
+
+[node name="MainButtons" type="VBoxContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 75.0
+offset_top = -342.0
+offset_right = 395.0
+offset_bottom = 342.0
+grow_vertical = 2
+theme_override_constants/separation = 100
+metadata/_edit_group_ = true
+
+[node name="Play" parent="CanvasLayer/UI/MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Грати"
+font_size = 40
+
+[node name="Archive" parent="CanvasLayer/UI/MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Архів"
+font_size = 40
+
+[node name="Settings" parent="CanvasLayer/UI/MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Налаштування"
+font_size = 40
+
+[node name="Quit" parent="CanvasLayer/UI/MainButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Вийти"
+font_size = 40
+
+[node name="PlayButtons" type="VBoxContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -242.0
+offset_bottom = 434.0
+grow_vertical = 2
+theme_override_constants/separation = 100
+metadata/_edit_group_ = true
+
+[node name="NewGame" parent="CanvasLayer/UI/PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Нова гра"
+font_size = 40
+
+[node name="Test" parent="CanvasLayer/UI/PlayButtons" instance=ExtResource("1_l6cm7")]
+visible = false
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Тест"
+font_size = 40
+
+[node name="Load" parent="CanvasLayer/UI/PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Продовжити"
+font_size = 40
+
+[node name="Back" parent="CanvasLayer/UI/PlayButtons" instance=ExtResource("1_l6cm7")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+text = "Назад"
+font_size = 40
+
+[node name="LoadScreen" parent="CanvasLayer/UI" instance=ExtResource("6_rtw2f")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="SettingsScreen" parent="CanvasLayer/UI" instance=ExtResource("9_jk1qb")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="ArchiveNote" type="ColorRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 501.0
+offset_top = 372.0
+offset_right = 969.0
+offset_bottom = 508.0
+color = Color(0.192157, 0.513726, 0.654902, 1)
+script = ExtResource("14_1ajci")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/ArchiveNote"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_bqqt6")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI/ArchiveNote/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/UI/ArchiveNote/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/ArchiveNote/MarginContainer/ColorRect/CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "В розробці"
 
 [node name="BackgroundParalax" type="Control" parent="." node_paths=PackedStringArray("controls")]
 layout_mode = 1
@@ -76,140 +294,14 @@ texture = ExtResource("7_flqon")
 script = ExtResource("8_rcqid")
 modifier = 1.0
 
-[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_rtw2f")
-bus = &"Music"
-
-[node name="MainButtons" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 75.0
-offset_top = -338.0
-offset_right = 395.0
-offset_bottom = 338.0
-grow_vertical = 2
-theme_override_constants/separation = 100
-metadata/_edit_group_ = true
-
-[node name="Play" parent="MainButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Грати"
-font_size = 40
-
-[node name="Archive" parent="MainButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Архів"
-font_size = 40
-
-[node name="Settings" parent="MainButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Налаштування"
-font_size = 40
-
-[node name="Quit" parent="MainButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Вийти"
-font_size = 40
-
-[node name="PlayButtons" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -242.0
-offset_bottom = 434.0
-grow_vertical = 2
-theme_override_constants/separation = 100
-metadata/_edit_group_ = true
-
-[node name="NewGame" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Нова гра"
-font_size = 40
-
-[node name="Test" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
-visible = false
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Тест"
-font_size = 40
-
-[node name="Load" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Продовжити"
-font_size = 40
-
-[node name="Back" parent="PlayButtons" instance=ExtResource("1_l6cm7")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Назад"
-font_size = 40
-
-[node name="LoadScreen" parent="." instance=ExtResource("6_rtw2f")]
-visible = false
-layout_mode = 1
-
-[node name="SettingsScreen" parent="." instance=ExtResource("9_jk1qb")]
-visible = false
-layout_mode = 1
-
-[node name="ArchiveNote" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 501.0
-offset_top = 372.0
-offset_right = 969.0
-offset_bottom = 508.0
-color = Color(0.192157, 0.513726, 0.654902, 1)
-script = ExtResource("14_1ajci")
-metadata/_edit_group_ = true
-
-[node name="MarginContainer" type="MarginContainer" parent="ArchiveNote"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="ColorRect" type="ColorRect" parent="ArchiveNote/MarginContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="CenterContainer" type="CenterContainer" parent="ArchiveNote/MarginContainer/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="ArchiveNote/MarginContainer/ColorRect/CenterContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "В розробці"
-
-[connection signal="pressed" from="MainButtons/Play" to="." method="_open_play_buttons"]
-[connection signal="pressed" from="MainButtons/Archive" to="ArchiveNote" method="open"]
-[connection signal="pressed" from="MainButtons/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="PlayButtons/Test" to="." method="_on_test_pressed"]
-[connection signal="pressed" from="PlayButtons/Load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="PlayButtons/Back" to="." method="_back_to_main_buttons"]
-[connection signal="back_pressed" from="LoadScreen" to="." method="_back_to_play_buttons"]
-[connection signal="loaded_file" from="LoadScreen" to="." method="_on_load_screen_loaded_file"]
-[connection signal="back_pressed" from="SettingsScreen" to="." method="_back_to_main_buttons"]
+[connection signal="pressed" from="CanvasLayer/UI/MainButtons/Play" to="." method="_open_play_buttons"]
+[connection signal="pressed" from="CanvasLayer/UI/MainButtons/Archive" to="CanvasLayer/UI/ArchiveNote" method="open"]
+[connection signal="pressed" from="CanvasLayer/UI/MainButtons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/MainButtons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PlayButtons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PlayButtons/Test" to="." method="_on_test_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PlayButtons/Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PlayButtons/Back" to="." method="_back_to_main_buttons"]
+[connection signal="back_pressed" from="CanvasLayer/UI/LoadScreen" to="." method="_back_to_play_buttons"]
+[connection signal="loaded_file" from="CanvasLayer/UI/LoadScreen" to="." method="_on_load_screen_loaded_file"]
+[connection signal="back_pressed" from="CanvasLayer/UI/SettingsScreen" to="." method="_back_to_main_buttons"]

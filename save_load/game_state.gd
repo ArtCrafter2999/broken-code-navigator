@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func save():
 	_save_file();
-	_apply_settings();
+	_apply_settings(false);
 
 func get_setting(key: StringName):
 	return settings.get_or_add(key, DEFAULT_SETTINGS.get(key))

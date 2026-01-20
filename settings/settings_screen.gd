@@ -11,12 +11,18 @@ signal back_pressed;
 @onready var text_size_slider: LabeledSlider = %TextSizeSlider
 @onready var noise: CheckBox = %Noise
 @onready var chromatic_abberation: CheckBox = %ChromaticAbberation
+@onready var effects_container: VBoxContainer = $EffectsContainer
+@onready var no_effects_container: VBoxContainer = $NoEffectsContainer
 
 var opened = false;
 
 func open():
 	if opened: return;
 	opened = true;
+	var rendering_method = ProjectSettings.get_setting_with_override("rendering/renderer/rendering_method")
+	if (rendering_method == "gl_compatibility"):
+		effects_container.hide();
+		no_effects_container.show();
 	full_screen_button.button_pressed = \
 			GameState.get_setting(&"window_mode") == DisplayServer.WINDOW_MODE_FULLSCREEN;
 	window_button.button_pressed = \

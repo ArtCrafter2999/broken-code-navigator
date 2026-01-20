@@ -25,6 +25,15 @@ offset_right = 134.5
 offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 text = "Назад"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

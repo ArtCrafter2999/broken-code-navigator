@@ -7,17 +7,28 @@ signal load_pressed
 @export var backgrounds: Array[Texture2D]
 @export var save_load_manager: SaveLoadManager
 
-@onready var background: TextureRect = $BackgroundOld
+@onready var ui: Control = %UI
+@onready var background: TextureRect = %BackgroundOld
 @onready var main_menu_music: AudioStreamPlayer = $MainMenuMusic
 @onready var quit_button: GeneralMenuButton = $MainButtons/Quit
-@onready var main_buttons: VBoxContainer = $MainButtons
-@onready var play_buttons: VBoxContainer = $PlayButtons
-@onready var load_button: GeneralMenuButton = $PlayButtons/Load
+@onready var main_buttons: VBoxContainer = %MainButtons
+@onready var play_buttons: VBoxContainer = %PlayButtons
+@onready var load_button: GeneralMenuButton = %PlayButtons/Load
 @onready var audio_slide: AudioStreamPlayer = $AudioSlide
-@onready var load_screen: LoadScreen = $LoadScreen
-@onready var settings_screen: SettingsScreen = $SettingsScreen
+@onready var load_screen: LoadScreen = %LoadScreen
+@onready var settings_screen: SettingsScreen = %SettingsScreen
 
 var _buttons_sliding : Array[Control] = [];
+
+func _ready() -> void:
+	ui.visible = visible
+	load_screen.save_load_manager = save_load_manager;
+	if OS.get_name() == "Web":
+		quit_button.hide();
+
+func _process(_delta: float) -> void:
+	ui.visible = visible
+	ui.modulate = modulate;
 
 func open():
 	background.texture = backgrounds.pick_random()
@@ -37,13 +48,6 @@ func close():
 	play_buttons.position.x = -320
 	visible = false;
 
-
-func _ready() -> void:
-	load_screen.save_load_manager = save_load_manager;
-	if OS.get_name() == "Web":
-		quit_button.hide();
-
-
 func slide_buttons(buttons: Control, in_view: bool):
 	if _buttons_sliding.has(buttons): return;
 	load_screen.close();
@@ -52,11 +56,12 @@ func slide_buttons(buttons: Control, in_view: bool):
 	_buttons_sliding.append(buttons)
 	if in_view:
 		await create_tween().tween_property(
-			buttons, "position", Vector2(75, buttons.position.y), 0.5)\
-			.finished
+				buttons, "position", Vector2(75, buttons.position.y), 0.5)\
+				.finished
 	else:
 		await create_tween().tween_property(
-			buttons, "position", Vector2(-320, buttons.position.y), 0.5)
+				buttons, "position", Vector2(-320, buttons.position.y), 0.5)\
+				.finished;
 	_buttons_sliding.erase(buttons)
 
 

@@ -105,14 +105,14 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("8_q871c")
-theme_override_fonts/italics_font = ExtResource("9_my1lc")
-theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
 theme_override_fonts/bold_font = ExtResource("11_q3h3j")
+theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
+theme_override_fonts/italics_font = ExtResource("9_my1lc")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
 theme_override_font_sizes/bold_italics_font_size = 30
 theme_override_font_sizes/italics_font_size = 30
 theme_override_font_sizes/mono_font_size = 30
-theme_override_font_sizes/normal_font_size = 30
-theme_override_font_sizes/bold_font_size = 30
 text = "Dialogue..."
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -143,7 +143,7 @@ mouse_filter = 1
 
 [node name="CharacterLabelContainer" type="TextureRect" parent="Balloon/TextPanels"]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 offset_left = 210.0
 offset_top = 699.0
 offset_right = 612.0
@@ -176,7 +176,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PanelContainer" type="TextureRect" parent="Balloon/TextPanels"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 151.0
 offset_top = 785.0
 offset_right = 1772.0
@@ -201,14 +201,14 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("8_q871c")
-theme_override_fonts/italics_font = ExtResource("9_my1lc")
-theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
 theme_override_fonts/bold_font = ExtResource("11_q3h3j")
+theme_override_fonts/bold_italics_font = ExtResource("10_pos5u")
+theme_override_fonts/italics_font = ExtResource("9_my1lc")
+theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/bold_font_size = 28
 theme_override_font_sizes/bold_italics_font_size = 28
 theme_override_font_sizes/italics_font_size = 28
 theme_override_font_sizes/mono_font_size = 28
-theme_override_font_sizes/normal_font_size = 28
-theme_override_font_sizes/bold_font_size = 28
 text = "Dialogue..."
 custom_effects = [SubResource("RichTextEffect_cwey4")]
 seconds_per_step = 0.04
@@ -265,6 +265,15 @@ metadata/_edit_group_ = true
 [node name="ResponseExample" parent="OneResponseMenu" instance=ExtResource("13_q871c")]
 layout_mode = 2
 size_flags_vertical = 3
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 font_size = 60
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
@@ -288,6 +297,15 @@ metadata/_edit_group_ = true
 
 [node name="ResponseExample" parent="ResponsesMenu" instance=ExtResource("13_q871c")]
 layout_mode = 2
+focus_behavior_recursive = 0
+mouse_behavior_recursive = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
 font_size = 45
 
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
